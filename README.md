@@ -48,9 +48,9 @@ A docker image will be introduced later
   - [ ] Docker
   - [ ] Blurhash for images
   - [ ] Support for multiple programs
+  - [ ] Replace legacy icons with Lucide
 
 - [x] Home Page
-
   - [ ] Add more cards
   - [ ] Change placeholder Date
   - [ ] Fix First card text and number
@@ -60,7 +60,6 @@ A docker image will be introduced later
   - [ ] Change dashboard icon
 
 - [x] Programs
-
   - [x] Basic Layout
   - [x] Basic functionality (Load Program Templates)
   - [x] Individual Program View
@@ -71,16 +70,16 @@ A docker image will be introduced later
   - [ ] Check if modal works on Android
 
 - [x] Meals
-
   - [x] Individual Recipe View
   - [x] Create an add button
   - [ ] Add an Add Recipes button top right
   - [ ] Add "Add Button Functionality
   - [ ] Allow for adjusting serving size and add options
   - [ ] Add Base Measurement (Serving, Tbsp, fruit), Base Amount w/ unit
+  - [ ] Add Individual Meal View
+  - [ ] Meal Photo Upload
 
 - [ ] Sources Button in Account
-
   - [ ] OpenFoodFacts Source
   - [ ] MyNetDiary
   - [ ] Lifesum

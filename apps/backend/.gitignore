@@ -10,16 +10,6 @@ dist/
 web-build/
 app-build/
 
-# Native
-*.orig.*
-*.jks
-# *.p8
-*.p12
-*.key
-*.mobileprovision
-*.sh
-*.cmd
-
 # Metro
 .metro-health-check*
 
@@ -38,5 +28,3 @@ credentials/
 
 # typescript
 *.tsbuildinfo
-
-src/db/secrets.ts

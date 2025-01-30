@@ -1,0 +1,43 @@
+name: Android Preview Build
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: 🏗 Setup NodeJS
+        uses: actions/setup-node@v4
+
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 🏗 Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: 🏗 Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: 📦 Install dependencies
+        run: yarn workspace nutrical install
+
+      - name: 🚀 Build app
+        run: cd apps/nutrical && EXPO_USE_METRO_WORKSPACE_ROOT=1 SENTRY_ALLOW_FAILURE=true eas build --platform android --profile preview --local --non-interactive --output ${{ github.workspace }}/app-release.apk
+
+      - name: 📦 Upload app
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: ${{ github.workspace }}/app-release.apk

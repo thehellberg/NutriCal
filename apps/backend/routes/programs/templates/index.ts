@@ -1,0 +1,68 @@
+import type { Response, Request } from 'express'
+
+import { db } from '@/db/index'
+import { validateSessionToken } from '@/utils/auth/utils'
+export const get = async (req: Request, res: Response) => {
+  try {
+    const requestToken = req.token
+    if (!requestToken) {
+      return res.status(401).json({
+        error: true,
+        message: 'Unauthorized'
+      })
+    }
+    const session = await validateSessionToken(requestToken)
+    if (session.session === null) {
+      return res.status(401).json({
+        error: true,
+        message: 'Unauthorized'
+      })
+    }
+    const programTemplates = await db.query.programTemplates.findMany({
+      orderBy: (programTemplates, { desc }) => [desc(programTemplates.createdAt)],
+      with: {
+        programTemplateRecipes: {
+          with: {
+            recipe: true
+          }
+        },
+        programTemplateTags: {
+          with: {
+            tag: true
+          }
+        }
+      }
+    })
+    if (programTemplates.length === 0) {
+      return res.status(404).json({
+        error: true,
+        message: 'No programs found'
+      })
+    }
+    return res.json({
+      error: false,
+      data: programTemplates
+    })
+  } catch (e) {
+    return res.status(500).json({
+      error: true,
+      message: e
+    })
+  }
+}
+const programTemplates = db.query.programTemplates.findMany({
+  orderBy: (programs, { desc }) => [desc(programs.createdAt)],
+  with: {
+    programTemplateRecipes: {
+      with: {
+        recipe: true
+      }
+    },
+    programTemplateTags: {
+      with: {
+        tag: true
+      }
+    }
+  }
+})
+export type ProgramTemplates = Awaited<typeof programTemplates>

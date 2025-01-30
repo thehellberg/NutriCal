@@ -1,4 +1,6 @@
-# NutriCal
+<p align="center"><img src="/apps/nutrical/assets/logo.png" width="230" alt="NutriCal Logo"></p>
+
+# <img src="/apps/nutrical/assets/icon.png" width="45" alt="NutriCal Logo"> NutriCal - Calorie Tracker
 
 Welcome, this project is under active development, feel free to open issues and pull request.
 

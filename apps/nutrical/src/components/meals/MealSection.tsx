@@ -100,7 +100,7 @@ export default function MealSection(props: {
           </View>
           <Link
             asChild
-            href={'/nutrical/meals/recipe/add'}
+            href={{pathname: '/nutrical/meals/recipe/add', params: {meal: props.title, selectedDay: props.selectedDay, programId: props.program.id}}}
           >
             <Pressable className={' rounded-full bg-teal-300 p-1 mr-2'}>
               <MaterialIcons

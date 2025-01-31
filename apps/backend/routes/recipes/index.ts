@@ -1,18 +1,9 @@
-import type { Response, Request, NextFunction } from 'express'
+import type { Response, Request } from 'express'
 
 import { db } from '@/db/index'
 import { validateSessionToken } from '@/utils/auth/utils'
-export const get = async (req: Request, res: Response, next: NextFunction) => {
+export const get = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params
-    if (!id || isNaN(parseInt(id))) {
-      next()
-      return res.status(400).json({
-        error: true,
-        message: 'Invalid request'
-      })
-    }
-    const recipeId = parseInt(id)
     const requestToken = req.token
     if (!requestToken) {
       return res.status(401).json({
@@ -27,9 +18,8 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
         message: 'Unauthorized'
       })
     }
-    const recipe = await db.query.recipes.findFirst({
+    const recipes = await db.query.recipes.findMany({
       orderBy: (recipes, { desc }) => [desc(recipes.createdAt)],
-      where: (recipes, { eq }) => eq(recipes.id, recipeId),
       with: {
         recipeComponentRecipes: {
           with: {
@@ -52,7 +42,7 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
       }
     })
 
-    if (!recipe) {
+    if (recipes.length === 0) {
       return res.status(404).json({
         error: true,
         message: 'No recipes found'
@@ -60,7 +50,7 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
     }
     return res.json({
       error: false,
-      data: recipe
+      data: recipes
     })
   } catch (e) {
     return res.status(500).json({
@@ -69,7 +59,8 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
     })
   }
 }
-const recipe = db.query.recipes.findFirst({
+const recipes = db.query.recipes.findMany({
+  orderBy: (recipes, { desc }) => [desc(recipes.createdAt)],
   with: {
     recipeComponentRecipes: {
       with: {
@@ -91,4 +82,4 @@ const recipe = db.query.recipes.findFirst({
     }
   }
 })
-export type Recipe = Awaited<typeof recipe>
+export type Recipes = Awaited<typeof recipes>

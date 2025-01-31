@@ -1,4 +1,4 @@
-import { ProgramTemplate } from '@backend/types'
+import { CreateProgramReturn, ProgramTemplate } from '@backend/types'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { Image } from 'expo-image'
 import { router, useLocalSearchParams } from 'expo-router'
@@ -7,12 +7,13 @@ import { ScrollView, View, Text, Pressable, FlatList } from 'react-native'
 import Toast from 'react-native-toast-message'
 import useSWR from 'swr'
 
+import useClient from '~/components/network/client'
 import PreviewMealSection from '~/components/programs/PreviewMealSection'
 
 export default function Meal() {
   const { program } = useLocalSearchParams()
   const [daysPassed, setDaysPassed] = useState(1)
-
+  const client = useClient()
   const { data: programData } = useSWR<
     { error: false; data: ProgramTemplate } | { error: true; message: string }
   >(`programs/templates/${program}`)
@@ -61,7 +62,36 @@ export default function Meal() {
           >
             {programs?.name}
           </Text>
-          <Pressable className=" border border-white rounded-full py-2 px-12 mb-10 bg-white">
+          <Pressable
+            className=" border border-white rounded-full py-2 px-12 mb-10 bg-white"
+            onPress={async () => {
+              try {
+                console.log('H')
+                const res = await client
+                  .post<
+                    | { error: false; data: CreateProgramReturn }
+                    | { error: true; message: string }
+                  >('recipes/track', {
+                    json: {
+                      programTemplateId: Number(program)
+                    }
+                  })
+                  .json()
+                console.log(res.error)
+
+                if (res.error) {
+                  Toast.show({ type: 'error', text1: res.message })
+                  return
+                }
+                Toast.show({ type: 'success', text1: 'Program Started' })
+                router.push('/nutrical/meals')
+              } catch (e) {
+                console.error(e)
+
+                Toast.show({ type: 'error', text1: 'Error', text2: e.message })
+              }
+            }}
+          >
             <Text
               style={{ color: programs?.startColor || '#fff' }}
               className="font-display text-center text-lg"

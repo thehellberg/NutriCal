@@ -60,7 +60,7 @@ export const userLoginSchema = z.object({
   password: z.string().min(8)
 })
 
-type userLogin = {
+export type userLogin = {
   email: string
   password: string
 }

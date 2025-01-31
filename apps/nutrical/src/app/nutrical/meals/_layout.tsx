@@ -46,6 +46,10 @@ export default function MealStack() {
         name={'recipe/[recipe]'}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name={'recipe/add'}
+        options={{ headerShown: false }}
+      />
     </Stack>
   )
 }

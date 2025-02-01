@@ -4,7 +4,7 @@
 
 Welcome, this project is under active development, feel free to open issues and pull request.
 
-This app is built as an open-source Calorie-tracker. Similar to apps
+This app is built as an open-source Calorie-tracker. Similar to apps like Lifesum, MyFitnessPal and MacroFactor
 
 ## Installation
 

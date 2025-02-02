@@ -11,7 +11,7 @@ import {
   varchar
 } from 'drizzle-orm/pg-core'
 
-import { programs } from './programs'
+import { programs, userTags } from './programs'
 
 import type { InferSelectModel } from 'drizzle-orm'
 /**
@@ -67,7 +67,8 @@ export type User = InferSelectModel<typeof users>
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
   programs: many(programs),
-  sessions: many(sessions)
+  sessions: many(sessions),
+  userTags: many(userTags)
 }))
 
 export const accounts = createTable(

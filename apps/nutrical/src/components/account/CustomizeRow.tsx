@@ -10,7 +10,7 @@ export default function CustomizeRow(props: {
     <View className={'flex flex-row items-center w-full justify-between'}>
       <View className={'flex flex-row items-center'}>
         {props.children}
-        <Text className={'font-display text-lg pt-1 ml-2'}>{props.title}</Text>
+        <Text className={'font-display text-lg pt-1 ml-3'}>{props.title}</Text>
       </View>
       <ChevronRight className={'w-6 h-6'} />
     </View>

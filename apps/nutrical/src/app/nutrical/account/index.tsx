@@ -5,7 +5,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { reloadAppAsync } from 'expo'
 import { Image } from 'expo-image'
 import { Link } from 'expo-router'
-import { UserRound } from 'lucide-react-native'
+import { HandPlatter, UserRound } from 'lucide-react-native'
 import { Linking, Pressable, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import useSWR from 'swr'
@@ -101,7 +101,7 @@ export default function Profile() {
           </Text>
           <View
             className={
-              'mx-4 bg-white flex flex-col rounded-lg overflow-hidden p-4'
+              'mx-4 bg-white flex flex-col rounded-lg overflow-hidden p-4 gap-1'
             }
           >
             <Link
@@ -110,7 +110,18 @@ export default function Profile() {
             >
               <Pressable>
                 <CustomizeRow title="Personal Details">
-                  <UserRound size={24} />
+                  <UserRound size={28} />
+                </CustomizeRow>
+              </Pressable>
+            </Link>
+            <Border />
+            <Link
+              href={'/nutrical/account/customize/personalDetails'}
+              asChild
+            >
+              <Pressable>
+                <CustomizeRow title="Dietary Preferences">
+                  <HandPlatter size={28} />
                 </CustomizeRow>
               </Pressable>
             </Link>

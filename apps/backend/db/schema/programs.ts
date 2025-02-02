@@ -222,7 +222,8 @@ export const tags = createTable('tag', {
 export const tagsRelations = relations(tags, ({ many }) => ({
   programTags: many(programTags),
   programTemplateTags: many(programTemplateTags),
-  recipeTags: many(recipeTags)
+  recipeTags: many(recipeTags),
+  userTags: many(userTags)
 }))
 
 export const programTemplateTags = createTable('program_template_tag', {
@@ -285,6 +286,25 @@ export const recipeTagsRelations = relations(recipeTags, ({ one }) => ({
   })
 }))
 
+export const userTags = createTable('user_tag', {
+  userId: varchar('user_id', { length: 255 })
+    .notNull()
+    .references(() => users.id, defaultForiegnKeyAction),
+  tagId: integer('tag_id')
+    .notNull()
+    .references(() => tags.id, defaultForiegnKeyAction)
+})
+
+export const userTagsRelations = relations(userTags, ({ one }) => ({
+  user: one(users, {
+    fields: [userTags.userId],
+    references: [users.id]
+  }),
+  tag: one(tags, {
+    fields: [userTags.tagId],
+    references: [tags.id]
+  })
+}))
 // Components for each recipe (w/ ratings for macro/micro/fiber/cholesterol)
 export const recipeComponents = createTable('recipe_component', {
   id: serial('id').primaryKey(),

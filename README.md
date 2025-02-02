@@ -54,6 +54,7 @@ A docker image will be introduced later
   - [ ] Replace legacy icons with Lucide
   - [ ] Date-fns
   - [ ] Server URL in start page
+  - [ ] First Time Setup
 
 - [x] Home Page
 
@@ -100,9 +101,11 @@ A docker image will be introduced later
 - [ ] Accounts Page
 
   - [ ] Personal Details page
+    - [ ] Dropdown Menu
+    - [ ] Save Button
   - [ ] Food Prefrences page
   - [ ] Dietary needs adjustment
-  - [ ] 
+  - [ ]
 
 - [ ] Swipe to reload everywhere
 - [ ] Thumbhash

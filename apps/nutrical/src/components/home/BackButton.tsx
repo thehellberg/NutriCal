@@ -1,4 +1,4 @@
-import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import { ChevronLeft } from 'lucide-react-native'
 import { Pressable } from 'react-native'
 
 export default function BackButton(props: {
@@ -11,10 +11,9 @@ export default function BackButton(props: {
       className={props.canGoBack ? 'pr-5 py-1' : 'hidden'}
       onPress={props.onPress}
     >
-      <MaterialIcons
-        name={'arrow-forward-ios'}
-        size={24}
+      <ChevronLeft
         color={props.tintColor}
+        size={24}
       />
     </Pressable>
   )

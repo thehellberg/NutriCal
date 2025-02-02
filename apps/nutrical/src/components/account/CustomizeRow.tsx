@@ -1,32 +1,18 @@
-import { Pressable, Text, View } from 'react-native'
-import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import { Link } from 'expo-router'
+import { ChevronRight } from 'lucide-react-native'
+import React from 'react'
+import { Text, View } from 'react-native'
 
-export default function CustomizeRow({ title, icon, href }) {
+export default function CustomizeRow(props: {
+  title: string
+  children: React.ReactNode
+}) {
   return (
-    <Link
-      href={href}
-      asChild
-    >
-      <Pressable
-        className={'flex flex-row items-center w-full justify-between'}
-      >
-        <View className={'flex flex-row items-center'}>
-          <MaterialIcons
-            name={icon}
-            size={28}
-            color={'#16a34a'}
-          />
-          <Text className={'font-display-medium text-lg pt-1 ml-1'}>
-            {title}
-          </Text>
-        </View>
-        <MaterialIcons
-          name={'keyboard-arrow-left'}
-          size={24}
-          color={'#6b7280'}
-        />
-      </Pressable>
-    </Link>
+    <View className={'flex flex-row items-center w-full justify-between'}>
+      <View className={'flex flex-row items-center'}>
+        {props.children}
+        <Text className={'font-display text-lg pt-1 ml-2'}>{props.title}</Text>
+      </View>
+      <ChevronRight className={'w-6 h-6'} />
+    </View>
   )
 }

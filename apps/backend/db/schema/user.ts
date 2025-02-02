@@ -2,6 +2,8 @@ import { relations, sql } from 'drizzle-orm'
 import {
   index,
   integer,
+  numeric,
+  pgEnum,
   pgTableCreator,
   primaryKey,
   text,
@@ -20,6 +22,24 @@ import type { InferSelectModel } from 'drizzle-orm'
  */
 export const createTable = pgTableCreator((name) => `nutrical_${name}`)
 
+export function enumToPgEnum<T extends Record<string, string | number>>(
+  myEnum: T
+): [T[keyof T], ...T[keyof T][]] {
+  return Object.values(myEnum).map((value: string | number) => `${value}`) as [
+    T[keyof T],
+    ...T[keyof T][]
+  ]
+}
+
+export enum Activity_Level {
+  SEDENTARY = 'sedentary',
+  LIGHTLY_ACTIVE = 'lightly_active',
+  MODERATELY_ACTIVE = 'moderately_active',
+  VERY_ACTIVE = 'very_active',
+}
+
+export const activityLevelEnum = pgEnum('nutrical_activity_level', enumToPgEnum(Activity_Level))
+
 export const users = createTable('user', {
   id: varchar('id', { length: 255 })
     .notNull()
@@ -37,7 +57,10 @@ export const users = createTable('user', {
     mode: 'date',
     withTimezone: true
   }),
+  height: integer('height'),
+  weight: numeric('weight', { precision: 5, scale: 2 }),
   image: varchar('image', { length: 255 }),
+  activityLevel: activityLevelEnum(),
   passwordHash: varchar('password_hash', { length: 255 })
 })
 export type User = InferSelectModel<typeof users>

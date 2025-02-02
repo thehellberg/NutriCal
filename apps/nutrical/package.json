@@ -13,7 +13,7 @@
     "@gorhom/bottom-sheet": "5",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/datetimepicker": "8.2.0",
-    "@react-native-menu/menu": "^1.1.2",
+    "@react-native-menu/menu": "^1.2.2",
     "@sentry/react-native": "~6.3.0",
     "@shopify/flash-list": "1.7.1",
     "babel-plugin-inline-import": "^3.0.0",
@@ -62,8 +62,8 @@
     "react-native-get-random-values": "~1.11.0",
     "react-native-gifted-charts": "^1.4.56",
     "react-native-image-modal": "^3.0.11",
-    "react-native-ios-context-menu": "^2.3.2",
-    "react-native-ios-utilities": "^4.4.0",
+    "react-native-ios-context-menu": "^3.1.0",
+    "react-native-ios-utilities": "^5.1.1",
     "react-native-reanimated": "^3.16.7",
     "react-native-safe-area-context": "^5.1.0",
     "react-native-screens": "~4.1.0",
@@ -75,7 +75,7 @@
     "swr": "^2.2.5",
     "tailwindcss": "^3.4.4",
     "timers": "^0.1.1",
-    "zeego": "^1.10.0"
+    "zeego": "^2.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

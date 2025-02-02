@@ -71,7 +71,7 @@ export default function Meal() {
                   .post<
                     | { error: false; data: CreateProgramReturn }
                     | { error: true; message: string }
-                  >('recipes/track', {
+                  >('programs/fromTemplate', {
                     json: {
                       programTemplateId: Number(program)
                     }
@@ -84,7 +84,7 @@ export default function Meal() {
                   return
                 }
                 Toast.show({ type: 'success', text1: 'Program Started' })
-                router.push('/nutrical/meals')
+                router.navigate('/nutrical/meals')
               } catch (e) {
                 console.error(e)
 

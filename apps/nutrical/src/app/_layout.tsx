@@ -6,7 +6,7 @@ import { Slot } from 'expo-router'
 import { HTTPError } from 'ky'
 import { cssInterop } from 'nativewind'
 import { useCallback } from 'react'
-import { View } from 'react-native'
+import { TextInput, View } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import Toast, {
   ErrorToast,
@@ -48,6 +48,7 @@ function RootLayout() {
   cssInterop(Image, { className: 'style' })
   cssInterop(ImageBackground, { className: 'style' })
   cssInterop(LinearGradient, { className: 'style' })
+  cssInterop(TextInput, { className: 'style' })
 
   return (
     <SessionProvider>

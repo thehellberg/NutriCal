@@ -30,3 +30,5 @@ export const get = async (req: Request, res: Response) => {
     })
   }
 }
+
+export type GetAccountReturn = Awaited<ReturnType<typeof validateSessionToken>>

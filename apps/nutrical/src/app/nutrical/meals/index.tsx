@@ -98,10 +98,10 @@ export default function Meals() {
                     >
                       {referenceDay.add(item - 1, 'day').format('ddd')}
                     </Text>
-                    <View className={'bg-white rounded-full p-1'}>
+                    <View className={'bg-white rounded-full p-1 w-8'}>
                       <Text
                         allowFontScaling={false}
-                        className={'font-bold text-center'}
+                        className={'font-display-bold text-center'}
                       >
                         {referenceDay.add(item - 1, 'day').format('D')}
                       </Text>
@@ -122,10 +122,10 @@ export default function Meals() {
                     >
                       {referenceDay.add(item - 1, 'day').format('ddd')}
                     </Text>
-                    <View className={' rounded-full p-1'}>
+                    <View className={'w-8 rounded-full p-1'}>
                       <Text
                         allowFontScaling={false}
-                        className={'font-bold'}
+                        className={'font-display-bold text-center'}
                       >
                         {referenceDay.add(item - 1, 'day').format('D')}
                       </Text>

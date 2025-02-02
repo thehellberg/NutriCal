@@ -22,6 +22,7 @@ A docker image will be introduced later
 ## TO-DO:
 
 - [ ] General Enchancements
+
   - [ ] UX Enhancements
   - [x] Typescript
   - [x] Configure to use Storage Context
@@ -51,17 +52,21 @@ A docker image will be introduced later
   - [ ] Blurhash for images
   - [ ] Support for multiple programs
   - [ ] Replace legacy icons with Lucide
+  - [ ] Date-fns
+  - [ ] Server URL in start page
 
 - [x] Home Page
+
+  - [ ] Add functionality to first card
   - [ ] Add more cards
   - [ ] Change placeholder Date
   - [ ] Fix First card text and number
-  - [ ] Add functionality to first card
   - [ ] Add card number and position indicator (...) [The one below the cards in other designs]
   - [ ] Add functionality to water card
   - [ ] Change dashboard icon
 
 - [x] Programs
+
   - [x] Basic Layout
   - [x] Basic functionality (Load Program Templates)
   - [x] Individual Program View
@@ -72,6 +77,7 @@ A docker image will be introduced later
   - [ ] Check if modal works on Android
 
 - [x] Meals
+
   - [x] Individual Recipe View
   - [x] Create an add button
   - [ ] Add an Add Recipes button top right
@@ -82,6 +88,7 @@ A docker image will be introduced later
   - [ ] Meal Photo Upload
 
 - [ ] Sources Button in Account
+
   - [ ] OpenFoodFacts Source
   - [ ] MyNetDiary
   - [ ] Lifesum
@@ -89,6 +96,13 @@ A docker image will be introduced later
   - [ ] UK Food DB
   - [ ] Swedish
   - [ ] Support For translations
+
+- [ ] Accounts Page
+
+  - [ ] Personal Details page
+  - [ ] Food Prefrences page
+  - [ ] Dietary needs adjustment
+  - [ ] 
 
 - [ ] Swipe to reload everywhere
 - [ ] Thumbhash

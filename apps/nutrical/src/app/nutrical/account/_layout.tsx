@@ -38,6 +38,10 @@ export default function AccountStack() {
         name={'index'}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name={'customize/personalDetails'}
+        options={{ headerTitle: 'Personal Details' }}
+      />
     </Stack>
   )
 }

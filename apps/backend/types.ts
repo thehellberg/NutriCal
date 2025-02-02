@@ -1,3 +1,4 @@
+import { GetAccountReturn } from './routes/account'
 import { UserPrograms } from './routes/programs'
 import { CreateProgramReturn } from './routes/programs/fromTemplate'
 import { ProgramTemplates } from './routes/programs/templates'
@@ -12,5 +13,6 @@ export type {
   Recipe,
   Recipes,
   TrackRecipeReturn,
-  CreateProgramReturn
+  CreateProgramReturn,
+  GetAccountReturn
 }

@@ -1,4 +1,5 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import { format } from 'date-fns'
 import { Image } from 'expo-image'
 import { SafeAreaView, ScrollView, Text, View } from 'react-native'
 
@@ -19,7 +20,7 @@ export default function Home() {
         <Text
           className={'text-md font-display text-gray-600 self-start mx-4 mt-6'}
         >
-          WEDNESDAY, 21 AUGUST
+          {format(new Date(), 'EEEE, d LLLL').toUpperCase()}
         </Text>
         <Text
           className={'text-4xl font-display-medium self-start mx-4 mb-2 mt-0.5'}

@@ -157,7 +157,7 @@ export default function Reports() {
           }
         >
           <Text className={'font-display-bold text-2xl mb-2'}>Reports</Text>
-          {userData['ID'] !== 79927 && (
+
             <DropdownMenuRoot>
               <DropdownMenuTrigger>
                 <View
@@ -205,7 +205,6 @@ export default function Reports() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenuRoot>
-          )}
         </View>
         {loading ? (
           <LoadingIndicator />

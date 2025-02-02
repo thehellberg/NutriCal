@@ -158,6 +158,14 @@
           "project": "sentry",
           "url": "https://sentry.io"
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "15.0"
+          }
+        }
       ]
     ],
     "scheme": "nutrical",

@@ -4,8 +4,8 @@ import type { Request, Response } from 'express'
 
 import { validateData } from '@/utils/zod-validate'
 
-export const post = async (req: Request, res: Response) => {
-  const requestBody: userLogin = await req.body
+export const patch = async (req: Request, res: Response) => {
+  const requestBody: userData = await req.body
   const valid = validateData(userLoginSchema, requestBody)
   if (valid !== 'OK') {
     return res.status(400).json({

@@ -86,9 +86,13 @@ export default function Meal() {
                 Toast.show({ type: 'success', text1: 'Program Started' })
                 router.navigate('/nutrical/meals')
               } catch (e) {
-                console.error(e)
+                console.error(e as Error)
 
-                Toast.show({ type: 'error', text1: 'Error', text2: e.message })
+                Toast.show({
+                  type: 'error',
+                  text1: 'Error',
+                  text2: e?.messsage || 'An error occurred'
+                })
               }
             }}
           >

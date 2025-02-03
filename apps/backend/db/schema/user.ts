@@ -35,10 +35,19 @@ export enum Activity_Level {
   SEDENTARY = 'sedentary',
   LIGHTLY_ACTIVE = 'lightly_active',
   MODERATELY_ACTIVE = 'moderately_active',
-  VERY_ACTIVE = 'very_active',
+  VERY_ACTIVE = 'very_active'
 }
 
-export const activityLevelEnum = pgEnum('nutrical_activity_level', enumToPgEnum(Activity_Level))
+export enum Sex {
+  Male = 'M',
+  Female = 'F'
+}
+
+export const activityLevelEnum = pgEnum(
+  'nutrical_activity_level',
+  enumToPgEnum(Activity_Level)
+)
+export const sexEnum = pgEnum('nutrical_sex', enumToPgEnum(Sex))
 
 export const users = createTable('user', {
   id: varchar('id', { length: 255 })
@@ -52,7 +61,7 @@ export const users = createTable('user', {
     mode: 'date',
     withTimezone: true
   }).default(sql`CURRENT_TIMESTAMP`),
-  sex: varchar('sex', { length: 1 }),
+  sex: sexEnum(),
   dateOfBirth: timestamp('date_of_birth', {
     mode: 'date',
     withTimezone: true

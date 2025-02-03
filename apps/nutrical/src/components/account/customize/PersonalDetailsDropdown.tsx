@@ -8,10 +8,11 @@ import {
   DropdownMenuTrigger
 } from '~/components/ui/Dropdown'
 
-export default function PersonalDetailsDropdown(props: {
+export default function PersonalDetailsDropdown<T>(props: {
   title: string
-  value: string
-  onChangeText: (text: string) => void
+  options: Array<[string, T]>
+  value: T
+  onChangeText: (value: T) => void
 }) {
   return (
     <View className="flex flex-row items-center justify-between p-4">
@@ -19,33 +20,23 @@ export default function PersonalDetailsDropdown(props: {
       <View className="flex flex-row items-center">
         <DropdownMenuRoot>
           <DropdownMenuTrigger>
-            <View
-              className={
-                'flex flex-row justify-center items-center rounded-full bg-gray-300 p-1 mb-2'
-              }
-            >
-              <Text className={'text-white font-display text-lg'}>
-                {props.value}
+            <View className="flex flex-row justify-center items-center rounded-full bg-gray-300 p-1 mb-2">
+              <Text className="text-white font-display text-lg">
+                {`${props.value}`}
               </Text>
             </View>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem
-              key={'male'}
-              onSelect={() => {
-                props.onChangeText('male')
-              }}
-            >
-              <DropdownMenuItemTitle>Male</DropdownMenuItemTitle>
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              key={'female'}
-              onSelect={() => {
-                props.onChangeText('Female')
-              }}
-            >
-              <DropdownMenuItemTitle>Female</DropdownMenuItemTitle>
-            </DropdownMenuItem>
+            {props.options.map((option) => (
+              <DropdownMenuItem
+                key={option[1]?.toString()}
+                onSelect={() => {
+                  props.onChangeText(option[1])
+                }}
+              >
+                <DropdownMenuItemTitle>{option[0]}</DropdownMenuItemTitle>
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenuRoot>
       </View>

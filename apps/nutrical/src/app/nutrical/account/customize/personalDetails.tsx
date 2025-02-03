@@ -88,7 +88,7 @@ export default function PersonalDetails() {
         className="bg-white rounded-full border-gray-200 border-2 py-2 mb-4"
         onPress={async () => {
           try {
-            console.log('H')
+
             const res = await client
               .post<
                 | { error: false; data: CreateProgramReturn }
@@ -99,7 +99,6 @@ export default function PersonalDetails() {
                 }
               })
               .json()
-            console.log(res.error)
 
             if (res.error) {
               Toast.show({ type: 'error', text1: res.message })
@@ -108,8 +107,6 @@ export default function PersonalDetails() {
             Toast.show({ type: 'success', text1: 'Program Started' })
             router.navigate('/nutrical/meals')
           } catch (e) {
-            console.error(e)
-
             Toast.show({ type: 'error', text1: 'Error', text2: e.message })
           }
         }}

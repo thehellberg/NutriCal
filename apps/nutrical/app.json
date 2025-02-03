@@ -30,7 +30,8 @@
       "infoPlist": {
         "ExpoLocalization_supportsRTL": false,
         "LSMinimumSystemVersion": "13.0",
-        "ExpoLocalization_forcesRTL": false
+        "ExpoLocalization_forcesRTL": false,
+        "ITSAppUsesNonExemptEncryption": false
       },
       "usesAppleSignIn": true,
       "bundleIdentifier": "com.nutrihealth.nutrical",

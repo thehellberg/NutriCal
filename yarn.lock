@@ -9629,17 +9629,29 @@ react-native-helmet-async@2.0.4:
     react-fast-compare "^3.2.2"
     shallowequal "^1.1.0"
 
-react-native-ios-context-menu@2.5.3:
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/react-native-ios-context-menu/-/react-native-ios-context-menu-2.5.3.tgz#3e65a6cee50e95a71766ad3ebc3920015eb02318"
-  integrity sha512-RMztfU71XiLuxnmf/eE4/ez6FT4dzFAzrsHEA0+QmMfaQMHjpyEHTfLJvvM++9gygBvLZmHuc/rQgzQzH7ETug==
+react-native-ios-context-menu@3.0.0-11:
+  version "3.0.0-11"
+  resolved "https://registry.yarnpkg.com/react-native-ios-context-menu/-/react-native-ios-context-menu-3.0.0-11.tgz#dd24d2f7be66d2d241b7942e6e22edf308eefa9d"
+  integrity sha512-LWhD+sEtglSKZClgH1OyRwVd+Swr9rofu3AxiKpbqM7xn1HhqhylZa0byc/Vx9R4xyv6zp+QGTG0830acwdwoQ==
   dependencies:
     "@dominicstop/ts-event-emitter" "^1.1.0"
 
-react-native-ios-utilities@4.5.3:
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/react-native-ios-utilities/-/react-native-ios-utilities-4.5.3.tgz#5af77955147b60f2a3a519fcd36d9e28493d84b9"
-  integrity sha512-bw+bIGMC9tA2GRrQYFyQedV4PWYwgfcX8Lw0puILEeO9uExTbtftYEaj78tgMRpYxwiztjtOlR+rC1Lo93CstA==
+react-native-ios-context-menu@3.0.0-23:
+  version "3.0.0-23"
+  resolved "https://registry.yarnpkg.com/react-native-ios-context-menu/-/react-native-ios-context-menu-3.0.0-23.tgz#f97e432697652057b9caa81d658c63f8242e3841"
+  integrity sha512-gpjys1y59uU4MYuNTTQv9npTKnjafn7UJxV67984xSWL1OWSoKmhLvLJsAEj+271+ccZSA/T4qxA3MScZY7E6g==
+  dependencies:
+    "@dominicstop/ts-event-emitter" "^1.1.0"
+
+react-native-ios-utilities@5.0.0-47:
+  version "5.0.0-47"
+  resolved "https://registry.yarnpkg.com/react-native-ios-utilities/-/react-native-ios-utilities-5.0.0-47.tgz#217c3b2152b649bcaedd2b54d2bc5c62645be611"
+  integrity sha512-uul5fZ4CPu/SPPF2HjMK7FuSCcFlgKDKRm2x2CcDvXEgtavU5m2rStanEDEM4ihnTLBR5L5WEj6y2WW+oIZTuQ==
+
+react-native-ios-utilities@5.0.0-58:
+  version "5.0.0-58"
+  resolved "https://registry.yarnpkg.com/react-native-ios-utilities/-/react-native-ios-utilities-5.0.0-58.tgz#f4572522e1313eb6160358c9b807df58503665f8"
+  integrity sha512-/9iD5eNvFdvN4vlFJLzctKS9I1MAoaIET0p2pdnj6ZKUe66/OGgfYrpZTaix+Cx1JGXo+zrEqru/5oh/AcDHvw==
 
 react-native-is-edge-to-edge@^1.1.6:
   version "1.1.6"

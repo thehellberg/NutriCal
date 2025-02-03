@@ -59,7 +59,7 @@ export const post = async (req: Request, res: Response) => {
     })
   }
 }
-const recipe = db
+export const recipe = db
   .insert(programRecipes)
   .values({
     recipeId: 1,

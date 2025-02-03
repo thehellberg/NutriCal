@@ -9599,17 +9599,17 @@ react-native-image-modal@^3.0.11:
   resolved "https://registry.yarnpkg.com/react-native-image-modal/-/react-native-image-modal-3.0.13.tgz#ff8d425694226e93bdebb03216a00d8436463304"
   integrity sha512-kezzhfKUSBZNM8jaQVII/3aOT34hrNVvQdCTtJcsx2EGE43UhoRY+GBg7rMQZCOvbPfvk4Zw58yh1JyY6QsE+Q==
 
-react-native-ios-context-menu@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-ios-context-menu/-/react-native-ios-context-menu-3.1.0.tgz#8e5b7054959e6d4629d9aa18e5fe51fc18ccc597"
-  integrity sha512-qdPSXMKUp5lDgmZeUPdv5sgBFhkFrIqma+zsnqJQYOvekb6Qs17yJy1Rqhrj0bJrwuduHzZX0aYbaA8whxqpDw==
+react-native-ios-context-menu@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-ios-context-menu/-/react-native-ios-context-menu-2.1.0.tgz#fdec1081912d0f72db5598682178785aeb0d30a0"
+  integrity sha512-rt+5ujSPThX87ku6I+QZJsSkAfIoecjxgfGda1ezZr9AbI2kR5YD01s98qKCS8FcUoCPyyl7maXZ+UDo6431HA==
   dependencies:
     "@dominicstop/ts-event-emitter" "^1.1.0"
 
-react-native-ios-utilities@5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-ios-utilities/-/react-native-ios-utilities-5.1.1.tgz#de86a261bc76113782bcb284b989f0b9a58632ea"
-  integrity sha512-fOm7IR2KCn3MzghITbrnZfpJ3Z7wai4S46GwXwTql1fzX25eO8MXVgaUeMd5EvPwg1zAqF5I6c3T6Dby8DoF3A==
+react-native-ios-utilities@4.5.1:
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-ios-utilities/-/react-native-ios-utilities-4.5.1.tgz#3d43f4fd3add5f0f6a2ff6c53f35c850226e2ead"
+  integrity sha512-A8PMME94PXv1Ui5WrTBcz69zVPAshvvIuYxJUkE09Nl1Ca6/ds6wCxys/A+KkNPtgeVCN7diBR/M5BTVnJbKDQ==
 
 react-native-is-edge-to-edge@^1.1.6:
   version "1.1.6"

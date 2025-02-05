@@ -1,5 +1,7 @@
+import { GetUserTagsReturn, PutUserTagsReturn } from '@backend/types'
+import { router } from 'expo-router'
 import { Circle, CircleCheck } from 'lucide-react-native'
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   View,
   Text,
@@ -8,8 +10,13 @@ import {
   ScrollView,
   SafeAreaView
 } from 'react-native'
+import Toast from 'react-native-toast-message'
+import useSWR from 'swr'
+
+import useClient from '~/components/network/client'
 
 export default function FoodPreferences() {
+  const client = useClient()
   const [foodPreferences, setFoodPreferences] = useState<
     'None' | 'Vegetarian' | 'Vegan' | 'Pescetarian'
   >('None')
@@ -37,8 +44,9 @@ export default function FoodPreferences() {
       setAllergies([...allergies, allergy])
     }
   }
-  function handleLoad(tagIds: number[]) {
-    const tagMapping = [
+
+  const tagMapping = useMemo(
+    () => [
       { id: 1000, name: 'Vegetarian' },
       { id: 1001, name: 'Vegan' },
       { id: 1002, name: 'Pescetarian' },
@@ -50,43 +58,79 @@ export default function FoodPreferences() {
       { id: 1008, name: 'Allergic to Shellfish' },
       { id: 1009, name: 'Allergic to Fish' },
       { id: 1010, name: 'Allergic to Nuts' }
-    ]
+    ],
+    []
+  )
 
-    const preferences = ['Vegetarian', 'Vegan', 'Pescetarian']
-    const foundPreference = tagMapping
-      .filter(tag => tagIds.includes(tag.id))
-      .find(tag => preferences.includes(tag.name))
-    setFoodPreferences(foundPreference ? foundPreference.name as typeof foodPreferences : 'None')
+  const { data: userTagData, mutate } = useSWR<
+    { error: false; data: GetUserTagsReturn } | { error: true; message: string }
+  >('users/tags')
+  useEffect(() => {
+    if (userTagData?.error) {
+      Toast.show({ type: 'error', text1: 'Error', text2: userTagData.message })
+    }
+  }, [userTagData])
+  const tags = userTagData?.error ? undefined : userTagData?.data
 
-    const allergyTags = tagMapping
-      .filter(tag => tagIds.includes(tag.id) && !preferences.includes(tag.name))
-      .map(tag => tag.name) as typeof allergies
-    setAllergies(allergyTags)
-  }
-  function handleSave() {
-    // Save the food preferences and allergies to the server
-    const tagIds = [
-      { id: 1000, name: 'Vegetarian' },
-      { id: 1001, name: 'Vegan' },
-      { id: 1002, name: 'Pescetarian' },
-      { id: 1003, name: 'Gluten Intolerant' },
-      { id: 1004, name: 'Wheat Intolerant' },
-      { id: 1005, name: 'Lactose Intolerant' },
-      { id: 1006, name: 'Allergic to Milk' },
-      { id: 1007, name: 'Allergic to Egg' },
-      { id: 1008, name: 'Allergic to Shellfish' },
-      { id: 1009, name: 'Allergic to Fish' },
-      { id: 1010, name: 'Allergic to Nuts' }
-    ]
+  // Set daysPassed and referenceDay once when programs changes
+  useEffect(() => {
+    if (tags) {
+      const tagIds = tags.map((tag) => tag.tagId)
+      const preferences = ['Vegetarian', 'Vegan', 'Pescetarian']
+      const foundPreference = tagMapping
+        .filter((tag) => tagIds.includes(tag.id))
+        .find((tag) => preferences.includes(tag.name))
+      setFoodPreferences(
+        foundPreference
+          ? (foundPreference.name as typeof foodPreferences)
+          : 'None'
+      )
+
+      const allergyTags = tagMapping
+        .filter(
+          (tag) => tagIds.includes(tag.id) && !preferences.includes(tag.name)
+        )
+        .map((tag) => tag.name) as typeof allergies
+      setAllergies(allergyTags)
+    }
+  }, [tags, tagMapping])
+
+  async function handleSave() {
     const selectedTagIds = [
       ...allergies.map(
-        (allergy) => tagIds.find((tag) => tag.name === allergy)?.id
+        (allergy) => tagMapping.find((tag) => tag.name === allergy)?.id
       ),
       ...(foodPreferences !== 'None'
-        ? [tagIds.find((tag) => tag.name === foodPreferences)?.id]
+        ? [tagMapping.find((tag) => tag.name === foodPreferences)?.id]
         : [])
     ].filter((id): id is number => id !== undefined)
-    console.log(selectedTagIds)
+
+    try {
+      const res = await client
+        .put<
+          | { error: false; data: PutUserTagsReturn }
+          | { error: true; message: string }
+        >('users/tags', {
+          json: {
+            ids: selectedTagIds
+          }
+        })
+        .json()
+
+      if (res.error) {
+        Toast.show({ type: 'error', text1: res.message })
+        return
+      }
+      Toast.show({ type: 'success', text1: 'Preferences Saved' })
+      mutate()
+      router.back()
+    } catch (e) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: JSON.stringify(e) || 'An error occurred'
+      })
+    }
   }
   return (
     <SafeAreaView className="flex flex-col">

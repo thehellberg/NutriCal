@@ -7,7 +7,7 @@ import { Recipes } from './routes/recipes'
 import { Recipe } from './routes/recipes/[id]'
 import { TrackRecipeReturn } from './routes/recipes/track'
 import { PatchUserReturn } from './routes/users'
-import { PutUserTagsReturn } from './routes/users/tags'
+import { PutUserTagsReturn, GetUserTagsReturn } from './routes/users/tags'
 export type {
   UserPrograms,
   ProgramTemplates,
@@ -18,5 +18,6 @@ export type {
   CreateProgramReturn,
   GetAccountReturn,
   PatchUserReturn,
-  PutUserTagsReturn
+  PutUserTagsReturn,
+  GetUserTagsReturn
 }

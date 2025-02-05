@@ -66,7 +66,6 @@ export default function Meal() {
             className=" border border-white rounded-full py-2 px-12 mb-10 bg-white"
             onPress={async () => {
               try {
-                console.log('H')
                 const res = await client
                   .post<
                     | { error: false; data: CreateProgramReturn }
@@ -77,7 +76,6 @@ export default function Meal() {
                     }
                   })
                   .json()
-                console.log(res.error)
 
                 if (res.error) {
                   Toast.show({ type: 'error', text1: res.message })
@@ -86,7 +84,6 @@ export default function Meal() {
                 Toast.show({ type: 'success', text1: 'Program Started' })
                 router.navigate('/nutrical/meals')
               } catch (e) {
-                console.error(e as Error)
 
                 Toast.show({
                   type: 'error',

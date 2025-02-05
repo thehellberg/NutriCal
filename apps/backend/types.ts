@@ -6,6 +6,8 @@ import { ProgramTemplate } from './routes/programs/templates/[id]'
 import { Recipes } from './routes/recipes'
 import { Recipe } from './routes/recipes/[id]'
 import { TrackRecipeReturn } from './routes/recipes/track'
+import { PatchUserReturn } from './routes/users'
+import { PutUserTagsReturn } from './routes/users/tags'
 export type {
   UserPrograms,
   ProgramTemplates,
@@ -14,5 +16,7 @@ export type {
   Recipes,
   TrackRecipeReturn,
   CreateProgramReturn,
-  GetAccountReturn
+  GetAccountReturn,
+  PatchUserReturn,
+  PutUserTagsReturn
 }

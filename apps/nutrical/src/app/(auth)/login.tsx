@@ -1,5 +1,6 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { captureException } from '@sentry/react-native'
+import { reloadAppAsync } from 'expo'
 import { router } from 'expo-router'
 import { useState } from 'react'
 import {
@@ -15,8 +16,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 import useSWR from 'swr'
 
-import { useSession } from '~/components/ctx'
 import useClient from '~/components/network/client'
+import { useStorageState } from '~/hooks/useStorageState'
 import { Session } from '~/types'
 
 //TODO: Add A Proper SSO Implementation
@@ -25,7 +26,7 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [loginDisable, setLoginDisable] = useState(false)
 
-  const { signIn } = useSession()
+  const [, setToken] = useStorageState('token')
   const client = useClient()
 
   const { mutate } = useSWR(
@@ -51,8 +52,8 @@ export default function Login() {
         return Toast.show({ type: 'error', text1: result.message })
       }
       if (result?.data.token) {
-        signIn(result.data.token)
-        router.navigate('/nutrical/home')
+        setToken(result.data.token)
+        reloadAppAsync()
       } else {
         Toast.show({ type: 'error', text1: 'Login failed' })
       }

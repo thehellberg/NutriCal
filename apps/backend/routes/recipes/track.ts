@@ -10,8 +10,6 @@ export const post = async (req: Request, res: Response) => {
   try {
     const requestBody: trackRecipe = req.body
     const valid = validateData(trackRecipeSchema, requestBody)
-    console.log(valid)
-
     if (valid !== 'OK') {
       return res.status(400).json({
         error: true,

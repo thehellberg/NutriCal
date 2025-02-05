@@ -1,82 +1,67 @@
+import { eq } from 'drizzle-orm'
 import { z } from 'zod'
-
-import { recipe } from '../recipes/track'
 
 import type { Request, Response } from 'express'
 
 import { db } from '@/db/index'
-import { programRecipes, Meal } from '@/db/schema/programs'
+import { users } from '@/db/schema/user'
 import { validateSessionToken } from '@/utils/auth/utils'
 import { validateData } from '@/utils/zod-validate'
 
 export const patch = async (req: Request, res: Response) => {
   try {
     const updateUserSchema = z.object({
-      username: z.string().optional(),
+      firstName: z.string().optional(),
+      lastName: z.string().optional(),
+      sex: z.enum(['M', 'F']).optional(),
+      height: z.number().optional(),
+      weight: z.number().optional(),
+      activityLevel: z
+        .enum([
+          'sedentary',
+          'lightly_active',
+          'moderately_active',
+          'very_active'
+        ])
+        .optional(),
+      dateOfBirth: z.string().optional(),
       email: z.string().email().optional(),
-      age: z.number().optional()
+      image: z.string().optional()
     })
-
-    const partialData = req.body
+    type UpdateUserData = z.infer<typeof updateUserSchema>
+    const partialData: UpdateUserData = req.body
+    const transormedData = {
+      ...partialData,
+      dateOfBirth: new Date(partialData.dateOfBirth)
+    }
     const valid = validateData(updateUserSchema, partialData)
     if (valid !== 'OK') {
-      return res.status(400).json({
-        error: true,
-        message: valid
-      })
+      return res.status(400).json({ error: true, message: valid })
     }
 
     const requestToken = req.token
     if (!requestToken) {
-      return res.status(401).json({
-        error: true,
-        message: 'Unauthorized'
-      })
+      return res.status(401).json({ error: true, message: 'Unauthorized' })
     }
     const session = await validateSessionToken(requestToken)
     if (!session.session) {
-      return res.status(401).json({
-        error: true,
-        message: 'Unauthorized'
-      })
+      return res.status(401).json({ error: true, message: 'Unauthorized' })
     }
 
-    // Example: update user data in database
     const updatedUser = await db
-      .update('users')
-      .set(partialData)
-      .where({ id: session.session.userId })
+      .update(users)
+      .set(transormedData)
+      .where(eq(users.id, session.user.id))
       .returning()
-
-    if (!updatedUser.length) {
-      return res.status(404).json({
-        error: true,
-        message: 'User not found'
-      })
+    if (updatedUser.length < 1) {
+      return res.status(404).json({ error: true, message: 'User not found' })
     }
+    updatedUser[0]!.passwordHash = ''
 
-    return res.json({
-      error: false,
-      data: updatedUser
-    })
+    return res.json({ error: false, data: updatedUser })
   } catch (e) {
-    return res.status(500).json({
-      error: true,
-      message: e
-    })
+    return res.status(500).json({ error: true, message: e.message })
   }
 }
-export type TrackRecipeReturn = Awaited<typeof recipe>
-export const trackRecipeSchema = z.object({
-  recipeId: z.number().min(0),
-  programId: z.number().min(0),
-  dayIndex: z.number().min(0).max(100),
-  mealName: z.enum(['breakfast', 'lunch', 'dinner', 'snack', 'functional_food'])
-})
-
-type trackRecipe = {
-  recipeId: number
-  programId: number
-  dayIndex: number
-  mealName: Meal
-}
+const updatedUser = db.update(users).set({ id: '123' }).returning()
+export type PatchUserReturn = Awaited<typeof updatedUser>

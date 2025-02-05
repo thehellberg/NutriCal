@@ -24,6 +24,7 @@ A docker image will be introduced later
 - [ ] General Enchancements
 
   - [ ] UX Enhancements
+  - [ ] Replace SWR with @nandorojo/swr-react-native
   - [x] Typescript
   - [x] Configure to use Storage Context
   - [x] Update workflows
@@ -100,12 +101,14 @@ A docker image will be introduced later
 
 - [ ] Accounts Page
 
-  - [ ] Personal Details page
-    - [ ] Dropdown Menu
-    - [ ] Save Button
-  - [ ] Food Prefrences page
+  - [x] Personal Details page
+    - [x] Dropdown Menu
+    - [x] Save Button
+  - [ ] Dietary Prefrences page
+    - [ ] Food Preference (Vegan, Vegetarian)
+    - [ ] Allergies
   - [ ] Dietary needs adjustment
-  - [ ]
+  - [ ] Calorie and Macronutrient Adjustment
 
 - [ ] Swipe to reload everywhere
 - [ ] Thumbhash

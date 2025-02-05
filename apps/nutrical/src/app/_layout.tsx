@@ -18,15 +18,17 @@ import { SWRConfig } from 'swr'
 
 import '../../global.css'
 
-import { SessionProvider, useSession } from '~/components/ctx'
+import { SessionProvider } from '~/components/ctx'
 import asyncStorageProvider from '~/components/network/cacheProvider'
 import useClient from '~/components/network/client'
+import { useStorageState } from '~/hooks/useStorageState'
 
 Sentry.init({
   enabled: false
 })
 function RootLayout() {
-  const { signOut, token } = useSession()
+  const [[, token], setToken] = useStorageState('token')
+
   const api = useClient(token)
   const fetcher = useCallback(
     async (url: string) => {
@@ -34,7 +36,7 @@ function RootLayout() {
         return await api(url).json()
       } catch (error) {
         if (error instanceof HTTPError && error.response.status === 401) {
-          signOut()
+          setToken(null)
           reloadAppAsync()
           return { error: true, message: 'Unauthorized' }
         } else {
@@ -42,7 +44,7 @@ function RootLayout() {
         }
       }
     },
-    [api, signOut]
+    [api, setToken]
   )
   //CSS Interops
   cssInterop(Image, { className: 'style' })

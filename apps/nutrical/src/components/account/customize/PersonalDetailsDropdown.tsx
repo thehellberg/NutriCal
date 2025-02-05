@@ -20,16 +20,17 @@ export default function PersonalDetailsDropdown<T>(props: {
       <View className="flex flex-row items-center">
         <DropdownMenuRoot>
           <DropdownMenuTrigger>
-            <View className="flex flex-row justify-center items-center rounded-full bg-gray-300 p-1 mb-2">
-              <Text className="text-white font-display text-lg">
-                {`${props.value}`}
+            <View className="flex flex-row justify-center items-center rounded-lg bg-gray-200 p-1 mb-2 w-40">
+              <Text className="text-black font-display text-lg">
+                {props.options.find(([, key]) => key === props.value)?.[0] ??
+                  ''}
               </Text>
             </View>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             {props.options.map((option) => (
               <DropdownMenuItem
-                key={option[1]?.toString()}
+                key={option[0]?.toString()}
                 onSelect={() => {
                   props.onChangeText(option[1])
                 }}

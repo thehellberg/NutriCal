@@ -52,14 +52,17 @@ export default function Profile() {
   }
 
   return (
-    <SafeAreaView className={'h-screen bg-white'}>
+    <SafeAreaView
+      className={' bg-white h-screen'}
+      edges={['top', 'left', 'right']}
+    >
       <ScrollView>
         <Text
           className={'text-4xl font-display-medium self-start mx-4 mb-2 mt-8'}
         >
           Account
         </Text>
-        <View className="bg-gray-100">
+        <View className="bg-gray-100 h-full">
           <View className={'flex flex-col bg-white rounded-lg mx-4 mt-4 p-4 '}>
             <View className={'flex flex-row items-start'}>
               <Image
@@ -85,16 +88,21 @@ export default function Profile() {
               </View>
             </View>
             <Border />
-            <View className="flex flex-row items-center justify-between mt-4 mb-2">
-              <Text className="font-display">Current Weight</Text>
-              <Text className="font-display-medium">
-                {account?.data.user?.weight + ' kg'}
-              </Text>
-            </View>
+            {account?.data.user?.weight && (
+              <View className="flex flex-row items-center justify-between mt-4 mb-2">
+                <Text className="font-display">Current Weight</Text>
+                <Text className="font-display-medium">
+                  {account?.data.user?.weight.substring(
+                    0,
+                    account?.data.user?.weight.length - 1
+                  ) + ' kg'}
+                </Text>
+              </View>
+            )}
           </View>
           <Text
             className={
-              'font-display-bold text-lg self-start mx-4 mt-4 mb-1 text-gray-600'
+              'font-display-medium text-xl text-gray-600 px-4 mt-4 mb-1'
             }
           >
             Customization
@@ -116,7 +124,7 @@ export default function Profile() {
             </Link>
             <Border />
             <Link
-              href={'/nutrical/account/customize/personalDetails'}
+              href={'/nutrical/account/customize/foodPreferences'}
               asChild
             >
               <Pressable>
@@ -128,7 +136,7 @@ export default function Profile() {
           </View>
           <Text
             className={
-              'font-display-bold text-lg self-start mx-4 mt-4 mb-1 text-gray-600'
+              'font-display-medium text-xl text-gray-600 px-4 mt-4 mb-1'
             }
           >
             Modify
@@ -168,7 +176,7 @@ export default function Profile() {
           </View>
           <Text
             className={
-              'font-display-bold text-lg self-start mx-4 mt-4 mb-1 text-gray-600'
+              'font-display-medium text-xl text-gray-600 px-4 mt-4 mb-1'
             }
           >
             Legal

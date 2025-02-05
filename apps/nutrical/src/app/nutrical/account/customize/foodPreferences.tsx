@@ -37,6 +37,32 @@ export default function FoodPreferences() {
       setAllergies([...allergies, allergy])
     }
   }
+  function handleLoad(tagIds: number[]) {
+    const tagMapping = [
+      { id: 1000, name: 'Vegetarian' },
+      { id: 1001, name: 'Vegan' },
+      { id: 1002, name: 'Pescetarian' },
+      { id: 1003, name: 'Gluten Intolerant' },
+      { id: 1004, name: 'Wheat Intolerant' },
+      { id: 1005, name: 'Lactose Intolerant' },
+      { id: 1006, name: 'Allergic to Milk' },
+      { id: 1007, name: 'Allergic to Egg' },
+      { id: 1008, name: 'Allergic to Shellfish' },
+      { id: 1009, name: 'Allergic to Fish' },
+      { id: 1010, name: 'Allergic to Nuts' }
+    ]
+
+    const preferences = ['Vegetarian', 'Vegan', 'Pescetarian']
+    const foundPreference = tagMapping
+      .filter(tag => tagIds.includes(tag.id))
+      .find(tag => preferences.includes(tag.name))
+    setFoodPreferences(foundPreference ? foundPreference.name as typeof foodPreferences : 'None')
+
+    const allergyTags = tagMapping
+      .filter(tag => tagIds.includes(tag.id) && !preferences.includes(tag.name))
+      .map(tag => tag.name) as typeof allergies
+    setAllergies(allergyTags)
+  }
   function handleSave() {
     // Save the food preferences and allergies to the server
     const tagIds = [

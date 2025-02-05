@@ -13,6 +13,7 @@
     "@gorhom/bottom-sheet": "5",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/datetimepicker": "8.2.0",
+    "@react-native-community/slider": "^4.5.5",
     "@react-native-menu/menu": "^1.2.2",
     "@sentry/react-native": "~6.3.0",
     "@shopify/flash-list": "1.7.1",
@@ -84,13 +85,5 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3"
-  },
-  "resolutions": {
-    "react-native-ios-context-menu": "3.0.0-11",
-    "react-native-ios-utilities": "5.0.0-47"
-  },
-  "overrides": {
-    "react-native-ios-context-menu": "3.0.0-11",
-    "react-native-ios-utilities": "5.0.0-47"
   }
 }

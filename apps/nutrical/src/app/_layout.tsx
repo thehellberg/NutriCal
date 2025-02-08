@@ -1,3 +1,4 @@
+import Slider from '@react-native-community/slider'
 import * as Sentry from '@sentry/react-native'
 import { reloadAppAsync } from 'expo'
 import { Image, ImageBackground } from 'expo-image'
@@ -51,6 +52,7 @@ function RootLayout() {
   cssInterop(ImageBackground, { className: 'style' })
   cssInterop(LinearGradient, { className: 'style' })
   cssInterop(TextInput, { className: 'style' })
+  cssInterop(Slider, { className: 'style' })
 
   return (
     <SessionProvider>

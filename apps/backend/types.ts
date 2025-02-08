@@ -1,3 +1,4 @@
+import { Activity_Level } from './db/schema/user'
 import { GetAccountReturn } from './routes/account'
 import { GetDietaryLogReturn } from './routes/dietaryLogs/[date]'
 import { UserPrograms } from './routes/programs'
@@ -8,6 +9,10 @@ import { Recipes } from './routes/recipes'
 import { Recipe } from './routes/recipes/[id]'
 import { TrackRecipeReturn } from './routes/recipes/track'
 import { PatchUserReturn } from './routes/users'
+import {
+  GetDietarySettingsReturn,
+  PatchDietarySettingsReturn
+} from './routes/users/dietarySettings'
 import { PutUserTagsReturn, GetUserTagsReturn } from './routes/users/tags'
 export type {
   UserPrograms,
@@ -21,5 +26,8 @@ export type {
   PatchUserReturn,
   PutUserTagsReturn,
   GetUserTagsReturn,
-  GetDietaryLogReturn
+  GetDietaryLogReturn,
+  GetDietarySettingsReturn,
+  PatchDietarySettingsReturn,
+  Activity_Level
 }

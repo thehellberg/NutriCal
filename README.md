@@ -106,11 +106,13 @@ A docker image will be introduced later
   - [x] Personal Details page
     - [x] Dropdown Menu
     - [x] Save Button
+    - [ ] Add clarification for each activity level
   - [x] Dietary Prefrences page
     - [x] Food Preference (Vegan, Vegetarian)
     - [x] Allergies
-  - [ ] Dietary needs adjustment
-  - [ ] Calorie and Macronutrient Adjustment
+  - [x] Dietary needs adjustment
+    - [x] Reset to Defaults
+  - [x] Calorie and Macronutrient Adjustment
 
 - [ ] Swipe to reload everywhere
 - [ ] Thumbhash

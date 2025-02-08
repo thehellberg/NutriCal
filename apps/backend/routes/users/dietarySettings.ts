@@ -1,3 +1,4 @@
+import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 
 import type { Request, Response } from 'express'
@@ -5,6 +6,33 @@ import type { Request, Response } from 'express'
 import { db } from '@/db/index'
 import { dietarySettings } from '@/db/schema/user'
 import { validateSessionToken } from '@/utils/auth/utils'
+
+export const get = async (req: Request, res: Response) => {
+  try {
+    const requestToken = req.token
+    if (!requestToken) {
+      return res.status(401).json({ error: true, message: 'Unauthorized' })
+    }
+    const session = await validateSessionToken(requestToken)
+    if (!session.session) {
+      return res.status(401).json({ error: true, message: 'Unauthorized' })
+    }
+
+    const dietarySettingsData = await db.query.dietarySettings.findFirst({
+      where: eq(dietarySettings.userId, session.user.id),
+    })
+
+    if (!dietarySettingsData) {
+      return res.status(404).json({ error: true, message: 'User not found' })
+    }
+
+    return res.json({ error: false, data: dietarySettingsData })
+  } catch (e) {
+    return res.status(500).json({ error: true, message: e })
+  }
+}
+const getTypeGenerator = db.query.dietarySettings.findFirst()
+export type GetDietarySettingsReturn = Awaited<typeof getTypeGenerator>
 
 export const patch = async (req: Request, res: Response) => {
   try {
@@ -48,7 +76,7 @@ export const patch = async (req: Request, res: Response) => {
 
     return res.json({ error: false, data: updatedDietarySettings })
   } catch (e) {
-    return res.status(500).json({ error: true, message: e.message })
+    return res.status(500).json({ error: true, message: e })
   }
 }
 const typeGenerator = db

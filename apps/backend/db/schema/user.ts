@@ -1,6 +1,5 @@
 import { relations, sql } from 'drizzle-orm'
 import {
-  serial,
   integer,
   numeric,
   pgEnum,
@@ -41,10 +40,13 @@ export function enumToPgEnum<T extends Record<string, string | number>>(
 }
 
 export enum Activity_Level {
+  BMR = 'bmr',
   SEDENTARY = 'sedentary',
   LIGHTLY_ACTIVE = 'lightly_active',
   MODERATELY_ACTIVE = 'moderately_active',
-  VERY_ACTIVE = 'very_active'
+  ACTIVE = 'active',
+  VERY_ACTIVE = 'very_active',
+  EXTRA_ACTIVE = 'extra_active'
 }
 
 export enum Sex {
@@ -203,7 +205,8 @@ export const dietaryLogsRelations = relations(dietaryLogs, ({ one }) => ({
 export const dietarySettings = createTable('dietary_setting', {
   userId: varchar('user_id', { length: 255 })
     .notNull()
-    .references(() => users.id, defaultForiegnKeyAction).primaryKey(),
+    .references(() => users.id, defaultForiegnKeyAction)
+    .primaryKey(),
   waterGoal: integer('water_goal'),
   calorieGoal: numeric('calorie_goal', { precision: 7, scale: 2 }),
   proteinGoal: numeric('protein_goal', { precision: 6, scale: 2 }),

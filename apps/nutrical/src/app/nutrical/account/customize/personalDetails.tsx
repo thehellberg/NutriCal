@@ -1,4 +1,8 @@
-import { GetAccountReturn, PatchUserReturn } from '@backend/types'
+import {
+  Activity_Level,
+  GetAccountReturn,
+  PatchUserReturn
+} from '@backend/types'
 import DateTimePicker, {
   DateTimePickerAndroid,
   DateTimePickerEvent
@@ -15,6 +19,7 @@ import useClient from '~/components/network/client'
 import ErrorComponent from '~/components/ui/ErrorComponent'
 import LoadingComponent from '~/components/ui/LoadingComponent'
 
+type ActivityLevel = `${Activity_Level}`
 export default function PersonalDetails() {
   const client = useClient()
   const { data: account, isLoading } = useSWR<
@@ -33,9 +38,7 @@ export default function PersonalDetails() {
     account?.error ? 'M' : account?.data.user?.sex || 'M'
   )
   const [activityLevel, setActivityLevel] = useState<ActivityLevel>(
-    account?.error
-      ? 'sedentary'
-      : account?.data.user?.activityLevel || 'sedentary'
+    account?.error ? 'bmr' : account?.data.user?.activityLevel || 'bmr'
   )
 
   //Android Report Date Picker
@@ -127,10 +130,13 @@ export default function PersonalDetails() {
         title="Activity Level"
         value={activityLevel}
         options={[
+          ['BMR', 'bmr'],
           ['Sedentary', 'sedentary'],
           ['Lightly Active', 'lightly_active'],
           ['Moderately Active', 'moderately_active'],
-          ['Very Active', 'very_active']
+          ['Active', 'active'],
+          ['Very Active', 'very_active'],
+          ['Extra Active', 'extra_active']
         ]}
         onChangeText={setActivityLevel}
       />
@@ -175,10 +181,5 @@ export default function PersonalDetails() {
 }
 
 type Sex = 'M' | 'F'
-type ActivityLevel =
-  | 'sedentary'
-  | 'lightly_active'
-  | 'moderately_active'
-  | 'very_active'
 
 const Border = () => <View className={'h-0.5 bg-gray-50'} />

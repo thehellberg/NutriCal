@@ -9,7 +9,7 @@ import { validateData } from '@/utils/zod-validate'
 
 export const post = async (req: Request, res: Response) => {
   try {
-    const requestBody: userLogin = req.body
+    const requestBody: z.infer<typeof userLoginSchema> = userLoginSchema.parse(req.body)
     const valid = validateData(userLoginSchema, requestBody)
     if (valid !== 'OK') {
       return res.status(400).json({
@@ -51,16 +51,11 @@ export const post = async (req: Request, res: Response) => {
   }
 }
 
-export const userLoginSchema = z.object({
+const userLoginSchema = z.object({
   email: z
     .string()
     .min(1, 'Email field is required.')
     .max(255, 'Email too long.')
     .email('This is not a valid email.'),
   password: z.string().min(8)
-})
-
-export type userLogin = {
-  email: string
-  password: string
-}
+}).strict()

@@ -8,7 +8,8 @@ import { validateSessionToken } from '@/utils/auth/utils'
 import { validateData } from '@/utils/zod-validate'
 export const post = async (req: Request, res: Response) => {
   try {
-    const requestBody: trackRecipe = req.body
+    const requestBody: z.infer<typeof trackRecipeSchema> =
+      trackRecipeSchema.parse(req.body)
     const valid = validateData(trackRecipeSchema, requestBody)
     if (valid !== 'OK') {
       return res.status(400).json({
@@ -67,16 +68,17 @@ export const recipe = db
   })
   .returning()
 export type TrackRecipeReturn = Awaited<typeof recipe>
-export const trackRecipeSchema = z.object({
-  recipeId: z.number().min(0),
-  programId: z.number().min(0),
-  dayIndex: z.number().min(0).max(100),
-  mealName: z.enum(['breakfast', 'lunch', 'dinner', 'snack', 'functional_food'])
-})
-
-type trackRecipe = {
-  recipeId: number
-  programId: number
-  dayIndex: number
-  mealName: Meal
-}
+const trackRecipeSchema = z
+  .object({
+    recipeId: z.number().min(0),
+    programId: z.number().min(0),
+    dayIndex: z.number().min(0).max(100),
+    mealName: z.enum([
+      'breakfast',
+      'lunch',
+      'dinner',
+      'snack',
+      'functional_food'
+    ])
+  })
+  .strict()

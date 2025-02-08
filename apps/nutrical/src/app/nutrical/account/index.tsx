@@ -1,7 +1,5 @@
 import { GetAccountReturn } from '@backend/types'
 import { differenceInYears } from 'date-fns'
-import dayjs from 'dayjs'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { reloadAppAsync } from 'expo'
 import { Image } from 'expo-image'
 import { Link } from 'expo-router'
@@ -13,8 +11,6 @@ import useSWR from 'swr'
 import Border from '~/components/account/Border'
 import CustomizeRow from '~/components/account/CustomizeRow'
 import { useSession } from '~/components/ctx'
-
-dayjs.extend(customParseFormat)
 
 export default function Profile() {
   const { signOut } = useSession()

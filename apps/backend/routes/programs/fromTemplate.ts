@@ -9,9 +9,8 @@ import { validateData } from '@/utils/zod-validate'
 
 export const post = async (req: Request, res: Response) => {
   try {
-    console.log('h')
-
-    const requestBody: programCreation = req.body
+    const requestBody: z.infer<typeof programCreationSchema> =
+      programCreationSchema.parse(req.body)
     const valid = validateData(programCreationSchema, requestBody)
     if (valid !== 'OK') {
       return res.status(400).json({
@@ -77,13 +76,11 @@ export const post = async (req: Request, res: Response) => {
     })
   }
 }
-export const programCreationSchema = z.object({
-  programTemplateId: z.number().min(0)
-})
-
-type programCreation = {
-  programTemplateId: number
-}
+const programCreationSchema = z
+  .object({
+    programTemplateId: z.number().min(0)
+  })
+  .strict()
 
 const newProgram = db
   .insert(programs)

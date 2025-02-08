@@ -1,7 +1,7 @@
-import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { captureException } from '@sentry/react-native'
 import { reloadAppAsync } from 'expo'
 import { router } from 'expo-router'
+import { ChevronLeft } from 'lucide-react-native'
 import { useState } from 'react'
 import {
   Pressable,
@@ -89,11 +89,7 @@ export default function Login() {
                   router.back()
                 }}
               >
-                <MaterialIcons
-                  name={'chevron-right'}
-                  size={42}
-                  color={'#6b7280'}
-                />
+                <ChevronLeft size={24} />
               </Pressable>
               <View className={'flex flex-col justify-start items-center'}>
                 <Text

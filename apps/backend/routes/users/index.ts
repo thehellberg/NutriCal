@@ -10,30 +10,29 @@ import { validateData } from '@/utils/zod-validate'
 
 export const patch = async (req: Request, res: Response) => {
   try {
-    const updateUserSchema = z.object({
-      firstName: z.string().optional(),
-      lastName: z.string().optional(),
-      sex: z.enum(['M', 'F']).optional(),
-      height: z.number().optional(),
-      weight: z.number().optional(),
-      activityLevel: z
-        .enum([
-          'sedentary',
-          'lightly_active',
-          'moderately_active',
-          'very_active'
-        ])
-        .optional(),
-      dateOfBirth: z.string().optional(),
-      email: z.string().email().optional(),
-      image: z.string().optional()
-    })
+    const updateUserSchema = z
+      .object({
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+        sex: z.enum(['M', 'F']).optional(),
+        height: z.number().optional(),
+        weight: z.number().optional(),
+        activityLevel: z
+          .enum([
+            'sedentary',
+            'lightly_active',
+            'moderately_active',
+            'very_active'
+          ])
+          .optional(),
+        dateOfBirth: z.coerce.date().optional(),
+        email: z.string().email().optional(),
+        image: z.string().optional(),
+        updatedAt: z.coerce.date().optional()
+      })
+      .strict()
     type UpdateUserData = z.infer<typeof updateUserSchema>
-    const partialData: UpdateUserData = req.body
-    const transormedData = {
-      ...partialData,
-      dateOfBirth: new Date(partialData.dateOfBirth)
-    }
+    const partialData: UpdateUserData = updateUserSchema.parse(req.body)
     const valid = validateData(updateUserSchema, partialData)
     if (valid !== 'OK') {
       return res.status(400).json({ error: true, message: valid })
@@ -47,10 +46,11 @@ export const patch = async (req: Request, res: Response) => {
     if (!session.session) {
       return res.status(401).json({ error: true, message: 'Unauthorized' })
     }
+    partialData.updatedAt = new Date()
 
     const updatedUser = await db
       .update(users)
-      .set(transormedData)
+      .set(partialData)
       .where(eq(users.id, session.user.id))
       .returning()
     if (updatedUser.length < 1) {

@@ -1,6 +1,6 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import dayjs from 'dayjs'
-import { useState, useEffect } from 'react'
+import { addDays, differenceInDays, format } from 'date-fns'
+import { useState, useEffect, useMemo } from 'react'
 import {
   Pressable,
   ScrollView,
@@ -25,7 +25,7 @@ export default function Meals() {
     data: [0, 0, calRemaining / calTotal]
   }
   // Current date
-  const currentDate = dayjs()
+  const currentDate = useMemo(() => new Date(), [])
 
   // Calculate days passed
   const [daysPassed, setDaysPassed] = useState(1)
@@ -35,7 +35,7 @@ export default function Meals() {
   >()
 
   const weekDays = [1, 2, 3, 4, 5, 6, 7]
-  const [referenceDay, setReferenceDay] = useState(dayjs())
+  const [referenceDay, setReferenceDay] = useState(new Date())
   const [currentMeal, setCurrentMeal] =
     useState<UserPrograms[number]['programRecipes'][number]['recipe']>()
 
@@ -53,11 +53,11 @@ export default function Meals() {
   // Set daysPassed and referenceDay once when programs changes
   useEffect(() => {
     if (programs && programs.length > 0) {
-      const referenceDate = dayjs(programs[0]?.startDate)
-      setDaysPassed(currentDate.diff(referenceDate, 'day') + 1)
+      const referenceDate = new Date(programs[0]?.startDate || currentDate)
+      setDaysPassed(differenceInDays(currentDate, referenceDate) + 1)
       setReferenceDay(referenceDate)
     }
-  }, [programs])
+  }, [programs, currentDate])
 
   return (
     <SafeAreaView className={' h-screen pb-14'}>
@@ -96,14 +96,14 @@ export default function Meals() {
                       allowFontScaling={false}
                       className={'text-white font-display-bold mb-0.5'}
                     >
-                      {referenceDay.add(item - 1, 'day').format('ddd')}
+                      {format(addDays(referenceDay, item - 1), 'E')}
                     </Text>
                     <View className={'bg-white rounded-full p-1 w-8'}>
                       <Text
                         allowFontScaling={false}
                         className={'font-display-bold text-center'}
                       >
-                        {referenceDay.add(item - 1, 'day').format('D')}
+                        {format(addDays(referenceDay, item - 1), 'd')}
                       </Text>
                     </View>
                   </View>
@@ -120,14 +120,14 @@ export default function Meals() {
                       allowFontScaling={false}
                       className={'text-black font-display-bold mb-0.5'}
                     >
-                      {referenceDay.add(item - 1, 'day').format('ddd')}
+                      {format(addDays(referenceDay, item - 1), 'E')}
                     </Text>
                     <View className={'w-8 rounded-full p-1'}>
                       <Text
                         allowFontScaling={false}
                         className={'font-display-bold text-center'}
                       >
-                        {referenceDay.add(item - 1, 'day').format('D')}
+                        {format(addDays(referenceDay, item - 1), 'd')}
                       </Text>
                     </View>
                   </Pressable>

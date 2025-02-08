@@ -33,10 +33,12 @@ export type GetUserTagsReturn = Awaited<typeof userTagsData>
 
 export const put = async (req: Request, res: Response) => {
   try {
-    const updateUserTagsSchema = z.object({ ids: z.array(z.number().int()) })
+    const updateUserTagsSchema = z
+      .object({ ids: z.array(z.number().int()) })
+      .strict()
 
-    type UpdateUserTags = z.infer<typeof updateUserTagsSchema>
-    const partialData: UpdateUserTags = req.body
+    const partialData: z.infer<typeof updateUserTagsSchema> =
+      updateUserTagsSchema.parse(req.body)
     const valid = validateData(updateUserTagsSchema, partialData)
     if (valid !== 'OK') {
       return res.status(400).json({ error: true, message: valid })

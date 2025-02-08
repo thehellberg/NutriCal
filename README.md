@@ -23,8 +23,7 @@ A docker image will be introduced later
 
 - [ ] General Enchancements
 
-  - [ ] UX Enhancements
-  - [ ] Replace SWR with @nandorojo/swr-react-native
+  - [x] Date-fns
   - [x] Typescript
   - [x] Configure to use Storage Context
   - [x] Update workflows
@@ -32,6 +31,7 @@ A docker image will be introduced later
   - [x] Cache into expo-storage instead of async
   - [x] Replace old API
   - [x] Drizzle
+  - [ ] Replace SWR with @nandorojo/swr-react-native
   - [ ] Dark mode
   - [ ] Email verification
   - [ ] Set up docs
@@ -53,19 +53,18 @@ A docker image will be introduced later
   - [ ] Blurhash for images
   - [ ] Support for multiple programs
   - [ ] Replace legacy icons with Lucide
-  - [ ] Date-fns
   - [ ] Server URL in start page
   - [ ] First Time Setup
 
 - [x] Home Page
 
+  - [x] Change placeholder Date
+  - [x] Change dashboard icon
   - [ ] Add functionality to first card
   - [ ] Add more cards
-  - [ ] Change placeholder Date
   - [ ] Fix First card text and number
   - [ ] Add card number and position indicator (...) [The one below the cards in other designs]
   - [ ] Add functionality to water card
-  - [ ] Change dashboard icon
 
 - [x] Programs
 
@@ -82,12 +81,15 @@ A docker image will be introduced later
 
   - [x] Individual Recipe View
   - [x] Create an add button
+  - [ ] Show current selected meal and have the ability to adjust current program
+  - [ ] Switching between meal plans
   - [ ] Add an Add Recipes button top right
   - [ ] Add "Add Button Functionality
   - [ ] Allow for adjusting serving size and add options
   - [ ] Add Base Measurement (Serving, Tbsp, fruit), Base Amount w/ unit
   - [ ] Add Individual Meal View
   - [ ] Meal Photo Upload
+  - [ ] Separate programs and diary
 
 - [ ] Sources Button in Account
 
@@ -99,14 +101,14 @@ A docker image will be introduced later
   - [ ] Swedish
   - [ ] Support For translations
 
-- [ ] Accounts Page
+- [x] Accounts Page
 
   - [x] Personal Details page
     - [x] Dropdown Menu
     - [x] Save Button
-  - [ ] Dietary Prefrences page
-    - [ ] Food Preference (Vegan, Vegetarian)
-    - [ ] Allergies
+  - [x] Dietary Prefrences page
+    - [x] Food Preference (Vegan, Vegetarian)
+    - [x] Allergies
   - [ ] Dietary needs adjustment
   - [ ] Calorie and Macronutrient Adjustment
 

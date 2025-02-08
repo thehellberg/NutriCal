@@ -6,7 +6,9 @@ import { createUser } from '@/utils/auth/user'
 import { createSession, generateSessionToken } from '@/utils/auth/utils'
 import { validateData } from '@/utils/zod-validate'
 export const post = async (req: Request, res: Response) => {
-  const requestBody: userSignup = await req.body
+  const requestBody: z.infer<typeof userSignupSchema> = userSignupSchema.parse(
+    req.body
+  )
   requestBody.dateOfBirth = new Date(requestBody.dateOfBirth)
   const valid = validateData(userSignupSchema, requestBody)
   if (valid !== 'OK') {
@@ -41,24 +43,17 @@ export const post = async (req: Request, res: Response) => {
   })
 }
 
-export const userSignupSchema = z.object({
-  email: z
-    .string()
-    .min(1, 'Email field is required.')
-    .max(255, 'Email too long.')
-    .email('This is not a valid email.'),
-  password: z.string().min(8),
-  firstName: z.string().min(1, 'First name is mandatory.'),
-  lastName: z.string(),
-  sex: z.enum(['M', 'F']),
-  dateOfBirth: z.date()
-})
-
-type userSignup = {
-  email: string
-  password: string
-  firstName: string
-  lastName: string
-  sex: 'M' | 'F'
-  dateOfBirth: string | Date
-}
+const userSignupSchema = z
+  .object({
+    email: z
+      .string()
+      .min(1, 'Email field is required.')
+      .max(255, 'Email too long.')
+      .email('This is not a valid email.'),
+    password: z.string().min(8),
+    firstName: z.string().min(1, 'First name is mandatory.'),
+    lastName: z.string(),
+    sex: z.enum(['M', 'F']),
+    dateOfBirth: z.date()
+  })
+  .strict()

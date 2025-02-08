@@ -88,7 +88,7 @@ export default function Meal() {
                 Toast.show({
                   type: 'error',
                   text1: 'Error',
-                  text2: e?.messsage || 'An error occurred'
+                  text2: JSON.stringify(e) || 'An error occurred'
                 })
               }
             }}

@@ -1,6 +1,6 @@
 import { relations, sql } from 'drizzle-orm'
 import {
-  index,
+  serial,
   integer,
   numeric,
   pgEnum,
@@ -8,6 +8,7 @@ import {
   primaryKey,
   text,
   timestamp,
+  UpdateDeleteAction,
   varchar
 } from 'drizzle-orm/pg-core'
 
@@ -20,6 +21,14 @@ import type { InferSelectModel } from 'drizzle-orm'
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
+
+const defaultForiegnKeyAction: {
+  onUpdate: UpdateDeleteAction
+  onDelete: UpdateDeleteAction
+} = {
+  onUpdate: 'set null',
+  onDelete: 'set null'
+}
 export const createTable = pgTableCreator((name) => `nutrical_${name}`)
 
 export function enumToPgEnum<T extends Record<string, string | number>>(
@@ -73,11 +82,13 @@ export const users = createTable('user', {
   passwordHash: varchar('password_hash', { length: 255 })
 })
 export type User = InferSelectModel<typeof users>
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(users, ({ many, one }) => ({
   accounts: many(accounts),
   programs: many(programs),
   sessions: many(sessions),
-  userTags: many(userTags)
+  userTags: many(userTags),
+  dietaryLogs: many(dietaryLogs),
+  dietarySettings: one(dietarySettings)
 }))
 
 export const accounts = createTable(
@@ -106,8 +117,7 @@ export const accounts = createTable(
   (account) => ({
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId]
-    }),
-    userIdIdx: index('account_user_id_idx').on(account.userId)
+    })
   })
 )
 
@@ -115,24 +125,18 @@ export const accountsRelations = relations(accounts, ({ one }) => ({
   user: one(users, { fields: [accounts.userId], references: [users.id] })
 }))
 
-export const sessions = createTable(
-  'session',
-  {
-    sessionToken: varchar('session_token', { length: 255 })
-      .notNull()
-      .primaryKey(),
-    userId: varchar('user_id', { length: 255 })
-      .notNull()
-      .references(() => users.id),
-    expires: timestamp('expires', {
-      mode: 'date',
-      withTimezone: true
-    }).notNull()
-  },
-  (session) => ({
-    userIdIdx: index('session_user_id_idx').on(session.userId)
-  })
-)
+export const sessions = createTable('session', {
+  sessionToken: varchar('session_token', { length: 255 })
+    .notNull()
+    .primaryKey(),
+  userId: varchar('user_id', { length: 255 })
+    .notNull()
+    .references(() => users.id),
+  expires: timestamp('expires', {
+    mode: 'date',
+    withTimezone: true
+  }).notNull()
+})
 export type Session = InferSelectModel<typeof sessions>
 export const sessionsRelations = relations(sessions, ({ one }) => ({
   user: one(users, { fields: [sessions.userId], references: [users.id] })
@@ -152,3 +156,74 @@ export const verificationTokens = createTable(
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] })
   })
 )
+
+export const dietaryLogs = createTable(
+  'dietary_log',
+  {
+    userId: varchar('user_id', { length: 255 })
+      .notNull()
+      .references(() => users.id, defaultForiegnKeyAction),
+    createdAt: timestamp('created_at', {
+      withTimezone: true
+    })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp('updated_at', {
+      withTimezone: true
+    })
+      .defaultNow()
+      .notNull(),
+    date: timestamp('date', {
+      mode: 'date',
+      withTimezone: true
+    })
+      .defaultNow()
+      .notNull(),
+    waterInML: integer('water_in_ml'),
+    calorieGoal: numeric('calorie_goal', { precision: 7, scale: 2 }),
+    calorieConsumed: numeric('calorie_consumed', { precision: 7, scale: 2 }),
+    calorieBurned: numeric('calorie_burned', { precision: 7, scale: 2 }),
+    proteinGoal: numeric('protein_goal', { precision: 6, scale: 2 }),
+    proteinConsumed: numeric('protein_consumed', { precision: 6, scale: 2 }),
+    fatGoal: numeric('fat_goal', { precision: 6, scale: 2 }),
+    fatConsumed: numeric('fat_consumed', { precision: 6, scale: 2 }),
+    carbsGoal: numeric('carbs_goal', { precision: 6, scale: 2 }),
+    carbsConsumed: numeric('carbs_consumed', { precision: 6, scale: 2 }),
+    weight: numeric('weight', { precision: 5, scale: 2 }),
+    height: integer('height')
+  },
+  (dietaryLog) => ({
+    primaryKey: primaryKey({ columns: [dietaryLog.userId, dietaryLog.date] })
+  })
+)
+export const dietaryLogsRelations = relations(dietaryLogs, ({ one }) => ({
+  user: one(users, { fields: [dietaryLogs.userId], references: [users.id] })
+}))
+
+export const dietarySettings = createTable('dietary_setting', {
+  userId: varchar('user_id', { length: 255 })
+    .notNull()
+    .references(() => users.id, defaultForiegnKeyAction).primaryKey(),
+  waterGoal: integer('water_goal'),
+  calorieGoal: numeric('calorie_goal', { precision: 7, scale: 2 }),
+  proteinGoal: numeric('protein_goal', { precision: 6, scale: 2 }),
+  fatGoal: numeric('fat_goal', { precision: 6, scale: 2 }),
+  carbsGoal: numeric('carbs_goal', { precision: 6, scale: 2 })
+})
+export const dietarySettingsRelations = relations(
+  dietarySettings,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [dietarySettings.userId],
+      references: [users.id]
+    })
+  })
+)
+
+// export const settings = createTable('setting', {
+//   userId: varchar('user_id', { length: 255 })
+//     .notNull()
+//     .references(() => users.id, defaultForiegnKeyAction),
+//   key: varchar('key', { length: 255 }).notNull(),
+//   value: text('value')
+// })

@@ -1,7 +1,3 @@
-import dayjs from 'dayjs'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import utc from 'dayjs/plugin/utc'
 import * as Notifications from 'expo-notifications'
 import { Link, Redirect } from 'expo-router'
 import { Pressable, Text, View, Image } from 'react-native'
@@ -9,9 +5,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { useStorageState } from '~/hooks/useStorageState'
 
-dayjs.extend(relativeTime)
-dayjs.extend(customParseFormat)
-dayjs.extend(utc)
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,

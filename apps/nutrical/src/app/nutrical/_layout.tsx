@@ -1,6 +1,11 @@
-import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { Redirect } from 'expo-router'
 import { Tabs } from 'expo-router/tabs'
+import {
+  CircleUserRound,
+  ClipboardList,
+  LayoutDashboard,
+  UtensilsCrossed
+} from 'lucide-react-native'
 import { Platform, Text } from 'react-native'
 
 import { useSession } from '~/components/ctx'
@@ -29,8 +34,7 @@ export default function AppLayout() {
         options={{
           title: 'Dashboard',
           tabBarIcon: ({ size, color }) => (
-            <MaterialIcons
-              name={'home'}
+            <LayoutDashboard
               size={size}
               color={color}
             />
@@ -43,8 +47,7 @@ export default function AppLayout() {
         options={{
           title: 'Meals',
           tabBarIcon: ({ size, color }) => (
-            <MaterialIcons
-              name={'restaurant-menu'}
+            <UtensilsCrossed
               size={size}
               color={color}
             />
@@ -57,8 +60,7 @@ export default function AppLayout() {
         options={{
           title: 'Programs',
           tabBarIcon: ({ size, color }) => (
-            <MaterialIcons
-              name={'description'}
+            <ClipboardList
               size={size}
               color={color}
             />
@@ -71,8 +73,7 @@ export default function AppLayout() {
         options={{
           title: 'Account',
           tabBarIcon: ({ size, color }) => (
-            <MaterialIcons
-              name={'account-circle'}
+            <CircleUserRound
               size={size}
               color={color}
             />

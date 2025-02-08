@@ -1,4 +1,5 @@
 import { GetAccountReturn } from './routes/account'
+import { GetDietaryLogReturn } from './routes/dietaryLogs/[date]'
 import { UserPrograms } from './routes/programs'
 import { CreateProgramReturn } from './routes/programs/fromTemplate'
 import { ProgramTemplates } from './routes/programs/templates'
@@ -19,5 +20,6 @@ export type {
   GetAccountReturn,
   PatchUserReturn,
   PutUserTagsReturn,
-  GetUserTagsReturn
+  GetUserTagsReturn,
+  GetDietaryLogReturn
 }

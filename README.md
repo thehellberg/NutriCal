@@ -31,9 +31,9 @@ A docker image will be introduced later
   - [x] Cache into expo-storage instead of async
   - [x] Replace old API
   - [x] Drizzle
-  - [ ] Replace SWR with @nandorojo/swr-react-native
-  - [ ] Dark mode
-  - [ ] Email verification
+  - [-] Replace SWR with @nandorojo/swr-react-native
+  - [l] Dark mode
+  - [l] Email verification
   - [ ] Set up docs
   - [x] Write DB schema
     - [x] Users
@@ -46,13 +46,12 @@ A docker image will be introduced later
     - [x] Programs
     - [ ] Sources must be many to one
   - [ ] Logs (steps, water intake, etc..)
-  - [ ] Healthkit integration (@kingstinct/react-native-healthkit)
-  - [ ] Health Connect Integration (react-native-health-connect)
-  - [ ] Replace profile picture placeholder
+  - [l] Healthkit integration (@kingstinct/react-native-healthkit)
+  - [l] Health Connect Integration (react-native-health-connect)
+  - [l] Replace profile picture placeholder
   - [ ] Docker
-  - [ ] Blurhash for images
-  - [ ] Support for multiple programs
-  - [ ] Replace legacy icons with Lucide
+  - [l] Support for multiple programs
+  - [l] Replace legacy icons with Lucide
   - [ ] Server URL in start page
   - [ ] First Time Setup
 
@@ -61,10 +60,10 @@ A docker image will be introduced later
   - [x] Change placeholder Date
   - [x] Change dashboard icon
   - [ ] Add functionality to first card
-  - [ ] Add more cards
+  - [l] Add more cards
   - [ ] Fix First card text and number
-  - [ ] Add card number and position indicator (...) [The one below the cards in other designs]
-  - [ ] Add functionality to water card
+  - [l] Add card number and position indicator (...) [The one below the cards in other designs]
+  - [l] Add functionality to water card
 
 - [x] Programs
 
@@ -89,24 +88,24 @@ A docker image will be introduced later
   - [ ] Add Base Measurement (Serving, Tbsp, fruit), Base Amount w/ unit
   - [ ] Add Individual Meal View
   - [ ] Meal Photo Upload
-  - [ ] Separate programs and diary
+  - [l] Separate programs and diary
 
 - [ ] Sources Button in Account
 
   - [ ] OpenFoodFacts Source
-  - [ ] MyNetDiary
-  - [ ] Lifesum
-  - [ ] USDA
-  - [ ] UK Food DB
-  - [ ] Swedish
-  - [ ] Support For translations
+  - [l] MyNetDiary
+  - [l] Lifesum
+  - [l] USDA
+  - [l] UK Food DB
+  - [l] Swedish
+  - [l] Support For translations
 
 - [x] Accounts Page
 
   - [x] Personal Details page
     - [x] Dropdown Menu
     - [x] Save Button
-    - [ ] Add clarification for each activity level
+    - [l] Add clarification for each activity level
   - [x] Dietary Prefrences page
     - [x] Food Preference (Vegan, Vegetarian)
     - [x] Allergies

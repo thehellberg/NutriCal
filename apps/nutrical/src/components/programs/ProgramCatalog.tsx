@@ -1,8 +1,9 @@
-import { ProgramTemplates } from '@backend/types'
 import { FlashList } from '@shopify/flash-list'
 import { View, Text } from 'react-native'
 
 import CatalogCard from './CatalogCard'
+
+import type { ProgramTemplates } from '@backend/types'
 
 export default function ProgramCatalog(props: { programs: ProgramTemplates }) {
   return (

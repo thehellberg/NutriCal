@@ -1,4 +1,3 @@
-import { Recipes, TrackRecipeReturn } from '@backend/types'
 import { FlashList } from '@shopify/flash-list'
 import { Image } from 'expo-image'
 import { router, useLocalSearchParams } from 'expo-router'
@@ -8,6 +7,8 @@ import { ScrollView, View, Text, TextInput, Pressable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 import useSWR from 'swr'
+
+import type { Recipes, TrackRecipeReturn } from '@backend/types'
 
 import useClient from '~/components/network/client'
 import ProgressBar from '~/components/ui/ProgressBar'

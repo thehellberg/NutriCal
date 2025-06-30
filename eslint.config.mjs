@@ -25,6 +25,7 @@ export default [
       'src/__generated__/',
       'src/graphql/types.ts',
       '**/*.generated.ts',
+      '**/*.config.js',
       '.expo',
       'android',
       'ios',
@@ -116,8 +117,8 @@ export default [
       '@typescript-eslint/no-non-null-assertion': 'off',
       'react/no-unescaped-entities': 'off',
       'no-console': 'warn',
-      "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
-      "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
+      'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+      'react-hooks/exhaustive-deps': 'warn' // Checks effect dependencies
     }
   }
 ]

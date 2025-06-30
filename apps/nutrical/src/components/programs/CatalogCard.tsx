@@ -1,8 +1,9 @@
-import { ProgramTemplates } from '@backend/types'
 import { ImageBackground } from 'expo-image'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Link } from 'expo-router'
 import { View, Text, Pressable } from 'react-native'
+
+import type { ProgramTemplates } from '@backend/types'
 export default function CatalogCard(props: {
   program: ProgramTemplates[number]
 }) {

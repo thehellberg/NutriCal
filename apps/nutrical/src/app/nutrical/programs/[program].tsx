@@ -1,4 +1,3 @@
-import { CreateProgramReturn, ProgramTemplate } from '@backend/types'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { Image } from 'expo-image'
 import { router, useLocalSearchParams } from 'expo-router'
@@ -6,6 +5,8 @@ import { useEffect, useState } from 'react'
 import { ScrollView, View, Text, Pressable, FlatList } from 'react-native'
 import Toast from 'react-native-toast-message'
 import useSWR from 'swr'
+
+import type { CreateProgramReturn, ProgramTemplate } from '@backend/types'
 
 import useClient from '~/components/network/client'
 import PreviewMealSection from '~/components/programs/PreviewMealSection'
@@ -84,7 +85,6 @@ export default function Meal() {
                 Toast.show({ type: 'success', text1: 'Program Started' })
                 router.navigate('/nutrical/meals')
               } catch (e) {
-
                 Toast.show({
                   type: 'error',
                   text1: 'Error',

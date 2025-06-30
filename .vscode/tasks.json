@@ -2,20 +2,6 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Multi-Terminal Task",
-      "dependsOrder": "parallel",
-      "dependsOn": [
-        "Expo",
-        "DB Studio",
-        "Express",
-        "CLI"
-      ],
-      "problemMatcher": [],
-      "runOptions": {
-        "runOn": "folderOpen"
-      }
-    },
-    {
       "label": "Expo",
       "type": "shell",
       "command": "yarn workspace nutrical start", // Replace with your command

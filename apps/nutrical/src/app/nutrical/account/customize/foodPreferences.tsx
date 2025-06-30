@@ -1,4 +1,3 @@
-import { GetUserTagsReturn, PutUserTagsReturn } from '@backend/types'
 import { router } from 'expo-router'
 import { Circle, CircleCheck } from 'lucide-react-native'
 import { useEffect, useMemo, useState } from 'react'
@@ -12,6 +11,8 @@ import {
 } from 'react-native'
 import Toast from 'react-native-toast-message'
 import useSWR from 'swr'
+
+import type { GetUserTagsReturn, PutUserTagsReturn } from '@backend/types'
 
 import useClient from '~/components/network/client'
 

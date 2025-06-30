@@ -1,9 +1,10 @@
-import { ProgramTemplates } from '@backend/types'
 import { useEffect } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 import useSWR from 'swr'
+
+import type { ProgramTemplates } from '@backend/types'
 
 import FeaturedPrograms from '~/components/programs/FeaturedPrograms'
 import ProgramCatalog from '~/components/programs/ProgramCatalog'

@@ -1,8 +1,3 @@
-import {
-  Activity_Level,
-  GetAccountReturn,
-  PatchUserReturn
-} from '@backend/types'
 import DateTimePicker, {
   DateTimePickerAndroid,
   DateTimePickerEvent
@@ -12,6 +7,12 @@ import { useState } from 'react'
 import { Pressable, View, Text, Platform, ScrollView } from 'react-native'
 import Toast from 'react-native-toast-message'
 import useSWR from 'swr'
+
+import type {
+  Activity_Level,
+  GetAccountReturn,
+  PatchUserReturn
+} from '@backend/types'
 
 import PersonalDetailsDropdown from '~/components/account/customize/PersonalDetailsDropdown'
 import PersonalDetailsRow from '~/components/account/customize/PersonalDetailsRow'

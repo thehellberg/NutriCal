@@ -1,4 +1,3 @@
-import { GetAccountReturn } from '@backend/types'
 import { differenceInYears } from 'date-fns'
 import { reloadAppAsync } from 'expo'
 import { Image } from 'expo-image'
@@ -7,6 +6,8 @@ import { ChartPie, HandPlatter, UserRound } from 'lucide-react-native'
 import { Linking, Pressable, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import useSWR from 'swr'
+
+import type { GetAccountReturn } from '@backend/types'
 
 import Border from '~/components/account/Border'
 import CustomizeRow from '~/components/account/CustomizeRow'

@@ -1,9 +1,10 @@
-import { ProgramTemplates } from '@backend/types'
 import { FlashList } from '@shopify/flash-list'
 import { Image } from 'expo-image'
 import { View, Text, Pressable } from 'react-native'
 
 import FeaturedProgram from './FeaturedProgram'
+
+import type { ProgramTemplates } from '@backend/types'
 
 export default function FeaturedPrograms(props: {
   programs: ProgramTemplates

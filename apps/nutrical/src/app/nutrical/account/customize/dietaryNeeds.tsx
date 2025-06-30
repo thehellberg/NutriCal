@@ -1,8 +1,3 @@
-import {
-  GetDietarySettingsReturn,
-  PatchDietarySettingsReturn,
-  GetAccountReturn
-} from '@backend/types'
 import Slider from '@react-native-community/slider'
 import { differenceInYears } from 'date-fns'
 import { useEffect, useState } from 'react'
@@ -16,6 +11,12 @@ import {
 } from 'react-native'
 import Toast from 'react-native-toast-message'
 import useSWR from 'swr'
+
+import type {
+  GetDietarySettingsReturn,
+  PatchDietarySettingsReturn,
+  GetAccountReturn
+} from '@backend/types'
 
 import ProgressCircle from '~/components/account/customize/ProgressCircle'
 import useClient from '~/components/network/client'

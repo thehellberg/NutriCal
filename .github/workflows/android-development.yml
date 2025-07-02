@@ -4,7 +4,7 @@ name: Android Development Build
 on:
   push:
     tags:
-      - "v*.*.*"
+      - "v*.*.*-devAndroid"
 jobs:
   build:
     runs-on: self-hosted

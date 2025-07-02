@@ -3,7 +3,7 @@ name: Android Production Build
 on:
   push:
     tags:
-      - "v*.*.*"
+      - "v*.*.*-prod"
 jobs:
   build:
     runs-on: self-hosted

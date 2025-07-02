@@ -3,7 +3,7 @@ name: Android Preview Build
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*.*.*-preview'
 jobs:
   build:
     runs-on: self-hosted

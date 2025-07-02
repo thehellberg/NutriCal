@@ -3,7 +3,7 @@ name: iOS Development Build
 on:
   push:
     tags:
-      - "v*.*.*"
+      - "v*.*.*-dev"
 jobs:
   build:
     runs-on: self-hosted

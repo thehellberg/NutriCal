@@ -11,10 +11,10 @@ import type { GetAccountReturn } from '@backend/types'
 
 import Border from '~/components/account/Border'
 import CustomizeRow from '~/components/account/CustomizeRow'
-import { useSession } from '~/components/ctx'
+import { useStorageState } from '~/hooks/useStorageState'
 
 export default function Profile() {
-  const { signOut } = useSession()
+  const [, setToken] = useStorageState('token')
   const { data: account, isLoading } = useSWR<
     { error: true; message: string } | { error: false; data: GetAccountReturn }
   >(`account`)
@@ -37,7 +37,7 @@ export default function Profile() {
           <Pressable
             className={'bg-blue-500 text-white p-2 rounded-lg mt-4'}
             onPress={() => {
-              signOut()
+              setToken(null)
               reloadAppAsync()
             }}
           >
@@ -155,7 +155,7 @@ export default function Profile() {
                 'bg-white rounded-full border-gray-200 border-2 py-2 mb-4'
               }
               onPress={() => {
-                signOut()
+                setToken(null)
                 reloadAppAsync()
               }}
             >

@@ -1,5 +1,6 @@
 import { captureException } from '@sentry/react-native'
 import { reloadAppAsync } from 'expo'
+import { Image } from 'expo-image'
 import { router } from 'expo-router'
 import { ChevronLeft } from 'lucide-react-native'
 import { useState } from 'react'
@@ -27,6 +28,7 @@ export default function Login() {
   const [loginDisable, setLoginDisable] = useState(false)
 
   const [, setToken] = useStorageState('token')
+  const [, setUrl] = useStorageState('serverUrl')
   const client = useClient()
 
   const { mutate } = useSWR(
@@ -66,104 +68,124 @@ export default function Login() {
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      className={'flex h-full pt-4'}
-      //keyboardVerticalOffset={Number(navbarHeight)}
-    >
-      <ScrollView
-        keyboardShouldPersistTaps={'handled'}
-        className={''}
-      >
-        <SafeAreaView
-          className={'flex flex-col items-center justify-center w-full'}
+    <SafeAreaView className={'flex-1 bg-gray-50'}>
+      <View className={'px-4'}>
+        <Pressable
+          className={'self-start p-2'}
+          onPress={() => {
+            router.back()
+          }}
         >
-          {/*<Image source={logo} className={"h-16 w-40 items-center"} contentFit={"contain"}/>*/}
-          <View className={'flex flex-col items-center w-screen px-8'}>
-            <View
-              className={'flex flex-col items-start justify-start self-start'}
-            >
-              <Pressable
-                className={' p-4 -ml-6 -mt-5'}
-                onPress={() => {
-                  router.back()
-                }}
-              >
-                <ChevronLeft size={24} />
-              </Pressable>
-              <View className={'flex flex-col justify-start items-center'}>
+          <ChevronLeft
+            size={24}
+            color={'#1F2937'}
+          />
+        </Pressable>
+      </View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        className={'flex-1'}
+      >
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+          keyboardShouldPersistTaps={'handled'}
+          className={'px-6'}
+        >
+          <View>
+            <View className={'items-center'}>
+              {/* Make sure to replace with your actual icon path */}
+              <Image
+                source={require('@assets/icon.png')}
+                className={'h-20 w-20 mb-8 rounded-lg'}
+                contentFit={'contain'}
+              />
+              <Text className={'font-display-bold text-gray-900 text-3xl mb-2'}>
+                Welcome back
+              </Text>
+              <Text className={'font-display text-gray-600 text-base'}>
+                Sign in to continue to your account.
+              </Text>
+            </View>
+
+            <View className={'mt-8'}>
+              <View className="mb-6">
                 <Text
-                  className={'font-display-bold text-left text-2xl self-start'}
+                  className={'font-display-medium text-gray-700 text-sm mb-2'}
                 >
-                  Login
+                  Email Address
                 </Text>
-                <Text
+                <TextInput
                   className={
-                    'font-display-medium text-gray-500 text-left text-md self-start mb-5'
+                    'p-3 bg-white border-gray-300 border rounded-lg w-full h-12 font-display text-base text-gray-900'
                   }
+                  placeholder={'you@example.com'}
+                  placeholderTextColor={'#9CA3AF'}
+                  textAlign={'left'}
+                  keyboardType={'email-address'}
+                  onChangeText={setEmail}
+                  textContentType={'emailAddress'}
+                  autoComplete={'email'}
+                  autoCapitalize={'none'}
+                />
+              </View>
+
+              <View>
+                <Text
+                  className={'font-display-medium text-gray-700 text-sm mb-2'}
                 >
-                  Continue with your account
+                  Password
                 </Text>
+                <TextInput
+                  className={
+                    'p-3 bg-white border-gray-300 border rounded-lg w-full h-12 font-display text-base text-gray-900'
+                  }
+                  placeholder={'••••••••'}
+                  placeholderTextColor={'#9CA3AF'}
+                  textAlign={'left'}
+                  onChangeText={setPassword}
+                  textContentType={'password'}
+                  autoComplete={'password'}
+                  secureTextEntry
+                />
+                <Pressable
+                  onPress={() => {
+                    router.push('/(auth)/forgot-password')
+                  }}
+                  className={'self-end mt-2'}
+                >
+                  <Text className={'font-display-medium text-blue-600 text-sm'}>
+                    Forgot Password?
+                  </Text>
+                </Pressable>
               </View>
             </View>
-            <Text
-              className={
-                'font-display-medium text-left text-lg self-start mt-2'
-              }
-            >
-              Email Address
-            </Text>
-            <TextInput
-              className={
-                'pt-2 px-2 bg-white border-gray-400 border rounded-lg w-full h-12 font-display text-lg'
-              }
-              textAlign={'left'}
-              keyboardType={'email-address'}
-              onChangeText={(text) => {
-                setEmail(text)
-              }}
-              textContentType={'emailAddress'}
-              autoComplete={'email'}
-            />
 
-            <Text
-              className={
-                'font-display-medium text-left text-lg self-start mt-2'
-              }
-            >
-              Password
-            </Text>
-            <TextInput
-              className={
-                'pt-2 px-4 bg-white border-gray-400 border rounded-lg w-full h-12 font-display text-lg'
-              }
-              textAlign={'left'}
-              onChangeText={(text) => {
-                setPassword(text)
-              }}
-              textContentType={'password'}
-              autoComplete={'password'}
-              secureTextEntry
-            />
+            <View className={'mt-8'}>
+              <Pressable
+                onPress={handleSignIn}
+                disabled={loginDisable}
+                className={
+                  'w-full items-center justify-center rounded-lg h-12 bg-green-600 shadow disabled:bg-green-400'
+                }
+              >
+                <Text className={'font-display-semibold text-base text-white'}>
+                  Login
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  router.push('/(auth)/server-url')
+                }}
+                className={'items-center mt-4'}
+              >
+                <Text className={'font-display-medium text-blue-600 text-sm'}>
+                  Change Server URL
+                </Text>
+              </Pressable>
+            </View>
           </View>
-
-          <Pressable
-            onPress={handleSignIn}
-            disabled={loginDisable}
-            className={
-              'pb-2 px-2 bg-green-600 rounded-lg shadow self-center mt-4'
-            }
-          >
-            <Text
-              className={
-                'font-display-medium text-left text-lg self-start mt-2 text-white'
-              }
-            >
-              Login
-            </Text>
-          </Pressable>
-        </SafeAreaView>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }

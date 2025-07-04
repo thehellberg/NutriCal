@@ -169,7 +169,8 @@
           }
         }
       ],
-      "expo-sqlite"
+      "expo-sqlite",
+      "expo-notifications"
     ],
     "scheme": "nutrical",
     "updates": {

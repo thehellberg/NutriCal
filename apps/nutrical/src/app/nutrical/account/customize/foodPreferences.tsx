@@ -135,7 +135,7 @@ export default function FoodPreferences() {
   }
   return (
     <SafeAreaView className="flex flex-col">
-      <ScrollView className="flex flex-col flex-shrink basis-11/12 py-4">
+      <ScrollView className="flex flex-col flex-shrink py-4 h-full">
         <Text
           className={'font-display-medium text-xl text-gray-600 px-4 mt-4 mb-1'}
         >
@@ -219,7 +219,7 @@ export default function FoodPreferences() {
           ))}
         </View>
       </ScrollView>
-      <View className="flex-grow basis-1/12 w-screen">
+      <View className="flex-grow h-32 w-screen">
         <Pressable
           className={
             'bg-primary rounded-lg p-4 mt-2 mx-4 flex flex-row items-center justify-center bg-green-600'

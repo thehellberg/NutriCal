@@ -1,5 +1,5 @@
 import { router, Stack } from 'expo-router'
-import { Platform, View } from 'react-native'
+import { Platform } from 'react-native'
 
 import BackButton from '~/components/home/BackButton'
 
@@ -9,7 +9,7 @@ export default function AccountStack() {
       screenOptions={{
         headerRight: ({ canGoBack, tintColor }) => {
           if (Platform.OS === 'ios') {
-            return <View></View>
+            return
           }
           return (
             <BackButton
@@ -19,24 +19,17 @@ export default function AccountStack() {
             />
           )
         },
-        headerLeft: ({ canGoBack, tintColor }) => {
-          if (Platform.OS !== 'ios') {
-            return <View></View>
+        headerLeft: () => {
+          if (Platform.OS === 'ios') {
+            return
           }
-          return (
-            <BackButton
-              canGoBack={canGoBack || false}
-              tintColor={tintColor || 'black'}
-              onPress={router.back}
-            />
-          )
         },
         headerTitleStyle: { fontFamily: 'Cairo-Medium' }
       }}
     >
       <Stack.Screen
         name={'index'}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, title: 'Account' }}
       />
       <Stack.Screen
         name={'customize/personalDetails'}

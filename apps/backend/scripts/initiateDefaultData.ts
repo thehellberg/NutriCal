@@ -1,6 +1,6 @@
 import { db } from '../db'
 
-import { tags } from '@/db/schema/programs'
+import { sources, tags } from '@/db/schema/programs'
 
 export default function initiateDefaultData() {
   const tagInit = db.insert(tags).values([
@@ -16,5 +16,14 @@ export default function initiateDefaultData() {
     { id: 1009, name: 'Allergic to Fish' },
     { id: 1010, name: 'Allergic to Nuts' }
   ])
-  Promise.all([tagInit])
+  const sourceInit = db.insert(sources).values([
+    {
+      id: 1,
+      name: 'USDA FoodData Central',
+      logoImageUrl: 'https://fdc.nal.usda.gov/img/usda-symbol.svg',
+      websiteUrl: 'https://fdc.nal.usda.gov/'
+    },
+    { id: 2, name: 'OpenFoodFacts' }
+  ])
+  Promise.all([tagInit, sourceInit])
 }

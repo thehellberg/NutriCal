@@ -9,7 +9,9 @@ Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
     shouldPlaySound: true,
-    shouldSetBadge: false
+    shouldSetBadge: false,
+    shouldShowBanner: true,
+    shouldShowList: true,
   })
 })
 export default function Home() {
@@ -27,7 +29,7 @@ export default function Home() {
           }
         >
           <Image
-            source={require('@assets/logo.png')}
+            source={require('iassets/logo.png')}
             className={'w-64 h-40'}
             resizeMode="contain"
           />

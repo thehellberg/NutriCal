@@ -2,7 +2,12 @@ import { differenceInYears } from 'date-fns'
 import { reloadAppAsync } from 'expo'
 import { Image } from 'expo-image'
 import { Link } from 'expo-router'
-import { ChartPie, HandPlatter, UserRound } from 'lucide-react-native'
+import {
+  ChartPie,
+  DownloadCloud,
+  HandPlatter,
+  UserRound
+} from 'lucide-react-native'
 import { Linking, Pressable, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import useSWR from 'swr'
@@ -138,6 +143,17 @@ export default function Profile() {
               <Pressable>
                 <CustomizeRow title="Dietary Needs">
                   <ChartPie />
+                </CustomizeRow>
+              </Pressable>
+            </Link>
+            <Border />
+            <Link
+              href={'/nutrical/account/customize/sourceManagement'}
+              asChild
+            >
+              <Pressable>
+                <CustomizeRow title="Source Management">
+                  <DownloadCloud />
                 </CustomizeRow>
               </Pressable>
             </Link>

@@ -8,12 +8,17 @@ import { ProgramTemplate } from './routes/programs/templates/[id]'
 import { Recipes } from './routes/recipes'
 import { Recipe } from './routes/recipes/[id]'
 import { TrackRecipeReturn } from './routes/recipes/track'
+import {
+  GetServerSources,
+  PutServerSourceConfig
+} from './routes/serverConfig/sources'
 import { PatchUserReturn } from './routes/users'
 import {
   GetDietarySettingsReturn,
   PatchDietarySettingsReturn
 } from './routes/users/dietarySettings'
 import { PutUserTagsReturn, GetUserTagsReturn } from './routes/users/tags'
+
 export type {
   UserPrograms,
   ProgramTemplates,
@@ -29,5 +34,7 @@ export type {
   GetDietaryLogReturn,
   GetDietarySettingsReturn,
   PatchDietarySettingsReturn,
-  Activity_Level
+  Activity_Level,
+  GetServerSources,
+  PutServerSourceConfig
 }

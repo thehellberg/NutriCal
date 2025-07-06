@@ -417,6 +417,7 @@ export const sources = createTable('source', {
   name: varchar('name', { length: 255 }).notNull(),
   logoImageUrl: varchar('logo_image_url', { length: 255 }),
   websiteUrl: varchar('website_url', { length: 255 }),
+  enabled: boolean('enabled').default(true),
   createdAt: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),

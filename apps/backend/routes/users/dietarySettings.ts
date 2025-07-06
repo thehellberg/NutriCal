@@ -10,9 +10,6 @@ import { validateSessionToken } from '@/utils/auth/utils'
 export const get = async (req: Request, res: Response) => {
   try {
     const requestToken = req.token
-    if (!requestToken) {
-      return res.status(401).json({ error: true, message: 'Unauthorized' })
-    }
     const session = await validateSessionToken(requestToken)
     if (!session.session) {
       return res.status(401).json({ error: true, message: 'Unauthorized' })

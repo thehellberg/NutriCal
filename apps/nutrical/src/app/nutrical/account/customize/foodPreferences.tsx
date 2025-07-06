@@ -199,7 +199,7 @@ export default function FoodPreferences() {
             <View key={allergy}>
               <View
                 className={
-                  'flex flex-row justify-between items-center px-6 py-4 rounded-lg'
+                  'flex flex-row justify-between items-center px-6 pr-10 py-4 rounded-lg'
                 }
               >
                 <Text className={'font-display-medium text-lg'}>{allergy}</Text>

@@ -40,6 +40,10 @@ export default function AccountStack() {
         options={{ headerTitle: 'Food Preferences' }}
       />
       <Stack.Screen
+        name={'customize/sourceManagement'}
+        options={{ headerTitle: 'Source Management' }}
+      />
+      <Stack.Screen
         name={'customize/dietaryNeeds'}
         options={{ headerTitle: 'Dietary Needs' }}
       />

@@ -1,7 +1,6 @@
 import Slider from '@react-native-community/slider'
 import { differenceInYears } from 'date-fns'
 import { router, Stack } from 'expo-router'
-import { ChevronLeft } from 'lucide-react-native'
 import { useEffect, useState } from 'react'
 import {
   View,
@@ -286,7 +285,7 @@ export default function FoodPreferences() {
     <SafeAreaView className="flex flex-col">
       <Stack.Screen
         options={{
-          headerLeft(props) {
+          headerRight(props) {
             return (
               <Pressable
                 className={'self-start p-2'}
@@ -294,10 +293,7 @@ export default function FoodPreferences() {
                   router.back()
                 }}
               >
-                <ChevronLeft
-                  size={24}
-                  color={'#1F2937'}
-                />
+                <Text className={'font-bold'}>Save</Text>
               </Pressable>
             )
           }

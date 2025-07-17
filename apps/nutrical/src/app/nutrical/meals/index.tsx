@@ -37,7 +37,7 @@ export default function Meals() {
   const weekDays = [1, 2, 3, 4, 5, 6, 7]
   const [referenceDay, setReferenceDay] = useState(new Date())
   const [currentMeal, setCurrentMeal] =
-    useState<UserPrograms[number]['programRecipes'][number]['recipe']>()
+    useState<UserPrograms[number]['programFoods'][number]['food']>()
 
   const { data: programData } = useSWR<
     { error: false; data: UserPrograms } | { error: true; message: string }

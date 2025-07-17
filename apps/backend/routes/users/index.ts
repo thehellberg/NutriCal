@@ -4,7 +4,7 @@ import { z } from 'zod'
 import type { Request, Response } from 'express'
 
 import { db } from '@/db/index'
-import { users } from '@/db/schema/user'
+import { Activity_Level, Sex, users } from '@/db/schema/user'
 import { validateSessionToken } from '@/utils/auth/utils'
 import { validateData } from '@/utils/zod-validate'
 
@@ -48,11 +48,20 @@ export const patch = async (req: Request, res: Response) => {
     }
     partialData.updatedAt = new Date()
 
+    // Map 'sex' to the correct type if necessary
+    const dbUpdateData = {
+      ...partialData,
+      sex: partialData.sex as Sex,
+      activityLevel: partialData.activityLevel as Activity_Level,
+      weight: partialData.weight?.toString()
+    }
+
     const updatedUser = await db
       .update(users)
-      .set(partialData)
-      .where(eq(users.id, session.user.id))
+      .set(dbUpdateData)
+      .where(eq(users.id, session.session.userId))
       .returning()
+
     if (updatedUser.length < 1) {
       return res.status(404).json({ error: true, message: 'User not found' })
     }

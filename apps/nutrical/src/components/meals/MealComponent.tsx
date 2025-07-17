@@ -5,7 +5,7 @@ import Border from '../account/Border'
 
 import type { UserPrograms } from '@backend/types'
 export default function MealComponent(props: {
-  recipe: UserPrograms[number]['programRecipes'][number]['recipe']
+  recipe: UserPrograms[number]['programFoods'][number]['food']
 }) {
   return (
     <Link

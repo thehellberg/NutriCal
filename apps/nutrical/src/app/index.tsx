@@ -29,7 +29,7 @@ export default function Home() {
           }
         >
           <Image
-            source={require('iassets/logo.png')}
+            source={require('@assets/logo.png')}
             className={'w-64 h-40'}
             resizeMode="contain"
           />

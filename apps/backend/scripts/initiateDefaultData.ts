@@ -1,8 +1,10 @@
 import { db } from '../db'
 
+import { importFoundationFoods } from './importFoundationFoods'
+
 import { sources, tags } from '@/db/schema/programs'
 
-export default function initiateDefaultData() {
+export default async function initiateDefaultData() {
   const tagInit = db.insert(tags).values([
     { id: 1000, name: 'Vegetarian' },
     { id: 1001, name: 'Vegan' },
@@ -15,7 +17,7 @@ export default function initiateDefaultData() {
     { id: 1008, name: 'Allergic to Shellfish' },
     { id: 1009, name: 'Allergic to Fish' },
     { id: 1010, name: 'Allergic to Nuts' }
-  ])
+  ]).onConflictDoNothing()
   const sourceInit = db.insert(sources).values([
     {
       id: 1,
@@ -24,6 +26,9 @@ export default function initiateDefaultData() {
       websiteUrl: 'https://fdc.nal.usda.gov/'
     },
     { id: 2, name: 'OpenFoodFacts' }
-  ])
+  ]).onConflictDoNothing()
+
   Promise.all([tagInit, sourceInit])
+  await importFoundationFoods()
 }
+initiateDefaultData()

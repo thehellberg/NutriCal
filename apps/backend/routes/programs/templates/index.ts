@@ -19,11 +19,13 @@ export const get = async (req: Request, res: Response) => {
       })
     }
     const programTemplates = await db.query.programTemplates.findMany({
-      orderBy: (programTemplates, { desc }) => [desc(programTemplates.createdAt)],
+      orderBy: (programTemplates, { desc }) => [
+        desc(programTemplates.createdAt)
+      ],
       with: {
-        programTemplateRecipes: {
+        programTemplateFoods: {
           with: {
-            recipe: true
+            food: true
           }
         },
         programTemplateTags: {
@@ -51,11 +53,11 @@ export const get = async (req: Request, res: Response) => {
   }
 }
 const programTemplates = db.query.programTemplates.findMany({
-  orderBy: (programs, { desc }) => [desc(programs.createdAt)],
+  orderBy: (programTemplates, { desc }) => [desc(programTemplates.createdAt)],
   with: {
-    programTemplateRecipes: {
+    programTemplateFoods: {
       with: {
-        recipe: true
+        food: true
       }
     },
     programTemplateTags: {

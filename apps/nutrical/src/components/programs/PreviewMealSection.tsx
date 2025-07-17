@@ -24,7 +24,7 @@ export default function PreviewMealSection(props: {
               ? 'snack'
               : 'functional_food'
     const mealDefault: {
-      meals: NonNullable<ProgramTemplate>['programTemplateRecipes']
+      meals: NonNullable<ProgramTemplate>['programTemplateFoods']
       sums: { cal: number; carb: number; protein: number; fat: number }
     } = {
       meals: [],
@@ -33,7 +33,7 @@ export default function PreviewMealSection(props: {
     if (!props.program) return mealDefault
     const tempMeal = mealDefault
 
-    props.program?.programTemplateRecipes.forEach((element) => {
+    props.program?.programTemplateFoods.forEach((element) => {
       if (
         element.mealName === mealName &&
         element.dayIndex === props.selectedDay
@@ -77,7 +77,7 @@ export default function PreviewMealSection(props: {
           estimatedItemSize={69}
           data={mealData.meals}
           renderItem={({ item }) => (
-            <PreviewMealComponent recipe={item.recipe} />
+            <PreviewMealComponent recipe={item.food} />
           )}
         />
       </View>

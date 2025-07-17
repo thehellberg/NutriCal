@@ -1,5 +1,5 @@
 import { router, Stack } from 'expo-router'
-import { Platform, View } from 'react-native'
+import { Platform } from 'react-native'
 
 import BackButton from '~/components/home/BackButton'
 
@@ -9,19 +9,7 @@ export default function MealStack() {
       screenOptions={{
         headerRight: ({ canGoBack, tintColor }) => {
           if (Platform.OS === 'ios') {
-            return <View></View>
-          }
-          return (
-            <BackButton
-              canGoBack={canGoBack || true}
-              tintColor={tintColor || 'black'}
-              onPress={router.back}
-            />
-          )
-        },
-        headerLeft: ({ canGoBack, tintColor }) => {
-          if (Platform.OS !== 'ios') {
-            return <View></View>
+            return
           }
           return (
             <BackButton
@@ -36,7 +24,7 @@ export default function MealStack() {
     >
       <Stack.Screen
         name={'index'}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, headerTitle: 'Meals' }}
       />
       <Stack.Screen
         name={'[meal]'}
@@ -48,7 +36,7 @@ export default function MealStack() {
       />
       <Stack.Screen
         name={'recipe/add'}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerTitle: 'Add Recipe' }}
       />
     </Stack>
   )

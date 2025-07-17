@@ -83,7 +83,7 @@ export default function Signup() {
       }
       if (result?.data.token) {
         signIn(result.data.token)
-        reloadAppAsync()
+        router.replace('/initialUserSetup')
       } else {
         Toast.show({ type: 'error', text1: 'Signup failed' })
       }

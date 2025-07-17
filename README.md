@@ -51,7 +51,7 @@ A docker image will be introduced later
   - [l] Replace profile picture placeholder
   - [ ] Docker
   - [l] Support for multiple programs
-  - [l] Replace legacy icons with Lucide
+  - [x] Replace legacy icons with Lucide
   - [ ] Server URL in start page
   - [ ] First Time Setup
 

@@ -11,7 +11,8 @@ import {
   Text,
   ScrollView,
   Platform,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  ActivityIndicator
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
@@ -51,19 +52,20 @@ export default function Login() {
       setLoginDisable(true)
       const result = await mutate()
       if (result?.error) {
+        setLoginDisable(false)
         return Toast.show({ type: 'error', text1: result.message })
       }
       if (result?.data.token) {
         setToken(result.data.token)
         reloadAppAsync()
       } else {
+        setLoginDisable(false)
         Toast.show({ type: 'error', text1: 'Login failed' })
       }
     } catch (err) {
+      setLoginDisable(false)
       captureException(err)
       Toast.show({ type: 'error', text1: 'Unknown Error' })
-    } finally {
-      setLoginDisable(false)
     }
   }
 
@@ -165,11 +167,17 @@ export default function Login() {
                 onPress={handleSignIn}
                 disabled={loginDisable}
                 className={
-                  'w-full items-center justify-center rounded-lg h-12 bg-green-600 shadow disabled:bg-green-400'
+                  'w-full items-center justify-center rounded-lg h-12 bg-green-600 disabled:bg-green-400 flex-row'
                 }
               >
+                {loginDisable && (
+                  <ActivityIndicator
+                    color="#fff"
+                    style={{ marginRight: 8 }}
+                  />
+                )}
                 <Text className={'font-display-semibold text-base text-white'}>
-                  Login
+                  {loginDisable ? 'Logging in...' : 'Login'}
                 </Text>
               </Pressable>
               <Pressable

@@ -1,6 +1,7 @@
 import { drizzle } from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
 
+import 'dotenv/config'
 import * as programSchema from './schema/programs'
 import * as userSchema from './schema/user'
 

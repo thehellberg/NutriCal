@@ -1,11 +1,17 @@
 import { useLocalSearchParams } from 'expo-router'
 import { useEffect } from 'react'
-import { ScrollView, Text, TextInput, View } from 'react-native'
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+  ActivityIndicator
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 import useSWR from 'swr'
 
-import type { Recipe } from '@backend/types'
+import type { GetFoodById } from '@backend/types'
 
 import Border from '~/components/account/Border'
 import NutritionalInformationRow from '~/components/meals/recipe/NutritionalInformationRow'
@@ -13,55 +19,72 @@ import NutritionalInformationSubRow from '~/components/meals/recipe/NutritionalI
 
 export default function RecipePage() {
   const { recipe } = useLocalSearchParams()
-  const { data: recipeData } = useSWR<
-    { error: false; data: Recipe } | { error: true; message: string }
-  >(`recipes/${recipe}`)
+  const { data: recipeData, isLoading } = useSWR<
+    { error: false; data: GetFoodById } | { error: true; message: string }
+  >(`foods/${recipe}`)
 
   useEffect(() => {
     if (recipeData?.error) {
       Toast.show({ type: 'error', text1: 'Error', text2: recipeData.message })
     }
   }, [recipeData])
-  const recipes = recipeData?.error ? undefined : recipeData?.data
+  const recipeDetails = recipeData?.error ? undefined : recipeData?.data
+
+  if (isLoading) {
+    return (
+      <SafeAreaView className="flex-1 justify-center items-center bg-gray-50">
+        <ActivityIndicator
+          size="large"
+          color="#16A34A"
+        />
+      </SafeAreaView>
+    )
+  }
+
   return (
-    <SafeAreaView>
-      <ScrollView className="h-full">
-        <View>
-          <Text
-            className={'text-3xl font-display-medium self-start mx-4 mb-2 mt-8'}
-          >
-            {recipes?.name}
+    <SafeAreaView className="flex-1 bg-gray-50">
+      <ScrollView
+        className="flex-1"
+        contentContainerStyle={{ paddingBottom: 32 }}
+      >
+        <View className="px-6 pt-8">
+          <Text className={'text-3xl font-display-bold text-gray-900 mb-4'}>
+            {recipeDetails?.name}
           </Text>
         </View>
-        <View className="flex flex-row m-4">
-          <View className="flex flex-row bg-white rounded-lg w-12 h-12 justify-center items-center align-middle">
-            <TextInput
-              inputMode="numeric"
-              value={'1'}
-              className=" font-display text-center text-lg"
-            />
-          </View>
-          <View className="flex flex-row justify-start items-center bg-white rounded-lg flex-grow py-2 px-4 ml-2">
-            <Text className="text-lg font-display text-left">
-              {recipes?.servings} Servings
-            </Text>
+
+        <View className="px-6 mb-6">
+          <View className="flex-row items-center">
+            <View className="bg-white rounded-lg h-12 w-16 justify-center items-center border border-gray-300">
+              <TextInput
+                inputMode="numeric"
+                value={'1'}
+                className="font-display-medium text-center text-lg text-gray-900"
+              />
+            </View>
+            <View className="flex-1 justify-center bg-white rounded-lg h-12 px-4 ml-3 border border-gray-300">
+              <Text className="text-lg font-display-medium text-gray-700">
+                {recipeDetails?.servings} Servings
+              </Text>
+            </View>
           </View>
         </View>
-        {recipes?.recipeIngredients &&
-          recipes?.recipeIngredients.length > 0 && (
-            <View className="flex flex-col mt-2">
+
+        {recipeDetails?.recipeIngredients &&
+          recipeDetails?.recipeIngredients.length > 0 && (
+            <View className="px-6 mb-6">
               <Text
-                className={'text-xl font-display-medium self-start mx-4 mb-2'}
+                className={'text-xl font-display-semibold text-gray-800 mb-3'}
               >
                 Ingredients
               </Text>
-              <View className="bg-white mx-4 py-2 px-4 rounded-lg">
-                {recipes.recipeIngredients.map((ingredient, index) => (
+              <View className="bg-white p-4 rounded-lg border border-gray-200">
+                {recipeDetails.recipeIngredients.map((ingredient, index) => (
                   <View
                     key={index}
-                    className="flex flex-row m-1"
+                    className="flex-row items-start py-2"
                   >
-                    <Text className="text-base font-display-medium text-left">
+                    <Text className="text-base font-display text-gray-700">
                       {ingredient.ingredientText}
                     </Text>
                   </View>
@@ -69,238 +92,111 @@ export default function RecipePage() {
               </View>
             </View>
           )}
-        {recipes?.recipeSteps && recipes?.recipeSteps.length > 0 && (
-          <View className="flex flex-col mt-2">
-            <Text
-              className={
-                'text-xl font-display-medium self-start mx-4 mb-2 mt-4'
-              }
-            >
-              Steps
-            </Text>
-            <View className="bg-white mx-4 rounded-lg py-2 px-4">
-              {recipes.recipeSteps.map((step, index) => (
-                <View
-                  key={index}
-                  className="flex flex-row m-1"
-                >
-                  <Text className="text-base font-display-medium text-left">
-                    {step.stepText}
-                  </Text>
-                </View>
-              ))}
+
+        {recipeDetails?.recipeSteps &&
+          recipeDetails?.recipeSteps.length > 0 && (
+            <View className="px-6 mb-6">
+              <Text
+                className={'text-xl font-display-semibold text-gray-800 mb-3'}
+              >
+                Steps
+              </Text>
+              <View className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+                {recipeDetails.recipeSteps.map((step, index) => (
+                  <View
+                    key={index}
+                    className="flex-row items-start py-2"
+                  >
+                    <Text className="text-base font-display text-gray-700 leading-6">
+                      <Text className="font-display-semibold">
+                        {index + 1}.{' '}
+                      </Text>
+                      {step.stepText}
+                    </Text>
+                  </View>
+                ))}
+              </View>
             </View>
-          </View>
-        )}
-        <View className="flex flex-col mt-2">
-          <Text
-            className={'text-xl font-display-medium self-start mx-4 mb-2 mt-4'}
-          >
+          )}
+
+        <View className="px-6">
+          <Text className={'text-xl font-display-semibold text-gray-800 mb-3'}>
             Nutritional Information
           </Text>
-          <View className="flex flex-col mx-4 bg-white rounded-lg py-2 px-4">
-            <Text className="text-xl font-display text-left">
-              {recipes?.name}
+          <View className="bg-white p-4 rounded-lg border border-gray-200">
+            <Text className="text-xl font-display-medium text-gray-900">
+              {recipeDetails?.name}
             </Text>
-            <Text className="text-base font-display-medium text-left">
-              {recipes?.servings} Servings
+            <Text className="text-base font-display text-gray-600 mb-3">
+              Per {recipeDetails?.servings} Servings
             </Text>
             <Border />
             <NutritionalInformationRow
               label={'Calories'}
-              value={
-                recipes?.recipeComponentRecipes
-                  .reduce((accumulator, currentValue) => {
-                    return (
-                      accumulator +
-                      (parseFloat(
-                        currentValue.recipeComponent.calories || '0.001'
-                      ) *
-                        parseFloat(currentValue.weightInGrams || '0.001')) /
-                        100
-                    )
-                  }, 0)
-                  .toFixed(1) + ' kcal'
-              }
+              value={`${parseFloat(recipeDetails?.calories || '0').toFixed(1)} kcal`}
             />
             <Border />
             <NutritionalInformationRow
               label={'Carbohydrates'}
-              value={
-                recipes?.recipeComponentRecipes
-                  .reduce((accumulator, currentValue) => {
-                    return (
-                      accumulator +
-                      (parseFloat(
-                        currentValue.recipeComponent.carbohydrates || '0.001'
-                      ) *
-                        parseFloat(currentValue.weightInGrams || '0.001')) /
-                        100
-                    )
-                  }, 0)
-                  .toFixed(1) + ' g'
-              }
+              value={`${parseFloat(recipeDetails?.carbohydrates || '0').toFixed(1)} g`}
             />
-            <NutritionalInformationSubRow
-              label={'Fibers'}
-              value={
-                recipes?.recipeComponentRecipes
-                  .reduce((accumulator, currentValue) => {
-                    return (
-                      accumulator +
-                      (parseFloat(
-                        currentValue.recipeComponent.fiber || '0.001'
-                      ) *
-                        parseFloat(currentValue.weightInGrams || '0.001')) /
-                        100
-                    )
-                  }, 0)
-                  .toFixed(1) + ' g'
-              }
-            />
-            <NutritionalInformationSubRow
-              label={'Simple Sugars'}
-              value={
-                recipes?.recipeComponentRecipes
-                  .reduce((accumulator, currentValue) => {
-                    return (
-                      accumulator +
-                      (parseFloat(
-                        currentValue.recipeComponent.simpleSugars || '0.001'
-                      ) *
-                        parseFloat(currentValue.weightInGrams || '0.001')) /
-                        100
-                    )
-                  }, 0)
-                  .toFixed(1) + ' g'
-              }
-            />
+            {recipeDetails?.fiber != null && (
+              <NutritionalInformationSubRow
+                label={'Fibers'}
+                value={`${parseFloat(recipeDetails?.fiber || '0').toFixed(1)} g`}
+              />
+            )}
+            {recipeDetails?.simpleSugars != null && (
+              <NutritionalInformationSubRow
+                label={'Simple Sugars'}
+                value={`${parseFloat(recipeDetails?.simpleSugars || '0').toFixed(1)} g`}
+              />
+            )}
             <Border />
             <NutritionalInformationRow
               label={'Proteins'}
-              value={
-                recipes?.recipeComponentRecipes
-                  .reduce((accumulator, currentValue) => {
-                    return (
-                      accumulator +
-                      (parseFloat(
-                        currentValue.recipeComponent.proteins || '0.001'
-                      ) *
-                        parseFloat(currentValue.weightInGrams || '0.001')) /
-                        100
-                    )
-                  }, 0)
-                  .toFixed(1) + ' g'
-              }
+              value={`${parseFloat(recipeDetails?.proteins || '0').toFixed(1)} g`}
             />
             <Border />
             <NutritionalInformationRow
               label={'Fats'}
-              value={
-                recipes?.recipeComponentRecipes
-                  .reduce((accumulator, currentValue) => {
-                    return (
-                      accumulator +
-                      (parseFloat(
-                        currentValue.recipeComponent.fats || '0.001'
-                      ) *
-                        parseFloat(currentValue.weightInGrams || '0.001')) /
-                        100
-                    )
-                  }, 0)
-                  .toFixed(1) + ' g'
-              }
+              value={`${parseFloat(recipeDetails?.fats || '0').toFixed(1)} g`}
             />
-            <NutritionalInformationSubRow
-              label={'Saturated Fats'}
-              value={
-                recipes?.recipeComponentRecipes
-                  .reduce((accumulator, currentValue) => {
-                    return (
-                      accumulator +
-                      (parseFloat(
-                        currentValue.recipeComponent.saturatedFats || '0.001'
-                      ) *
-                        parseFloat(currentValue.weightInGrams || '0.001')) /
-                        100
-                    )
-                  }, 0)
-                  .toFixed(1) + ' g'
-              }
-            />
-            <NutritionalInformationSubRow
-              label={'Unsaturated Fats'}
-              value={
-                recipes?.recipeComponentRecipes
-                  .reduce((accumulator, currentValue) => {
-                    return (
-                      accumulator +
-                      (parseFloat(
-                        currentValue.recipeComponent.unsaturatedFats || '0.001'
-                      ) *
-                        parseFloat(currentValue.weightInGrams || '0.001')) /
-                        100
-                    )
-                  }, 0)
-                  .toFixed(1) + ' g'
-              }
-            />
+            {recipeDetails?.saturatedFats != null && (
+              <NutritionalInformationSubRow
+                label={'Saturated Fats'}
+                value={`${parseFloat(recipeDetails?.saturatedFats || '0').toFixed(1)} g`}
+              />
+            )}
+            {recipeDetails?.unsaturatedFats != null && (
+              <NutritionalInformationSubRow
+                label={'Unsaturated Fats'}
+                value={`${parseFloat(recipeDetails?.unsaturatedFats || '0').toFixed(1)} g`}
+              />
+            )}
             <Border />
             <NutritionalInformationRow
               label={'Other'}
               value={''}
             />
-            <NutritionalInformationSubRow
-              label={'Cholestrol'}
-              value={
-                recipes?.recipeComponentRecipes
-                  .reduce((accumulator, currentValue) => {
-                    return (
-                      accumulator +
-                      (parseFloat(
-                        currentValue.recipeComponent.cholesterol || '0.001'
-                      ) *
-                        parseFloat(currentValue.weightInGrams || '0.001')) /
-                        100
-                    )
-                  }, 0)
-                  .toFixed(1) + ' g'
-              }
-            />
-            <NutritionalInformationSubRow
-              label={'Sodium'}
-              value={
-                recipes?.recipeComponentRecipes
-                  .reduce((accumulator, currentValue) => {
-                    return (
-                      accumulator +
-                      (parseFloat(
-                        currentValue.recipeComponent.sodium || '0.001'
-                      ) *
-                        parseFloat(currentValue.weightInGrams || '0.001')) /
-                        100
-                    )
-                  }, 0)
-                  .toFixed(1) + ' g'
-              }
-            />
-            <NutritionalInformationSubRow
-              label={'Potassium'}
-              value={
-                recipes?.recipeComponentRecipes
-                  .reduce((accumulator, currentValue) => {
-                    return (
-                      accumulator +
-                      (parseFloat(
-                        currentValue.recipeComponent.potassium || '0.001'
-                      ) *
-                        parseFloat(currentValue.weightInGrams || '0.001')) /
-                        100
-                    )
-                  }, 0)
-                  .toFixed(1) + ' g'
-              }
-            />
+            {recipeDetails?.cholesterol != null && (
+              <NutritionalInformationSubRow
+                label={'Cholesterol'}
+                value={`${parseFloat(recipeDetails?.cholesterol || '0').toFixed(1)} mg`}
+              />
+            )}
+            {recipeDetails?.sodium != null && (
+              <NutritionalInformationSubRow
+                label={'Sodium'}
+                value={`${parseFloat(recipeDetails?.sodium || '0').toFixed(1)} mg`}
+              />
+            )}
+            {recipeDetails?.potassium != null && (
+              <NutritionalInformationSubRow
+                label={'Potassium'}
+                value={`${parseFloat(recipeDetails?.potassium || '0').toFixed(1)} mg`}
+              />
+            )}
           </View>
         </View>
       </ScrollView>

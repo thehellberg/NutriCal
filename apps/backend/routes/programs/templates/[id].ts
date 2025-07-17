@@ -34,9 +34,9 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
       where: (programTemplates, { eq }) =>
         eq(programTemplates.id, programTemplateId),
       with: {
-        programTemplateRecipes: {
+        programTemplateFoods: {
           with: {
-            recipe: true
+            food: true
           }
         },
         programTemplateTags: {
@@ -65,8 +65,13 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 const programTemplates = db.query.programTemplates.findFirst({
+  orderBy: (programTemplates, { desc }) => [desc(programTemplates.createdAt)],
   with: {
-    programTemplateRecipes: { with: { recipe: true } },
+    programTemplateFoods: {
+      with: {
+        food: true
+      }
+    },
     programTemplateTags: {
       with: {
         tag: true

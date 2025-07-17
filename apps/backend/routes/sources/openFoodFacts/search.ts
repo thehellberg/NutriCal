@@ -1,5 +1,5 @@
-import axios from 'axios'
 import { eq } from 'drizzle-orm'
+import { z } from 'zod'
 
 import type { Request, Response } from 'express'
 
@@ -38,21 +38,20 @@ interface OpenFoodFactsResponse {
   page_size: number
 }
 
-export const get = async (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   try {
+    const requestSchema = z
+      .object({
+        query: z.string()
+      })
+      .strict()
+    const reqData = requestSchema.parse(req.body)
+
     const requestToken = req.token
     const session = await validateSessionToken(requestToken)
     if (!session.session) {
-      return res.status(401).json({ error: true, message: 'Unauthorized' })
-    }
-
-    const { q, page = 1, page_size = 20 } = req.query
-
-    if (!q || typeof q !== 'string') {
-      return res.status(400).json({
-        error: true,
-        message: 'Search query (q) is required'
-      })
+      res.status(401).json({ error: true, message: 'Unauthorized' })
+      return
     }
 
     // Get user's dietary settings for filtering
@@ -60,35 +59,19 @@ export const get = async (req: Request, res: Response) => {
       where: eq(dietarySettings.userId, session.session.userId)
     })
 
-    // Search OpenFoodFacts API
-    const searchUrl = 'https://world.openfoodfacts.net/cgi/search.pl'
-    const params = {
-      search_terms: q,
-      page: Number(page),
-      page_size: Math.min(Number(page_size), 100), // Limit to 100 per page
-      json: 1,
-      fields:
-        'product_name,brands,nutriscore_grade,nova_group,nutriments,allergens,traces,categories,image_url,code'
-    }
-
-    const response = await axios.get<OpenFoodFactsResponse>(searchUrl, {
-      params,
-      timeout: 10000 // 10 second timeout
-    })
-    const res = fetch('https://world.openfoodfacts.net/cgi/search.pl?search', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      params: {
-        search_terms: q,
-        page: Number(page),
-        page_size: Math.min(Number(page_size), 100), // Limit to 100 per page
-        json: 1,
-        fields:
-          'product_name,brands,nutriscore_grade,nova_group,nutriments,allergens,traces,categories,image_url,code'
+    const response = await fetch(
+      `https://world.openfoodfacts.net/cgi/search.pl?search_terms=${reqData.query}&page=${1}&page_size=${10}&json=1&fields=product_name,brands,nutriscore_grade,nova_group,nutriments,allergens,traces,categories,image_url,code`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-
+    )
+    return res.json({
+      error: false,
+      data: { response: await response.json() }
+    })
     if (!response.data || !response.data.products) {
       return res.json({
         error: false,

@@ -1,13 +1,13 @@
 import { Activity_Level } from './db/schema/user'
 import { GetAccountReturn } from './routes/account'
 import { GetDietaryLogReturn } from './routes/dietaryLogs/[date]'
+import { GetFoods } from './routes/foods'
+import { GetFoodById } from './routes/foods/[id]'
+import { PostTrackFood } from './routes/foods/track'
 import { UserPrograms } from './routes/programs'
 import { CreateProgramReturn } from './routes/programs/fromTemplate'
 import { ProgramTemplates } from './routes/programs/templates'
 import { ProgramTemplate } from './routes/programs/templates/[id]'
-import { Recipes } from './routes/recipes'
-import { Recipe } from './routes/recipes/[id]'
-import { TrackRecipeReturn } from './routes/recipes/track'
 import {
   GetServerSources,
   PutServerSourceConfig
@@ -23,9 +23,9 @@ export type {
   UserPrograms,
   ProgramTemplates,
   ProgramTemplate,
-  Recipe,
-  Recipes,
-  TrackRecipeReturn,
+  GetFoods,
+  PostTrackFood,
+  GetFoodById,
   CreateProgramReturn,
   GetAccountReturn,
   PatchUserReturn,

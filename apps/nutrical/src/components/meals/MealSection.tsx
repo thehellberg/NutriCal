@@ -25,7 +25,7 @@ export default function MealSection(props: {
               ? 'snack'
               : 'functional_food'
     const mealDefault: {
-      meals: UserPrograms[number]['programRecipes']
+      meals: UserPrograms[number]['programFoods']
       sums: { cal: number; carb: number; protein: number; fat: number }
     } = {
       meals: [],
@@ -34,27 +34,27 @@ export default function MealSection(props: {
     if (!props.program) return mealDefault
     const tempMeal = mealDefault
 
-    props.program?.programRecipes.forEach((element) => {
+    props.program?.programFoods.forEach((element) => {
       if (
         element.mealName === mealName &&
         element.dayIndex === props.selectedDay
       ) {
         tempMeal.meals.push(element)
-        element.recipe?.recipeComponentRecipes.forEach((ingredient) => {
+        element.food?.recipeFoodComponents.forEach((ingredient) => {
           tempMeal.sums.cal +=
-            (parseInt(ingredient.recipeComponent?.calories || '0.01') *
+            (parseInt(ingredient.component?.calories || '0.01') *
               parseFloat(ingredient.weightInGrams || '0.01')) /
             100
           tempMeal.sums.carb +=
-            (parseInt(ingredient.recipeComponent?.carbohydrates || '0.01') *
+            (parseInt(ingredient.component?.carbohydrates || '0.01') *
               parseFloat(ingredient.weightInGrams || '0.01')) /
             100
           tempMeal.sums.protein +=
-            (parseInt(ingredient.recipeComponent?.proteins || '0.01') *
+            (parseInt(ingredient.component?.proteins || '0.01') *
               parseFloat(ingredient.weightInGrams || '0.01')) /
             100
           tempMeal.sums.fat +=
-            (parseInt(ingredient.recipeComponent?.fats || '0.01') *
+            (parseInt(ingredient.component?.fats || '0.01') *
               parseFloat(ingredient.weightInGrams || '0.01')) /
             100
         })
@@ -114,7 +114,7 @@ export default function MealSection(props: {
         <FlashList
           estimatedItemSize={69}
           data={mealData.meals}
-          renderItem={({ item }) => <MealComponent recipe={item.recipe} />}
+          renderItem={({ item }) => <MealComponent recipe={item.food} />}
         />
       </View>
     </View>

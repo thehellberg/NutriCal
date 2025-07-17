@@ -25,13 +25,13 @@ export const get = async (req: Request, res: Response) => {
       where: eq(programs.userId, session.session.userId),
       orderBy: (programs, { desc }) => [desc(programs.createdAt)],
       with: {
-        programRecipes: {
+        programFoods: {
           with: {
-            recipe: {
+            food: {
               with: {
-                recipeComponentRecipes: {
+                recipeFoodComponents: {
                   with: {
-                    recipeComponent: true
+                    component: true
                   }
                 }
               }
@@ -64,14 +64,15 @@ export const get = async (req: Request, res: Response) => {
   }
 }
 const userPrograms = db.query.programs.findMany({
+  orderBy: (programs, { desc }) => [desc(programs.createdAt)],
   with: {
-    programRecipes: {
+    programFoods: {
       with: {
-        recipe: {
+        food: {
           with: {
-            recipeComponentRecipes: {
+            recipeFoodComponents: {
               with: {
-                recipeComponent: true
+                component: true
               }
             }
           }

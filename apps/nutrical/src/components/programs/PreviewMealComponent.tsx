@@ -4,7 +4,7 @@ import Border from '../account/Border'
 
 import type { ProgramTemplate } from '@backend/types'
 export default function PreviewMealComponent(props: {
-  recipe: NonNullable<ProgramTemplate>['programTemplateRecipes'][number]['recipe']
+  recipe: NonNullable<ProgramTemplate>['programTemplateFoods'][number]['food']
 }) {
   return (
     <View>

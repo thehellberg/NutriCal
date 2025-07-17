@@ -42,6 +42,12 @@ export enum Meal {
 
 export const mealEnum = pgEnum('meal', enumToPgEnum(Meal))
 
+export enum FoodType {
+  RECIPE = 'recipe',
+  COMPONENT = 'component'
+}
+export const foodTypeEnum = pgEnum('food_type', enumToPgEnum(FoodType))
+
 const defaultForiegnKeyAction: {
   onUpdate: UpdateDeleteAction
   onDelete: UpdateDeleteAction
@@ -76,14 +82,14 @@ export type ProgramTemplate = InferSelectModel<typeof programTemplates>
 export const programTemplateRelations = relations(
   programTemplates,
   ({ many }) => ({
-    programTemplateRecipes: many(programTemplateRecipes),
+    programTemplateFoods: many(programTemplateFoods),
     programs: many(programs),
     programTemplateTags: many(programTemplateTags)
   })
 )
 
-// Pivot table for many-to-many (program template <-> recipe)
-export const programTemplateRecipes = createTable('program_template_recipe', {
+// Pivot table for many-to-many (program template <-> food)
+export const programTemplateFoods = createTable('program_template_food', {
   id: serial('id').primaryKey(),
   programTemplateId: integer('program_template_id').references(
     () => programTemplates.id,
@@ -91,10 +97,7 @@ export const programTemplateRecipes = createTable('program_template_recipe', {
   ),
   dayIndex: integer('day_index').notNull(),
   mealName: mealEnum(),
-  recipeId: integer('recipe_id').references(
-    () => recipes.id,
-    defaultForiegnKeyAction
-  ),
+  foodId: integer('food_id').references(() => food.id, defaultForiegnKeyAction),
   createdAt: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),
@@ -102,16 +105,16 @@ export const programTemplateRecipes = createTable('program_template_recipe', {
     .defaultNow()
     .notNull()
 })
-export const programTemplateRecipesRelations = relations(
-  programTemplateRecipes,
+export const programTemplateFoodsRelations = relations(
+  programTemplateFoods,
   ({ one }) => ({
     programTemplate: one(programTemplates, {
-      fields: [programTemplateRecipes.programTemplateId],
+      fields: [programTemplateFoods.programTemplateId],
       references: [programTemplates.id]
     }),
-    recipe: one(recipes, {
-      fields: [programTemplateRecipes.recipeId],
-      references: [recipes.id]
+    food: one(food, {
+      fields: [programTemplateFoods.foodId],
+      references: [food.id]
     })
   })
 )
@@ -149,11 +152,11 @@ export const programsRelations = relations(programs, ({ one, many }) => ({
   }),
   user: one(users, { fields: [programs.userId], references: [users.id] }),
   programTags: many(programTags),
-  programRecipes: many(programRecipes)
+  programFoods: many(programFoods)
 }))
 
-// Pivot table for many-to-many (program <-> recipe)
-export const programRecipes = createTable('program_recipe', {
+// Pivot table for many-to-many (program <-> food)
+export const programFoods = createTable('program_food', {
   id: serial('id').primaryKey(),
   programId: integer('program_id').references(
     () => programs.id,
@@ -161,10 +164,7 @@ export const programRecipes = createTable('program_recipe', {
   ),
   dayIndex: integer('day_index').notNull(),
   mealName: mealEnum(),
-  recipeId: integer('recipe_id').references(
-    () => recipes.id,
-    defaultForiegnKeyAction
-  ),
+  foodId: integer('food_id').references(() => food.id, defaultForiegnKeyAction),
   createdAt: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),
@@ -172,25 +172,49 @@ export const programRecipes = createTable('program_recipe', {
     .defaultNow()
     .notNull()
 })
-export const programRecipesRelations = relations(programRecipes, ({ one }) => ({
+export const programFoodsRelations = relations(programFoods, ({ one }) => ({
   program: one(programs, {
-    fields: [programRecipes.programId],
+    fields: [programFoods.programId],
     references: [programs.id]
   }),
-  recipe: one(recipes, {
-    fields: [programRecipes.recipeId],
-    references: [recipes.id]
+  food: one(food, {
+    fields: [programFoods.foodId],
+    references: [food.id]
   })
 }))
 
-export const recipes = createTable('recipe', {
+export const food = createTable('food', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 255 }).notNull(),
+  type: foodTypeEnum('type').notNull(),
+  categoryId: integer('category_id').references(
+    () => foodCategories.id,
+    defaultForiegnKeyAction
+  ),
+  // Recipe fields
   notes: text('notes'),
   backgroundImageUrl: varchar('background_image_url', { length: 255 }),
   photoUrl: varchar('photo_url', { length: 255 }),
   cookingTime: integer('cooking_time'),
   servings: integer('servings'),
+  // Component fields
+  sourceReferenceId: integer('source_reference_id').unique(),
+  sourceId: integer('source_id').references(
+    () => sources.id,
+    defaultForiegnKeyAction
+  ),
+  calories: numeric('calories', { precision: 6, scale: 2 }),
+  carbohydrates: numeric('carbohydrates', { precision: 6, scale: 2 }),
+  simpleSugars: numeric('simple_sugars', { precision: 6, scale: 2 }),
+  fiber: numeric('fiber', { precision: 6, scale: 2 }),
+  fats: numeric('fats', { precision: 6, scale: 2 }),
+  proteins: numeric('proteins', { precision: 6, scale: 2 }),
+  potassium: numeric('potassium', { precision: 6, scale: 2 }),
+  sodium: numeric('sodium', { precision: 6, scale: 2 }),
+  saturatedFats: numeric('saturated_fats', { precision: 6, scale: 2 }),
+  unsaturatedFats: numeric('unsaturated_fats', { precision: 6, scale: 2 }),
+  cholesterol: numeric('cholesterol', { precision: 6, scale: 2 }),
+  verified: boolean('verified').default(false),
   createdAt: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),
@@ -198,14 +222,26 @@ export const recipes = createTable('recipe', {
     .defaultNow()
     .notNull()
 })
-export type Recipes = InferSelectModel<typeof recipes>
-export const recipesRelations = relations(recipes, ({ many }) => ({
-  programTemplateRecipes: many(programTemplateRecipes),
-  programRecipes: many(programRecipes),
-  recipeTags: many(recipeTags),
-  recipeComponentRecipes: many(recipeComponentRecipes),
+export type Food = InferSelectModel<typeof food>
+export const foodRelations = relations(food, ({ many, one }) => ({
+  category: one(foodCategories, {
+    fields: [food.categoryId],
+    references: [foodCategories.id]
+  }),
+  programTemplateFoods: many(programTemplateFoods),
+  programFoods: many(programFoods),
+  foodTags: many(foodTags),
+  // as recipe
+  recipeFoodComponents: many(foodComponents, { relationName: 'recipe' }),
   recipeSteps: many(recipeSteps),
-  recipeIngredients: many(recipeIngredients)
+  recipeIngredients: many(recipeIngredients),
+  // as component
+  componentInRecipes: many(foodComponents, { relationName: 'component' }),
+  source: one(sources, {
+    fields: [food.sourceId],
+    references: [sources.id]
+  }),
+  units: many(foodUnits)
 }))
 
 // For recipe tags & program tags
@@ -222,7 +258,7 @@ export const tags = createTable('tag', {
 export const tagsRelations = relations(tags, ({ many }) => ({
   programTags: many(programTags),
   programTemplateTags: many(programTemplateTags),
-  recipeTags: many(recipeTags),
+  foodTags: many(foodTags),
   userTags: many(userTags)
 }))
 
@@ -267,21 +303,21 @@ export const programTagsRelations = relations(programTags, ({ one }) => ({
   })
 }))
 
-export const recipeTags = createTable('recipe_tag', {
-  recipeId: integer('recipe_id')
-    .references(() => recipes.id, defaultForiegnKeyAction)
+export const foodTags = createTable('food_tag', {
+  foodId: integer('food_id')
+    .references(() => food.id, defaultForiegnKeyAction)
     .notNull(),
   tagId: integer('tag_id')
     .references(() => tags.id, defaultForiegnKeyAction)
     .notNull()
 })
-export const recipeTagsRelations = relations(recipeTags, ({ one }) => ({
-  recipe: one(recipes, {
-    fields: [recipeTags.recipeId],
-    references: [recipes.id]
+export const foodTagsRelations = relations(foodTags, ({ one }) => ({
+  food: one(food, {
+    fields: [foodTags.foodId],
+    references: [food.id]
   }),
   tag: one(tags, {
-    fields: [recipeTags.tagId],
+    fields: [foodTags.tagId],
     references: [tags.id]
   })
 }))
@@ -305,21 +341,10 @@ export const userTagsRelations = relations(userTags, ({ one }) => ({
     references: [tags.id]
   })
 }))
-// Components for each recipe (w/ ratings for macro/micro/fiber/cholesterol)
-export const recipeComponents = createTable('recipe_component', {
+
+export const foodCategories = createTable('food_category', {
   id: serial('id').primaryKey(),
-  name: varchar('name', { length: 255 }).notNull(),
-  calories: numeric('calories', { precision: 6, scale: 2 }),
-  carbohydrates: numeric('carbohydrates', { precision: 6, scale: 2 }),
-  simpleSugars: numeric('simple_sugars', { precision: 6, scale: 2 }),
-  fiber: numeric('fiber', { precision: 6, scale: 2 }),
-  fats: numeric('fats', { precision: 6, scale: 2 }),
-  proteins: numeric('proteins', { precision: 6, scale: 2 }),
-  potassium: numeric('potassium', { precision: 6, scale: 2 }),
-  sodium: numeric('sodium', { precision: 6, scale: 2 }),
-  saturatedFats: numeric('saturated_fats', { precision: 6, scale: 2 }),
-  unsaturatedFats: numeric('unsaturated_fats', { precision: 6, scale: 2 }),
-  cholesterol: numeric('cholesterol', { precision: 6, scale: 2 }),
+  name: varchar('name', { length: 255 }).notNull().unique(),
   createdAt: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),
@@ -327,22 +352,42 @@ export const recipeComponents = createTable('recipe_component', {
     .defaultNow()
     .notNull()
 })
-export const recipeComponentsRelations = relations(
-  recipeComponents,
+export const foodCategoriesRelations = relations(
+  foodCategories,
   ({ many }) => ({
-    recipeComponentSources: many(recipeComponentSources),
-    recipeComponentRecipes: many(recipeComponentRecipes)
+    foods: many(food)
   })
 )
 
-// Pivot table for many-to-many (recipe components <-> recipe)
-export const recipeComponentRecipes = createTable('recipe_component_recipe', {
+export const foodUnits = createTable('food_unit', {
   id: serial('id').primaryKey(),
-  recipeComponentId: integer('recipe_component_id')
-    .references(() => recipeComponents.id, defaultForiegnKeyAction)
+  foodId: integer('food_id')
+    .references(() => food.id, { onDelete: 'cascade', onUpdate: 'cascade' })
     .notNull(),
-  recipeId: integer('recipe_id').references(
-    () => recipes.id,
+  name: varchar('name', { length: 255 }).notNull(),
+  gramsEquivalent: numeric('grams_equivalent', { precision: 10, scale: 2 }),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true })
+    .defaultNow()
+    .notNull()
+})
+export const foodUnitsRelations = relations(foodUnits, ({ one }) => ({
+  food: one(food, {
+    fields: [foodUnits.foodId],
+    references: [food.id]
+  })
+}))
+
+// Pivot table for many-to-many (food (recipe) <-> food (component))
+export const foodComponents = createTable('food_component', {
+  id: serial('id').primaryKey(),
+  recipeId: integer('recipe_id')
+    .references(() => food.id, defaultForiegnKeyAction)
+    .notNull(),
+  componentId: integer('component_id').references(
+    () => food.id,
     defaultForiegnKeyAction
   ),
   weightInGrams: numeric('weight_in_grams', { precision: 6, scale: 1 }),
@@ -353,24 +398,23 @@ export const recipeComponentRecipes = createTable('recipe_component_recipe', {
     .defaultNow()
     .notNull()
 })
-export const recipeComponentRecipesRelations = relations(
-  recipeComponentRecipes,
-  ({ one }) => ({
-    recipeComponent: one(recipeComponents, {
-      fields: [recipeComponentRecipes.recipeComponentId],
-      references: [recipeComponents.id]
-    }),
-    recipe: one(recipes, {
-      fields: [recipeComponentRecipes.recipeId],
-      references: [recipes.id]
-    })
+export const foodComponentsRelations = relations(foodComponents, ({ one }) => ({
+  recipe: one(food, {
+    fields: [foodComponents.recipeId],
+    references: [food.id],
+    relationName: 'recipe'
+  }),
+  component: one(food, {
+    fields: [foodComponents.componentId],
+    references: [food.id],
+    relationName: 'component'
   })
-)
+}))
 
 export const recipeSteps = createTable('recipe_step', {
   id: serial('id').primaryKey(),
   recipeId: integer('recipe_id')
-    .references(() => recipes.id, defaultForiegnKeyAction)
+    .references(() => food.id, defaultForiegnKeyAction)
     .notNull(),
   stepText: text('step_text').notNull(),
   stepOrder: integer('step_order').notNull(),
@@ -382,16 +426,16 @@ export const recipeSteps = createTable('recipe_step', {
     .notNull()
 })
 export const recipeStepsRelations = relations(recipeSteps, ({ one }) => ({
-  recipe: one(recipes, {
+  recipe: one(food, {
     fields: [recipeSteps.recipeId],
-    references: [recipes.id]
+    references: [food.id]
   })
 }))
 
 export const recipeIngredients = createTable('recipe_ingredient', {
   id: serial('id').primaryKey(),
   recipeId: integer('recipe_id')
-    .references(() => recipes.id, defaultForiegnKeyAction)
+    .references(() => food.id, defaultForiegnKeyAction)
     .notNull(),
   ingredientText: text('ingredient_text').notNull(),
   ingredientOrder: integer('ingredient_order').notNull(),
@@ -405,9 +449,9 @@ export const recipeIngredients = createTable('recipe_ingredient', {
 export const recipeIngredientsRelations = relations(
   recipeIngredients,
   ({ one }) => ({
-    recipe: one(recipes, {
+    recipe: one(food, {
       fields: [recipeIngredients.recipeId],
-      references: [recipes.id]
+      references: [food.id]
     })
   })
 )
@@ -426,39 +470,5 @@ export const sources = createTable('source', {
     .notNull()
 })
 export const sourcesRelations = relations(sources, ({ many }) => ({
-  recipeComponentSources: many(recipeComponentSources)
+  foods: many(food)
 }))
-
-// Pivot table for many-to-many (recipe components <-> sources)
-export const recipeComponentSources = createTable('recipe_component_source', {
-  id: serial('id').primaryKey(),
-  recipeComponentId: integer('recipe_component_id')
-    .references(() => recipeComponents.id, defaultForiegnKeyAction)
-    .notNull(),
-  sourceId: integer('source_id').references(
-    () => sources.id,
-    defaultForiegnKeyAction
-  ),
-  sourceReferenceNumber: varchar('source_reference_number', {
-    length: 50
-  }),
-  createdAt: timestamp('created_at', { withTimezone: true })
-    .defaultNow()
-    .notNull(),
-  updatedAt: timestamp('updated_at', { withTimezone: true })
-    .defaultNow()
-    .notNull()
-})
-export const recipeComponentSourcesRelations = relations(
-  recipeComponentSources,
-  ({ one }) => ({
-    recipeComponent: one(recipeComponents, {
-      fields: [recipeComponentSources.recipeComponentId],
-      references: [recipeComponents.id]
-    }),
-    source: one(sources, {
-      fields: [recipeComponentSources.sourceId],
-      references: [sources.id]
-    })
-  })
-)

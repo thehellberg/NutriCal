@@ -1,7 +1,8 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { format } from 'date-fns'
 import { Image } from 'expo-image'
-import { SafeAreaView, ScrollView, Text, View } from 'react-native'
+import { router } from 'expo-router'
+import { Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native'
 
 import FoodLogFocusText from '~/components/home/FoodLogFocusText'
 import ProgressCircle from '~/components/home/ProgressCircle'
@@ -102,13 +103,19 @@ export default function Home() {
               <Text className={'font-display-medium text-xl self-start'}>
                 Steps
               </Text>
-              <Image
-                source={
-                  'https://developer.apple.com/assets/elements/icons/healthkit/healthkit-128x128_2x.png'
-                }
-                className="w-16 h-16"
-                contentFit="contain"
-              />
+              <Pressable
+                onPress={() => {
+                  router.push('/initialUserSetup')
+                }}
+              >
+                <Image
+                  source={
+                    'https://developer.apple.com/assets/elements/icons/healthkit/healthkit-128x128_2x.png'
+                  }
+                  className="w-16 h-16"
+                  contentFit="contain"
+                />
+              </Pressable>
               <Text className={'font-display text-md mt-2'}>
                 Support for tracking steps and exercise wil be added with Apple
                 healthkit

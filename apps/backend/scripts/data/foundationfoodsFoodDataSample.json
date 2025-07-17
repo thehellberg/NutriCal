@@ -1,0 +1,824 @@
+{
+  "FoundationFoods": [
+    {
+      "foodClass": "FinalFood",
+      "description": "Beans, snap, green, canned, regular pack, drained solids",
+      "foodNutrients": [
+        {
+          "type": "FoodNutrient",
+          "id": 2220526,
+          "nutrient": {
+            "id": 1075,
+            "number": "287",
+            "name": "Galactose",
+            "rank": 2100,
+            "unitName": "g"
+          },
+          "dataPoints": 6,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 0.000,
+          "min": 0.000,
+          "median": 0.000,
+          "amount": 0.000
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220527,
+          "nutrient": {
+            "id": 1013,
+            "number": "213",
+            "name": "Lactose",
+            "rank": 1900,
+            "unitName": "g"
+          },
+          "dataPoints": 6,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 0.000,
+          "min": 0.000,
+          "median": 0.000,
+          "amount": 0.000
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220528,
+          "nutrient": {
+            "id": 1051,
+            "number": "255",
+            "name": "Water",
+            "rank": 100,
+            "unitName": "g"
+          },
+          "dataPoints": 12,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 94.2,
+          "min": 93.0,
+          "median": 93.5,
+          "amount": 93.6
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220529,
+          "nutrient": {
+            "id": 1095,
+            "number": "309",
+            "name": "Zinc, Zn",
+            "rank": 5900,
+            "unitName": "mg"
+          },
+          "dataPoints": 12,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 0.270,
+          "min": 0.140,
+          "median": 0.190,
+          "amount": 0.190
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220530,
+          "nutrient": {
+            "id": 1087,
+            "number": "301",
+            "name": "Calcium, Ca",
+            "rank": 5300,
+            "unitName": "mg"
+          },
+          "dataPoints": 12,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 42.0,
+          "min": 26.0,
+          "median": 36.0,
+          "amount": 36.0
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220531,
+          "nutrient": {
+            "id": 1004,
+            "number": "204",
+            "name": "Total lipid (fat)",
+            "rank": 800,
+            "unitName": "g"
+          },
+          "dataPoints": 12,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 0.470,
+          "min": 0.300,
+          "median": 0.380,
+          "amount": 0.390
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220532,
+          "nutrient": {
+            "id": 1005,
+            "number": "205",
+            "name": "Carbohydrate, by difference",
+            "rank": 1110,
+            "unitName": "g"
+          },
+          "foodNutrientDerivation": {
+            "code": "NC",
+            "description": "Calculated",
+            "foodNutrientSource": {
+              "id": 2,
+              "code": "4",
+              "description": "Calculated or imputed"
+            }
+          },
+          "amount": 4.11
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220533,
+          "nutrient": {
+            "id": 1008,
+            "number": "208",
+            "name": "Energy",
+            "rank": 300,
+            "unitName": "kcal"
+          },
+          "foodNutrientDerivation": {
+            "code": "NC",
+            "description": "Calculated",
+            "foodNutrientSource": {
+              "id": 2,
+              "code": "4",
+              "description": "Calculated or imputed"
+            }
+          },
+          "amount": 21.0
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220534,
+          "nutrient": {
+            "id": 1010,
+            "number": "210",
+            "name": "Sucrose",
+            "rank": 1600,
+            "unitName": "g"
+          },
+          "dataPoints": 6,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 0.000,
+          "min": 0.000,
+          "median": 0.000,
+          "amount": 0.000
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220535,
+          "nutrient": {
+            "id": 1011,
+            "number": "211",
+            "name": "Glucose",
+            "rank": 1700,
+            "unitName": "g"
+          },
+          "dataPoints": 6,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 0.720,
+          "min": 0.500,
+          "median": 0.670,
+          "amount": 0.650
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220536,
+          "nutrient": {
+            "id": 1062,
+            "number": "268",
+            "name": "Energy",
+            "rank": 400,
+            "unitName": "kJ"
+          },
+          "foodNutrientDerivation": {
+            "code": "NC",
+            "description": "Calculated",
+            "foodNutrientSource": {
+              "id": 2,
+              "code": "4",
+              "description": "Calculated or imputed"
+            }
+          },
+          "amount": 86.0
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220537,
+          "nutrient": {
+            "id": 1091,
+            "number": "305",
+            "name": "Phosphorus, P",
+            "rank": 5600,
+            "unitName": "mg"
+          },
+          "dataPoints": 12,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 27.0,
+          "min": 18.0,
+          "median": 23.0,
+          "amount": 23.0
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220538,
+          "nutrient": {
+            "id": 1093,
+            "number": "307",
+            "name": "Sodium, Na",
+            "rank": 5800,
+            "unitName": "mg"
+          },
+          "dataPoints": 12,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 328,
+          "min": 183,
+          "median": 305,
+          "amount": 282
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220539,
+          "nutrient": {
+            "id": 1098,
+            "number": "312",
+            "name": "Copper, Cu",
+            "rank": 6000,
+            "unitName": "mg"
+          },
+          "dataPoints": 12,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 0.058,
+          "min": 0.027,
+          "median": 0.041,
+          "amount": 0.041
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220540,
+          "nutrient": {
+            "id": 1101,
+            "number": "315",
+            "name": "Manganese, Mn",
+            "rank": 6100,
+            "unitName": "mg"
+          },
+          "dataPoints": 12,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 0.223,
+          "min": 0.137,
+          "median": 0.180,
+          "amount": 0.176
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220541,
+          "nutrient": {
+            "id": 1089,
+            "number": "303",
+            "name": "Iron, Fe",
+            "rank": 5400,
+            "unitName": "mg"
+          },
+          "dataPoints": 12,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 1.50,
+          "min": 0.350,
+          "median": 0.610,
+          "amount": 0.780
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220542,
+          "nutrient": {
+            "id": 1012,
+            "number": "212",
+            "name": "Fructose",
+            "rank": 1800,
+            "unitName": "g"
+          },
+          "dataPoints": 6,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 0.720,
+          "min": 0.480,
+          "median": 0.670,
+          "amount": 0.640
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220543,
+          "nutrient": {
+            "id": 1003,
+            "number": "203",
+            "name": "Protein",
+            "rank": 600,
+            "unitName": "g"
+          },
+          "foodNutrientDerivation": {
+            "code": "NC",
+            "description": "Calculated",
+            "foodNutrientSource": {
+              "id": 2,
+              "code": "4",
+              "description": "Calculated or imputed"
+            }
+          },
+          "max": 1.25,
+          "min": 0.810,
+          "median": 1.06,
+          "amount": 1.04
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220544,
+          "nutrient": {
+            "id": 1007,
+            "number": "207",
+            "name": "Ash",
+            "rank": 1000,
+            "unitName": "g"
+          },
+          "dataPoints": 12,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 1.05,
+          "min": 0.710,
+          "median": 0.920,
+          "amount": 0.890
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220545,
+          "nutrient": {
+            "id": 1090,
+            "number": "304",
+            "name": "Magnesium, Mg",
+            "rank": 5500,
+            "unitName": "mg"
+          },
+          "dataPoints": 12,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 14.3,
+          "min": 10.7,
+          "median": 12.5,
+          "amount": 12.7
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220546,
+          "nutrient": {
+            "id": 1014,
+            "number": "214",
+            "name": "Maltose",
+            "rank": 2000,
+            "unitName": "g"
+          },
+          "dataPoints": 6,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 0.000,
+          "min": 0.000,
+          "median": 0.000,
+          "amount": 0.000
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220547,
+          "nutrient": {
+            "id": 1092,
+            "number": "306",
+            "name": "Potassium, K",
+            "rank": 5700,
+            "unitName": "mg"
+          },
+          "dataPoints": 12,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 114,
+          "min": 76.0,
+          "median": 96.0,
+          "amount": 97.0
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220548,
+          "nutrient": {
+            "id": 1002,
+            "number": "202",
+            "name": "Nitrogen",
+            "rank": 500,
+            "unitName": "g"
+          },
+          "dataPoints": 12,
+          "foodNutrientDerivation": {
+            "code": "A",
+            "description": "Analytical",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "max": 0.200,
+          "min": 0.130,
+          "median": 0.170,
+          "amount": 0.170
+        },
+        {
+          "type": "FoodNutrient",
+          "id": 2220549,
+          "nutrient": {
+            "id": 1063,
+            "number": "269.3",
+            "name": "Sugars, Total",
+            "rank": 1500,
+            "unitName": "g"
+          },
+          "foodNutrientDerivation": {
+            "code": "AS",
+            "description": "Summed",
+            "foodNutrientSource": {
+              "id": 1,
+              "code": "1",
+              "description": "Analytical or derived from analytical"
+            }
+          },
+          "amount": 1.29
+        }
+      ],
+      "foodAttributes": [],
+      "nutrientConversionFactors": [
+        {
+          "type": ".CalorieConversionFactor",
+          "proteinValue": 2.44,
+          "fatValue": 8.37,
+          "carbohydrateValue": 3.57
+        },
+        {
+          "type": ".ProteinConversionFactor",
+          "value": 6.25
+        }
+      ],
+      "isHistoricalReference": false,
+      "ndbNumber": 11056,
+      "dataType": "Foundation",
+      "foodCategory": {
+        "description": "Vegetables and Vegetable Products"
+      },
+      "fdcId": 321611,
+      "foodPortions": [
+        {
+          "id": 118859,
+          "value": 1.0,
+          "measureUnit": {
+            "id": 1000,
+            "name": "cup",
+            "abbreviation": "cup"
+          },
+          "modifier": "drained",
+          "gramWeight": 129.0,
+          "sequenceNumber": 1,
+          "amount": 1.0,
+          "minYearAcquired": 2015
+        }
+      ],
+      "publicationDate": "4/1/2019",
+      "inputFoods": [
+        {
+          "id": 10515,
+          "foodDescription": "BEANS, SNAP, CANNED, DRAINED, GREAT VALUE",
+          "inputFood": {
+            "foodClass": "Composite",
+            "description": "BEANS, SNAP, CANNED, DRAINED, GREAT VALUE",
+            "dataType": "Sample",
+            "foodCategory": {
+              "id": 11,
+              "code": "1100",
+              "description": "Vegetables and Vegetable Products"
+            },
+            "fdcId": 321591,
+            "publicationDate": "4/1/2019"
+          }
+        },
+        {
+          "id": 10506,
+          "foodDescription": "BEANS, SNAP, CANNED, DRAINED, DEL MONTE",
+          "inputFood": {
+            "foodClass": "Composite",
+            "description": "BEANS, SNAP, CANNED, DRAINED, DEL MONTE",
+            "dataType": "Sample",
+            "foodCategory": {
+              "id": 11,
+              "code": "1100",
+              "description": "Vegetables and Vegetable Products"
+            },
+            "fdcId": 321512,
+            "publicationDate": "4/1/2019"
+          }
+        },
+        {
+          "id": 10508,
+          "foodDescription": "BEANS, SNAP, CANNED, DRAINED, DEL MONTE",
+          "inputFood": {
+            "foodClass": "Composite",
+            "description": "BEANS, SNAP, CANNED, DRAINED, DEL MONTE",
+            "dataType": "Sample",
+            "foodCategory": {
+              "id": 11,
+              "code": "1100",
+              "description": "Vegetables and Vegetable Products"
+            },
+            "fdcId": 321528,
+            "publicationDate": "4/1/2019"
+          }
+        },
+        {
+          "id": 10512,
+          "foodDescription": "BEANS, SNAP, CANNED, DRAINED, STORE BRAND",
+          "inputFood": {
+            "foodClass": "Composite",
+            "description": "BEANS, SNAP, CANNED, DRAINED, STORE BRAND",
+            "dataType": "Sample",
+            "foodCategory": {
+              "id": 11,
+              "code": "1100",
+              "description": "Vegetables and Vegetable Products"
+            },
+            "fdcId": 321566,
+            "publicationDate": "4/1/2019"
+          }
+        },
+        {
+          "id": 10511,
+          "foodDescription": "BEANS, SNAP, CANNED, DRAINED, STORE BRAND",
+          "inputFood": {
+            "foodClass": "Composite",
+            "description": "BEANS, SNAP, CANNED, DRAINED, STORE BRAND",
+            "dataType": "Sample",
+            "foodCategory": {
+              "id": 11,
+              "code": "1100",
+              "description": "Vegetables and Vegetable Products"
+            },
+            "fdcId": 321557,
+            "publicationDate": "4/1/2019"
+          }
+        },
+        {
+          "id": 10509,
+          "foodDescription": "BEANS, SNAP, CANNED, DRAINED, DEL MONTE",
+          "inputFood": {
+            "foodClass": "Composite",
+            "description": "BEANS, SNAP, CANNED, DRAINED, DEL MONTE",
+            "dataType": "Sample",
+            "foodCategory": {
+              "id": 11,
+              "code": "1100",
+              "description": "Vegetables and Vegetable Products"
+            },
+            "fdcId": 321538,
+            "publicationDate": "4/1/2019"
+          }
+        },
+        {
+          "id": 10505,
+          "foodDescription": "BEANS, SNAP, CANNED, DRAINED, DEL MONTE",
+          "inputFood": {
+            "foodClass": "Composite",
+            "description": "BEANS, SNAP, CANNED, DRAINED, DEL MONTE",
+            "dataType": "Sample",
+            "foodCategory": {
+              "id": 11,
+              "code": "1100",
+              "description": "Vegetables and Vegetable Products"
+            },
+            "fdcId": 321506,
+            "publicationDate": "4/1/2019"
+          }
+        },
+        {
+          "id": 10513,
+          "foodDescription": "BEANS, SNAP, CANNED, DRAINED, STORE BRAND",
+          "inputFood": {
+            "foodClass": "Composite",
+            "description": "BEANS, SNAP, CANNED, DRAINED, STORE BRAND",
+            "dataType": "Sample",
+            "foodCategory": {
+              "id": 11,
+              "code": "1100",
+              "description": "Vegetables and Vegetable Products"
+            },
+            "fdcId": 321573,
+            "publicationDate": "4/1/2019"
+          }
+        },
+        {
+          "id": 10514,
+          "foodDescription": "BEANS, SNAP, CANNED, DRAINED, STORE BRAND",
+          "inputFood": {
+            "foodClass": "Composite",
+            "description": "BEANS, SNAP, CANNED, DRAINED, STORE BRAND",
+            "dataType": "Sample",
+            "foodCategory": {
+              "id": 11,
+              "code": "1100",
+              "description": "Vegetables and Vegetable Products"
+            },
+            "fdcId": 321582,
+            "publicationDate": "4/1/2019"
+          }
+        },
+        {
+          "id": 10516,
+          "foodDescription": "BEANS, SNAP, CANNED, DRAINED, STORE BRAND",
+          "inputFood": {
+            "foodClass": "Composite",
+            "description": "BEANS, SNAP, CANNED, DRAINED, STORE BRAND",
+            "dataType": "Sample",
+            "foodCategory": {
+              "id": 11,
+              "code": "1100",
+              "description": "Vegetables and Vegetable Products"
+            },
+            "fdcId": 321601,
+            "publicationDate": "4/1/2019"
+          }
+        },
+        {
+          "id": 10510,
+          "foodDescription": "BEANS, SNAP, CANNED, DRAINED, DEL MONTE",
+          "inputFood": {
+            "foodClass": "Composite",
+            "description": "BEANS, SNAP, CANNED, DRAINED, DEL MONTE",
+            "dataType": "Sample",
+            "foodCategory": {
+              "id": 11,
+              "code": "1100",
+              "description": "Vegetables and Vegetable Products"
+            },
+            "fdcId": 321547,
+            "publicationDate": "4/1/2019"
+          }
+        },
+        {
+          "id": 10507,
+          "foodDescription": "BEANS, SNAP, CANNED, DRAINED, DEL MONTE",
+          "inputFood": {
+            "foodClass": "Composite",
+            "description": "BEANS, SNAP, CANNED, DRAINED, DEL MONTE",
+            "dataType": "Sample",
+            "foodCategory": {
+              "id": 11,
+              "code": "1100",
+              "description": "Vegetables and Vegetable Products"
+            },
+            "fdcId": 321521,
+            "publicationDate": "4/1/2019"
+          }
+        }
+      ]
+    }
+  ]
+}

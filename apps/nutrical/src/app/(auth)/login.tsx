@@ -20,6 +20,7 @@ import useSWR from 'swr'
 
 import useClient from '~/components/network/client'
 import { useStorageState } from '~/hooks/useStorageState'
+import { m } from '~/messages'
 import { Session } from '~/types'
 
 //TODO: Add A Proper SSO Implementation
@@ -60,12 +61,12 @@ export default function Login() {
         reloadAppAsync()
       } else {
         setLoginDisable(false)
-        Toast.show({ type: 'error', text1: 'Login failed' })
+        Toast.show({ type: 'error', text1: m.login_error() })
       }
     } catch (err) {
       setLoginDisable(false)
       captureException(err)
-      Toast.show({ type: 'error', text1: 'Unknown Error' })
+      Toast.show({ type: 'error', text1: m.login_unknown_error() })
     }
   }
 
@@ -102,10 +103,10 @@ export default function Login() {
                 contentFit={'contain'}
               />
               <Text className={'font-display-bold text-gray-900 text-3xl mb-2'}>
-                Welcome back
+                {m.login_welcome()}
               </Text>
               <Text className={'font-display text-gray-600 text-base'}>
-                Sign in to continue to your account.
+                {m.login_subtitle()}
               </Text>
             </View>
 
@@ -114,13 +115,13 @@ export default function Login() {
                 <Text
                   className={'font-display-medium text-gray-700 text-sm mb-2'}
                 >
-                  Email Address
+                  {m.login_email_label()}
                 </Text>
                 <TextInput
                   className={
                     'p-3 bg-white border-gray-300 border rounded-lg w-full h-12 font-display text-base text-gray-900'
                   }
-                  placeholder={'you@example.com'}
+                  placeholder={m.login_email_placeholder()}
                   placeholderTextColor={'#9CA3AF'}
                   textAlign={'left'}
                   keyboardType={'email-address'}
@@ -135,13 +136,13 @@ export default function Login() {
                 <Text
                   className={'font-display-medium text-gray-700 text-sm mb-2'}
                 >
-                  Password
+                  {m.login_password_label()}
                 </Text>
                 <TextInput
                   className={
                     'p-3 bg-white border-gray-300 border rounded-lg w-full h-12 font-display text-base text-gray-900'
                   }
-                  placeholder={'••••••••'}
+                  placeholder={m.login_password_placeholder()}
                   placeholderTextColor={'#9CA3AF'}
                   textAlign={'left'}
                   onChangeText={setPassword}
@@ -156,7 +157,7 @@ export default function Login() {
                   className={'self-end mt-2'}
                 >
                   <Text className={'font-display-medium text-blue-600 text-sm'}>
-                    Forgot Password?
+                    {m.login_forgot_password()}
                   </Text>
                 </Pressable>
               </View>
@@ -177,7 +178,7 @@ export default function Login() {
                   />
                 )}
                 <Text className={'font-display-semibold text-base text-white'}>
-                  {loginDisable ? 'Logging in...' : 'Login'}
+                  {loginDisable ? m.login_logging_in() : m.login_button()}
                 </Text>
               </Pressable>
               <Pressable
@@ -187,7 +188,7 @@ export default function Login() {
                 className={'items-center mt-4'}
               >
                 <Text className={'font-display-medium text-blue-600 text-sm'}>
-                  Change Server URL
+                  {m.login_change_server_url()}
                 </Text>
               </Pressable>
             </View>

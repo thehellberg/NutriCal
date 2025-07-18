@@ -23,11 +23,13 @@ import { SessionProvider } from '~/components/ctx'
 import asyncStorageProvider from '~/components/network/cacheProvider'
 import useClient from '~/components/network/client'
 import { useStorageState } from '~/hooks/useStorageState'
+import { setLocale } from '~/paraglide/runtime'
 
 Sentry.init({
   enabled: false
 })
 function RootLayout() {
+  setLocale('en')
   const [[, token], setToken] = useStorageState('token')
 
   const api = useClient(token)

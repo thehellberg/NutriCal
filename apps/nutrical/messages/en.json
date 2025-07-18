@@ -1,0 +1,16 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "example_message": "Hello world {username}",
+  "login_welcome": "Welcome back",
+  "login_subtitle": "Sign in to continue to your account.",
+  "login_email_label": "Email Address",
+  "login_email_placeholder": "you@example.com",
+  "login_password_label": "Password",
+  "login_password_placeholder": "••••••••",
+  "login_forgot_password": "Forgot Password?",
+  "login_button": "Login",
+  "login_logging_in": "Logging in...",
+  "login_change_server_url": "Change Server URL",
+  "login_error": "Login failed",
+  "login_unknown_error": "Unknown Error"
+}

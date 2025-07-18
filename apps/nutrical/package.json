@@ -8,7 +8,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build": "paraglide-js compile --project ./project.inlang --outdir ./src\\paraglide",
+    "machine-translate": "inlang machine translate --project project.inlang"
   },
   "dependencies": {
     "@expo-google-fonts/rubik": "^0.2.3",
@@ -85,6 +87,8 @@
     "@welldone-software/why-did-you-render": "^8",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
-    "typescript": "~5.8.3"
+    "typescript": "~5.8.3",
+    "@inlang/paraglide-js": "2.2.0",
+    "@inlang/cli": "^3.0.0"
   }
 }

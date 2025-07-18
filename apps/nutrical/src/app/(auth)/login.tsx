@@ -20,7 +20,7 @@ import useSWR from 'swr'
 
 import useClient from '~/components/network/client'
 import { useStorageState } from '~/hooks/useStorageState'
-import { m } from '~/messages'
+import { m } from '~/paraglide/messages'
 import { Session } from '~/types'
 
 //TODO: Add A Proper SSO Implementation

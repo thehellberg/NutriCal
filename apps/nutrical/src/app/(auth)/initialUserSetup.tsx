@@ -24,31 +24,36 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
 import useClient from '~/components/network/client'
+import { m } from '~/paraglide/messages'
 // Animation imports
 
 const totalSteps = 4
 
 const activityLevels = [
-  { id: 'sedentary', name: 'Sedentary', description: 'Little or no exercise' },
+  {
+    id: 'sedentary',
+    name: m.setup_activity_sedentary(),
+    description: m.setup_activity_sedentary_desc()
+  },
   {
     id: 'lightly_active',
-    name: 'Lightly Active',
-    description: 'Exercise 1-3 days/week'
+    name: m.setup_activity_lightly_active(),
+    description: m.setup_activity_lightly_active_desc()
   },
   {
     id: 'moderately_active',
-    name: 'Moderately Active',
-    description: 'Exercise 3-5 days/week'
+    name: m.setup_activity_moderately_active(),
+    description: m.setup_activity_moderately_active_desc()
   },
   {
     id: 'very_active',
-    name: 'Very Active',
-    description: 'Exercise 6-7 days/week'
+    name: m.setup_activity_very_active(),
+    description: m.setup_activity_very_active_desc()
   },
   {
     id: 'extra_active',
-    name: 'Extra Active',
-    description: 'Very hard exercise & physical job'
+    name: m.setup_activity_extra_active(),
+    description: m.setup_activity_extra_active_desc()
   }
 ]
 
@@ -84,14 +89,14 @@ export default function InitialUserSetup() {
     if (step === 1) {
       const w = parseFloat(weight)
       if (!weight || isNaN(w) || w <= 0 || w > 500) {
-        setError('Please enter a valid weight (1-500 kg).')
+        setError(m.setup_weight_error())
         return
       }
     }
     if (step === 2) {
       const h = parseFloat(height)
       if (!height || isNaN(h) || h < 50 || h > 300) {
-        setError('Please enter a valid height (50-300 cm).')
+        setError(m.setup_height_error())
         return
       }
     }
@@ -102,13 +107,13 @@ export default function InitialUserSetup() {
         dob > new Date() ||
         dob.getFullYear() < 1900
       ) {
-        setError('Please select a valid date of birth.')
+        setError(m.setup_dob_error())
         return
       }
     }
     if (step === 4) {
       if (!activityLevel) {
-        setError('Please select your activity level.')
+        setError(m.setup_activity_error())
         return
       }
     }
@@ -147,7 +152,7 @@ export default function InitialUserSetup() {
     if (res.error) {
       Toast.show({
         type: 'error',
-        text1: 'Error',
+        text1: m.setup_error(),
         text2: res.message
       })
       return
@@ -164,16 +169,16 @@ export default function InitialUserSetup() {
             key={stepKey}
           >
             <Text className={'font-display-bold text-gray-900 text-3xl mb-2'}>
-              What's your weight?
+              {m.setup_weight_title()}
             </Text>
             <Text className={'font-display text-gray-600 text-base mb-8'}>
-              This helps us calculate your daily calorie needs.
+              {m.setup_weight_subtitle()}
             </Text>
             <TextInput
               className={
                 'p-3 bg-white border-gray-300 border rounded-lg w-full h-12 font-display text-base text-gray-900 text-center'
               }
-              placeholder={'e.g., 70 kg'}
+              placeholder={m.setup_weight_placeholder()}
               placeholderTextColor={'#9CA3AF'}
               keyboardType={'numeric'}
               onChangeText={setWeight}
@@ -191,16 +196,16 @@ export default function InitialUserSetup() {
             key={stepKey}
           >
             <Text className={'font-display-bold text-gray-900 text-3xl mb-2'}>
-              What's your height?
+              {m.setup_height_title()}
             </Text>
             <Text className={'font-display text-gray-600 text-base mb-8'}>
-              This is also used to determine your calorie goals.
+              {m.setup_height_subtitle()}
             </Text>
             <TextInput
               className={
                 'p-3 bg-white border-gray-300 border rounded-lg w-full h-12 font-display text-base text-gray-900 text-center'
               }
-              placeholder={'e.g., 175 cm'}
+              placeholder={m.setup_height_placeholder()}
               placeholderTextColor={'#9CA3AF'}
               keyboardType={'numeric'}
               onChangeText={setHeight}
@@ -218,10 +223,10 @@ export default function InitialUserSetup() {
             key={stepKey}
           >
             <Text className={'font-display-bold text-gray-900 text-3xl mb-2'}>
-              What's your date of birth?
+              {m.setup_dob_title()}
             </Text>
             <Text className={'font-display text-gray-600 text-base mb-8'}>
-              Your date of birth helps us personalize your nutrition plan.
+              {m.setup_dob_subtitle()}
             </Text>
             <Pressable
               onPress={() => setShowDatePicker(true)}
@@ -230,7 +235,7 @@ export default function InitialUserSetup() {
               }
             >
               <Text className={'font-display text-base text-gray-900'}>
-                {dob ? dob.toLocaleDateString() : 'Select your date of birth'}
+                {dob ? dob.toLocaleDateString() : m.setup_dob_placeholder()}
               </Text>
             </Pressable>
             {showDatePicker && (
@@ -257,10 +262,10 @@ export default function InitialUserSetup() {
             key={stepKey}
           >
             <Text className={'font-display-bold text-gray-900 text-3xl mb-2'}>
-              Your activity level?
+              {m.setup_activity_title()}
             </Text>
             <Text className={'font-display text-gray-600 text-base mb-8'}>
-              Select the option that best describes your weekly activity.
+              {m.setup_activity_subtitle()}
             </Text>
             {activityLevels.map((level) => (
               <Pressable
@@ -361,11 +366,11 @@ export default function InitialUserSetup() {
               <Text className={'font-display-semibold text-base text-white'}>
                 {loading
                   ? step === totalSteps
-                    ? 'Finishing...'
-                    : 'Loading...'
+                    ? m.setup_finishing()
+                    : m.setup_loading()
                   : step === totalSteps
-                    ? 'Finish'
-                    : 'Next'}
+                    ? m.setup_finish()
+                    : m.setup_next()}
               </Text>
             </Pressable>
           </View>

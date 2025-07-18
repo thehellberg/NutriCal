@@ -13,13 +13,18 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
+import { m } from '~/paraglide/messages'
+
 export default function ForgotPassword() {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleResetRequest = async () => {
     if (!email) {
-      return Toast.show({ type: 'error', text1: 'Please enter your email' })
+      return Toast.show({
+        type: 'error',
+        text1: m.forgot_password_error_no_email()
+      })
     }
     setLoading(true)
     // TODO: Implement actual password reset API call
@@ -27,8 +32,8 @@ export default function ForgotPassword() {
     setLoading(false)
     Toast.show({
       type: 'success',
-      text1: 'Reset Link Sent',
-      text2: 'Check your email for instructions.'
+      text1: m.forgot_password_success_title(),
+      text2: m.forgot_password_success_message()
     })
     router.back()
   }
@@ -60,12 +65,12 @@ export default function ForgotPassword() {
           <View>
             <View className={'items-center'}>
               <Text className={'font-display-bold text-gray-900 text-3xl mb-2'}>
-                Forgot Password?
+                {m.forgot_password_title()}
               </Text>
               <Text
                 className={'font-display text-center text-gray-600 text-base'}
               >
-                No worries, we'll send you reset instructions.
+                {m.forgot_password_subtitle()}
               </Text>
             </View>
 
@@ -74,13 +79,13 @@ export default function ForgotPassword() {
                 <Text
                   className={'font-display-medium text-gray-700 text-sm mb-2'}
                 >
-                  Email Address
+                  {m.forgot_password_email_label()}
                 </Text>
                 <TextInput
                   className={
                     'p-3 bg-white border-gray-300 border rounded-lg w-full h-12 font-display text-base text-gray-900'
                   }
-                  placeholder={'you@example.com'}
+                  placeholder={m.forgot_password_email_placeholder()}
                   placeholderTextColor={'#9CA3AF'}
                   textAlign={'left'}
                   keyboardType={'email-address'}
@@ -101,7 +106,7 @@ export default function ForgotPassword() {
                 }
               >
                 <Text className={'font-display-semibold text-base text-white'}>
-                  Send Reset Link
+                  {m.forgot_password_button()}
                 </Text>
               </Pressable>
             </View>

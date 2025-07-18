@@ -15,10 +15,11 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 
 import { useStorageState } from '~/hooks/useStorageState'
+import { m } from '~/paraglide/messages'
 
 export default function ServerUrlPage() {
   const [currentUrl, setUrl] = useStorageState('serverUrl')
-  const [newUrl, setNewUrl] = useState(currentUrl ?? '')
+  const [newUrl, setNewUrl] = useState<string>(currentUrl?.toString() ?? '')
   const [saveDisabled, setSaveDisabled] = useState(false)
 
   const handleSave = async () => {
@@ -31,15 +32,15 @@ export default function ServerUrlPage() {
       await setUrl(newUrl)
       Toast.show({
         type: 'success',
-        text1: 'Server URL updated',
-        text2: 'The app will now reload.'
+        text1: m.server_url_success_title(),
+        text2: m.server_url_success_message()
       })
       await reloadAppAsync()
     } else {
       Toast.show({
         type: 'error',
-        text1: 'Invalid URL',
-        text2: 'Please enter a valid URL starting with http:// or https://'
+        text1: m.server_url_error_title(),
+        text2: m.server_url_error_message()
       })
     }
     setSaveDisabled(false)
@@ -72,12 +73,12 @@ export default function ServerUrlPage() {
           <View>
             <View className={'items-center'}>
               <Text className={'font-display-bold text-gray-900 text-3xl mb-2'}>
-                Server URL
+                {m.server_url_title()}
               </Text>
               <Text
                 className={'font-display text-center text-gray-600 text-base'}
               >
-                Change the server the app connects to.
+                {m.server_url_subtitle()}
               </Text>
             </View>
 
@@ -86,7 +87,7 @@ export default function ServerUrlPage() {
                 <Text
                   className={'font-display-medium text-gray-700 text-sm mb-2'}
                 >
-                  Server URL
+                  {m.server_url_label()}
                 </Text>
                 <TextInput
                   className={
@@ -99,7 +100,7 @@ export default function ServerUrlPage() {
                   textContentType={'URL'}
                   autoCapitalize="none"
                   autoCorrect={false}
-                  placeholder="https://your-server.com"
+                  placeholder={m.server_url_placeholder()}
                   placeholderTextColor={'#9CA3AF'}
                 />
               </View>
@@ -114,7 +115,7 @@ export default function ServerUrlPage() {
                 }
               >
                 <Text className={'font-display-semibold text-base text-white'}>
-                  Save and Restart
+                  {m.server_url_save_button()}
                 </Text>
               </Pressable>
             </View>

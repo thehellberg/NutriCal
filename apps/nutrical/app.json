@@ -16,7 +16,7 @@
     },
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
@@ -28,7 +28,7 @@
     "ios": {
       "supportsTablet": false,
       "infoPlist": {
-        "ExpoLocalization_supportsRTL": false,
+        "ExpoLocalization_supportsRTL": true,
         "LSMinimumSystemVersion": "13.0",
         "ExpoLocalization_forcesRTL": false,
         "ITSAppUsesNonExemptEncryption": false
@@ -104,12 +104,20 @@
       "eas": {
         "projectId": "0b8a496c-f7c8-4d87-abc1-1476d4e4c9f2"
       },
-      "supportsRTL": false,
+      "supportsRTL": true,
       "forcesRTL": false
     },
     "owner": "nutrical",
     "plugins": [
-      "expo-localization",
+      [
+        "expo-localization",
+        {
+          "supportedLocales": [
+            "en",
+            "ar"
+          ]
+        }
+      ],
       [
         "expo-router",
         {

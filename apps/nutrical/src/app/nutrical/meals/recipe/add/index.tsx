@@ -1,6 +1,6 @@
 import { FlashList } from '@shopify/flash-list'
 import { Image } from 'expo-image'
-import { router, useLocalSearchParams } from 'expo-router'
+import { Link, router, useLocalSearchParams } from 'expo-router'
 import { CirclePlus, ScanBarcode, Utensils } from 'lucide-react-native'
 import { useEffect, useState } from 'react'
 import {
@@ -119,12 +119,17 @@ export default function RecipeAdd() {
                 setIsEnd(false)
               }}
             />
-            <Pressable>
-              <ScanBarcode
-                size={24}
-                color={'#1F2937'}
-              />
-            </Pressable>
+            <Link
+              asChild
+              href="/nutrical/meals/recipe/barcodeAdd"
+            >
+              <Pressable>
+                <ScanBarcode
+                  size={24}
+                  color={'#1F2937'}
+                />
+              </Pressable>
+            </Link>
           </View>
         </View>
         <View className="flex-1 bg-gray-50 px-4">

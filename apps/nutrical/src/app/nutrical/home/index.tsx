@@ -1,7 +1,6 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { format } from 'date-fns'
 import { Image } from 'expo-image'
-import { router } from 'expo-router'
 import { Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native'
 
 import FoodLogFocusText from '~/components/home/FoodLogFocusText'
@@ -16,98 +15,91 @@ const waterData = {
 }
 export default function Home() {
   return (
-    <SafeAreaView className="bg-white">
-      <ScrollView className="h-full pb-20">
-        <Text
-          className={'text-md font-display text-gray-600 self-start mx-4 mt-6'}
-        >
-          {format(new Date(), 'EEEE, d LLLL').toUpperCase()}
-        </Text>
-        <Text
-          className={'text-4xl font-display-medium self-start mx-4 mb-2 mt-0.5'}
-        >
-          Dashboard
-        </Text>
-        <ScrollView
-          horizontal
-          className={'pb-4'}
-          pagingEnabled
-        >
-          <View
-            className={'bg-white flex flex-col items-start w-screen px-4 pt-2'}
+    <SafeAreaView className="flex-1 bg-gray-50">
+      <ScrollView
+        className="h-full"
+        contentContainerStyle={{ paddingBottom: 20 }}
+      >
+        <View className="px-6 pt-6">
+          <Text
+            className={'font-display text-gray-600 text-base self-start mb-1'}
           >
-            <Text className={'text-2xl font-display-medium'}>
-              Food Log Focus
+            {format(new Date(), 'EEEE, d LLLL').toUpperCase()}
+          </Text>
+          <Text
+            className={
+              'text-3xl font-display-bold text-gray-900 self-start mb-6'
+            }
+          >
+            Dashboard
+          </Text>
+
+          {/* Food Log Focus Card */}
+          <View
+            className={
+              'bg-white border border-gray-300 rounded-lg p-4 w-full mb-6'
+            }
+          >
+            <Text className={'text-xl font-display-semibold text-gray-900'}>
+              Calorie Goal
             </Text>
             <View
               className={
-                'flex flex-row items-center justify-evenly w-full mt-8'
+                'flex flex-row items-center justify-around w-full mt-4'
               }
             >
               <FoodLogFocusText remaining={1281} />
-
               <ProgressCircle
                 {...data}
-                strokeWidth={6}
+                strokeWidth={8}
                 radius={70}
               />
               <FoodLogFocusText remaining={1281} />
             </View>
-            <View className={'w-full flex flex-row px-6 py-3 justify-between'}>
+            <View
+              className={'w-full flex flex-row px-2 pt-4 pb-2 justify-between'}
+            >
               <MainMealStat
-                type={'Carbohydrates'}
+                type={'Carbs'}
                 value={10}
                 limit={136}
                 color={'emerald-700'}
               />
               <MainMealStat
-                type={'Fats'}
+                type={'Fat'}
                 value={10}
                 limit={40}
                 color={'blue-800'}
               />
               <MainMealStat
-                type={'Proteins'}
+                type={'Protein'}
                 value={10}
                 limit={77}
                 color={'yellow-500'}
               />
             </View>
           </View>
-          <View
+
+          {/* Insights Section */}
+          <Text
             className={
-              'bg-white flex flex-col items-center justify-center w-screen px-4 py-2'
+              'text-xl font-display-semibold text-gray-900 self-start mb-3'
             }
           >
-            <Text className={'text-2xl font-display-medium'}>
-              More cards Coming Soon!
-            </Text>
-          </View>
-        </ScrollView>
-        <Text className={'text-blue-700 hidden'}></Text>
-        <Text className={'text-yellow-500 hidden'}></Text>
-        <View
-          className={
-            'flex flex-col justify-evenly items-start w-screen bg-gray-50 px-4'
-          }
-        >
-          <Text className={'text-2xl font-display-medium mt-4 mb-2'}>
             Insights
           </Text>
-          <View className="flex flex-1 flex-row justify-center items-center w-full gap-4">
+
+          <View className="flex flex-row w-full gap-4 mb-4">
+            {/* Steps Card */}
             <View
               className={
-                'bg-white rounded-lg py-4 px-4 basis-1/2 flex flex-col justify-center items-center flex-shrink h-full'
+                'bg-white border border-gray-300 rounded-lg p-4 flex-1 flex-col justify-between'
               }
             >
-              <Text className={'font-display-medium text-xl self-start'}>
+              <Text className={'font-display-semibold text-lg text-gray-900'}>
                 Steps
               </Text>
-              <Pressable
-                onPress={() => {
-                  router.push('/initialUserSetup')
-                }}
-              >
+              <View className="items-center justify-center flex-1 my-2">
                 <Image
                   source={
                     'https://developer.apple.com/assets/elements/icons/healthkit/healthkit-128x128_2x.png'
@@ -115,80 +107,57 @@ export default function Home() {
                   className="w-16 h-16"
                   contentFit="contain"
                 />
-              </Pressable>
-              <Text className={'font-display text-md mt-2'}>
-                Support for tracking steps and exercise wil be added with Apple
-                healthkit
-              </Text>
-              {/* 
-              <View className={'flex flex-row items-center'}>
-              <Footprints />
-              <Text className={'font-semibold text-lg'}>43</Text>
               </View>
-              <Text className={'font-display my-1'}>Goal: 10,000 Steps</Text>
-              <View className={'relative h-4 mx-1'}>
-              <View
-              className={'absolute bg-slate-300 w-full rounded-full h-2'}
-              ></View>
-              <View
-              style={{ width: '80%' }}
-              className={'absolute bg-green-500 rounded-full h-2 z-10'}
-              ></View> 
-              </View>*/}
+              <Text className={'font-display text-sm text-gray-600'}>
+                Apple Health integration coming soon.
+              </Text>
             </View>
+
+            {/* Water Card */}
             <View
               className={
-                'bg-white rounded-lg py-2 px-4 basis-1/2 flex-shrink flex flex-col justify-center items-center'
+                'bg-white border border-gray-300 rounded-lg p-4 flex-1 flex-col'
               }
             >
-              <Text
-                className={'font-display-medium text-xl mb-auto self-start'}
-              >
+              <Text className={'font-display-semibold text-lg text-gray-900'}>
                 Water
               </Text>
-
-              <WaterCircle
-                {...waterData}
-                strokeWidth={6}
-                radius={50}
-              />
-              <View
-                className={
-                  'flex flex-row items-center bg-gray-100 p-0.5 rounded'
-                }
-              >
-                <MaterialIcons
-                  name={'remove'}
-                  size={24}
-                  color={'#2563eb'}
-                  className="m-0.5"
+              <View className="items-center justify-center flex-1 my-2">
+                <WaterCircle
+                  {...waterData}
+                  strokeWidth={6}
+                  radius={45}
                 />
-                <View className="h-full w-1 bg-gray-300 rounded-full m-0.5"></View>
-                <MaterialIcons
-                  name={'add'}
-                  size={24}
-                  color={'#2563eb'}
-                  className="m-0.5"
-                />
+              </View>
+              <View className={'flex flex-row items-center justify-center'}>
+                <Pressable className="p-1">
+                  <MaterialIcons
+                    name={'remove'}
+                    size={24}
+                    color={'#2563eb'}
+                  />
+                </Pressable>
+                <View className="h-full w-1 bg-gray-300 rounded-full"></View>
+                <Pressable className="p-1">
+                  <MaterialIcons
+                    name={'add'}
+                    size={24}
+                    color={'#2563eb'}
+                  />
+                </Pressable>
               </View>
             </View>
           </View>
-          <View className={'flex flex-row items-start w-full mt-4'}>
-            <View
-              className={
-                'bg-white rounded-lg items-start py-2 px-4 basis-full h-28'
-              }
-            >
-              <Text className={'font-display-medium text-xl self-start'}>
-                Weight
+
+          {/* Weight Chart Card */}
+          <View className={'bg-white border border-gray-300 rounded-lg p-4'}>
+            <Text className={'font-display-semibold text-xl text-gray-900'}>
+              Weight
+            </Text>
+            <View className="bg-gray-200 h-32 w-full rounded-lg mt-2 flex items-center justify-center">
+              <Text className={'font-display text-lg text-gray-700'}>
+                Chart coming soon
               </Text>
-              <View
-                className={
-                  'bg-gray-200 h-32 w-full rounded-lg mt-2 flex items-center justify-center'
-                }
-              >
-                <Text className={'font-display text-lg'}>Chart here</Text>
-              </View>
             </View>
           </View>
         </View>

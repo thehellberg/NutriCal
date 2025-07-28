@@ -30,21 +30,8 @@ export const post = async (req: Request, res: Response) => {
       where: (food, { eq }) => eq(food.barcode, reqData.barcode),
       orderBy: (food, { desc }) => [desc(food.createdAt)],
       with: {
-        recipeFoodComponents: {
-          with: {
-            component: true
-          }
-        },
-        recipeIngredients: {
-          orderBy: (foodIngredients, { asc }) => [
-            asc(foodIngredients.ingredientOrder)
-          ]
-        },
-        recipeSteps: {
-          orderBy: (foodSteps, { asc }) => [asc(foodSteps.stepOrder)]
-        },
         foodTags: {
-          with : {
+          with: {
             tag: true
           }
         }
@@ -69,22 +56,9 @@ export const post = async (req: Request, res: Response) => {
     })
   }
 }
-const postSearchFoods = db.query.food.findMany({
+const postFoodsBarcode = db.query.food.findMany({
   orderBy: (food, { desc }) => [desc(food.createdAt)],
   with: {
-    recipeFoodComponents: {
-      with: {
-        component: true
-      }
-    },
-    recipeIngredients: {
-      orderBy: (foodIngredients, { asc }) => [
-        asc(foodIngredients.ingredientOrder)
-      ]
-    },
-    recipeSteps: {
-      orderBy: (foodSteps, { asc }) => [asc(foodSteps.stepOrder)]
-    },
     foodTags: {
       with: {
         tag: true
@@ -92,4 +66,4 @@ const postSearchFoods = db.query.food.findMany({
     }
   }
 })
-export type PostSearchFoods = Awaited<typeof postSearchFoods>
+export type PostFoodsBarcode = Awaited<typeof postFoodsBarcode>

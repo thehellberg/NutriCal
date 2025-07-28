@@ -98,6 +98,11 @@ export const programTemplateFoods = createTable('program_template_food', {
   dayIndex: integer('day_index').notNull(),
   mealName: mealEnum(),
   foodId: integer('food_id').references(() => food.id, defaultForiegnKeyAction),
+  amount: numeric('amount', { precision: 10, scale: 2 }),
+  unitId: integer('unit_id').references(
+    () => foodUnits.id,
+    defaultForiegnKeyAction
+  ),
   createdAt: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),
@@ -115,6 +120,10 @@ export const programTemplateFoodsRelations = relations(
     food: one(food, {
       fields: [programTemplateFoods.foodId],
       references: [food.id]
+    }),
+    unit: one(foodUnits, {
+      fields: [programTemplateFoods.unitId],
+      references: [foodUnits.id]
     })
   })
 )
@@ -165,6 +174,11 @@ export const programFoods = createTable('program_food', {
   dayIndex: integer('day_index').notNull(),
   mealName: mealEnum(),
   foodId: integer('food_id').references(() => food.id, defaultForiegnKeyAction),
+  amount: numeric('amount', { precision: 10, scale: 2 }),
+  unitId: integer('unit_id').references(
+    () => foodUnits.id,
+    defaultForiegnKeyAction
+  ),
   createdAt: timestamp('created_at', { withTimezone: true })
     .defaultNow()
     .notNull(),
@@ -180,6 +194,10 @@ export const programFoodsRelations = relations(programFoods, ({ one }) => ({
   food: one(food, {
     fields: [programFoods.foodId],
     references: [food.id]
+  }),
+  unit: one(foodUnits, {
+    fields: [programFoods.unitId],
+    references: [foodUnits.id]
   })
 }))
 

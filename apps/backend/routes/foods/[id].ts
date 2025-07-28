@@ -49,6 +49,7 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
             tag: true
           }
         },
+        source: true,
         units: true
       }
     })
@@ -91,6 +92,7 @@ const getFood = db.query.food.findFirst({
         tag: true
       }
     },
+    source: true,
     units: true
   }
 })

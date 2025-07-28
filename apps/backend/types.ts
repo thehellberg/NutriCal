@@ -3,6 +3,7 @@ import { GetAccountReturn } from './routes/account'
 import { GetDietaryLogReturn } from './routes/dietaryLogs/[date]'
 import { GetFoods } from './routes/foods'
 import { GetFoodById } from './routes/foods/[id]'
+import { PostFoodsBarcode } from './routes/foods/barcode'
 import { PostTrackFood } from './routes/foods/track'
 import { UserPrograms } from './routes/programs'
 import { CreateProgramReturn } from './routes/programs/fromTemplate'
@@ -36,5 +37,6 @@ export type {
   PatchDietarySettingsReturn,
   Activity_Level,
   GetServerSources,
-  PutServerSourceConfig
+  PutServerSourceConfig,
+  PostFoodsBarcode
 }

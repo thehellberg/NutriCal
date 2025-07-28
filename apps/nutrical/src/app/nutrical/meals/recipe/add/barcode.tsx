@@ -1,21 +1,30 @@
 import { CameraView, useCameraPermissions } from 'expo-camera'
-import { router } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 import { ChevronLeft } from 'lucide-react-native'
 import { useEffect, useState } from 'react'
 import { Button, Pressable, StyleSheet, Text, View } from 'react-native'
 import Toast from 'react-native-toast-message'
 
+import type { PostFoodsBarcode } from '@backend/types'
+
+import useClient from '~/components/network/client'
+
 export default function BarcodeAdd() {
+  const { meal, selectedDay, programId } = useLocalSearchParams<{
+    meal?: string 
+    selectedDay?: string
+    programId?: string
+  }>()
   const [permission, requestPermission] = useCameraPermissions()
   const [scanned, setScanned] = useState(false)
-
+  const api = useClient()
   useEffect(() => {
     if (!permission?.granted) {
       requestPermission()
     }
   }, [permission])
 
-  const handleBarCodeScanned = ({
+  const handleBarCodeScanned = async ({
     type,
     data
   }: {
@@ -23,14 +32,33 @@ export default function BarcodeAdd() {
     data: string
   }) => {
     setScanned(true)
-    Toast.show({
-      type: 'info',
-      text1: 'Barcode Scanned!',
-      text2: `Type: ${type}, Data: ${data}`
-    })
-    // Here you would typically make an API call to find the food by its barcode
-    // and then navigate to a food details page.
-    // e.g., router.push(`/nutrical/food-details?barcode=${data}`);
+    const response = await api
+      .post<
+        | { error: false; data: PostFoodsBarcode }
+        | { error: true; message: string }
+      >('foods/barcode', {
+        json: {
+          barcode: data
+        }
+      })
+      .json()
+    if (response.error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: response.message
+      })
+    } else {
+      router.push({
+        pathname: '/nutrical/meals/recipe/add/foodDetails',
+        params: {
+          foodId: response.data[0]?.id,
+          meal,
+          selectedDay,
+          programId
+        }
+      })
+    }
   }
 
   if (!permission) {

@@ -42,6 +42,10 @@ export default function MealStack() {
         name={'recipe/add/barcode'}
         options={{ headerShown: false, headerTitle: 'Scan Barcode' }}
       />
+      <Stack.Screen
+        name={'recipe/add/foodDetails'}
+        options={{ headerShown: true, headerTitle: 'Food Details' }}
+      />
     </Stack>
   )
 }

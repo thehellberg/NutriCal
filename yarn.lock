@@ -9788,6 +9788,11 @@ lucide-react-native@^0.460.0:
   resolved "https://registry.yarnpkg.com/lucide-react-native/-/lucide-react-native-0.460.0.tgz#240e4333ddcd19753d613e963a9ce60a7879d666"
   integrity sha512-Z43BbteT398BMNcqkZWGc+lKUgERPo5oVV+2NYlGUF+vP2xtckO4tJKcuF+jR+wrLyxrAFfTHetfz80aNryWMw==
 
+luxon@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-3.7.1.tgz#9bd09aa84a56afb00c57ea78a8ec5bd16eb24ec0"
+  integrity sha512-RkRWjA926cTvz5rAb1BqyWkKbbjzCGchDUIKMCUvNi17j6f6j8uHGDV82Aqcqtzd+icoYpELmG3ksgGiFNNcNg==
+
 magic-string@^0.30.17:
   version "0.30.17"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.30.17.tgz#450a449673d2460e5bbcfba9a61916a1714c7453"
@@ -12128,6 +12133,11 @@ react-native-gesture-handler@~2.24.0:
     "@egjs/hammerjs" "^2.0.17"
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
+
+react-native-gesture-image-viewer@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-image-viewer/-/react-native-gesture-image-viewer-1.4.1.tgz#9a9aeab24ef77a20629e801a6d73d7c86f332cb0"
+  integrity sha512-kbUaShH149FreQWYUdiF3Ch1YOE/rEwuH2ZsM8mBwLjo/UBxnyRfq/wKMT5Rk+UPH532+LhGDGfntR2z/omaGg==
 
 react-native-get-random-values@~1.11.0:
   version "1.11.0"

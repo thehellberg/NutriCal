@@ -1,5 +1,5 @@
-import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { addDays, differenceInDays, format } from 'date-fns'
+import { ChevronDown, ChevronLeft } from 'lucide-react-native'
 import { useState, useEffect, useMemo } from 'react'
 import {
   Pressable,
@@ -234,23 +234,20 @@ export default function Meals() {
                           {'Instructions'}
                         </Text>
                       </View>
-                      <MaterialIcons
-                        name={
-                          toggleInstructions
-                            ? 'keyboard-arrow-down'
-                            : 'keyboard-arrow-left'
-                        }
-                        size={36}
-                        color={'#a9afab'}
-                      />
+                      {toggleInstructions ? (
+                        <ChevronDown color={'#a9afab'} />
+                      ) : (
+                        
+                        <ChevronLeft color={'#a9afab'} />
+                      )}
                     </Pressable>
                     {toggleInstructions && (
-                      <>
+                      <View>
                         <Border />
                         <Text className={'font-display text-base text-left'}>
                           {programs[0]?.instructions}
                         </Text>
-                      </>
+                      </View>
                     )}
                   </View>
                 )}

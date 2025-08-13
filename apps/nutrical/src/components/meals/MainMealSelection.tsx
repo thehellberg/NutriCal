@@ -2,6 +2,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { Text, View } from 'react-native'
 
 import Border from '../account/Border'
+import { ChevronLeft } from 'lucide-react-native'
 //TODO: Add Detailed View
 export default function MainMealSelection({ title, subtitle, icon, href }) {
   return (
@@ -17,11 +18,7 @@ export default function MainMealSelection({ title, subtitle, icon, href }) {
           <Text className={'font-display text-gray-600'}>{subtitle}</Text>
         </View>
         <View className={' rounded-full bg-teal-300'}>
-          <MaterialIcons
-            name={'keyboard-arrow-left'}
-            size={32}
-            color={'#0f766e'}
-          />
+          <ChevronLeft />
         </View>
       </View>
       <Border />

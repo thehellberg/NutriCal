@@ -1,10 +1,12 @@
-import { Activity_Level } from './db/schema/user'
+import { Activity_Level, MediaType } from './db/schema/user'
 import { GetAccountReturn } from './routes/account'
 import { GetDietaryLogReturn } from './routes/dietaryLogs/[date]'
 import { GetFoods } from './routes/foods'
 import { GetFoodById } from './routes/foods/[id]'
 import { PostFoodsBarcode } from './routes/foods/barcode'
 import { PostTrackFood } from './routes/foods/track'
+import { GetPosts, PostPosts } from './routes/posts'
+import { GetPostById } from './routes/posts/[id]'
 import { UserPrograms } from './routes/programs'
 import { CreateProgramReturn } from './routes/programs/fromTemplate'
 import { ProgramTemplates } from './routes/programs/templates'
@@ -38,5 +40,9 @@ export type {
   Activity_Level,
   GetServerSources,
   PutServerSourceConfig,
-  PostFoodsBarcode
+  PostFoodsBarcode,
+  GetPostById,
+  GetPosts,
+  MediaType,
+  PostPosts,
 }

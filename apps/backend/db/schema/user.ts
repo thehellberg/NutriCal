@@ -1,5 +1,7 @@
-import { relations, sql } from 'drizzle-orm'
+import { is, relations, sql } from 'drizzle-orm'
 import {
+  AnyPgColumn,
+  boolean,
   integer,
   numeric,
   pgEnum,
@@ -14,6 +16,7 @@ import {
 import { programs, userTags } from './programs'
 
 import type { InferSelectModel } from 'drizzle-orm'
+import { en } from 'zod/v4/locales'
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
  * database instance for multiple projects.
@@ -53,12 +56,21 @@ export enum Sex {
   Male = 'M',
   Female = 'F'
 }
+export enum MediaType {
+  Text = 'text',
+  Image = 'image',
+  Video = 'video'
+}
 
 export const activityLevelEnum = pgEnum(
   'nutrical_activity_level',
   enumToPgEnum(Activity_Level)
 )
 export const sexEnum = pgEnum('nutrical_sex', enumToPgEnum(Sex))
+export const mediaTypeEnum = pgEnum(
+  'nutrical_media_type',
+  enumToPgEnum(MediaType)
+)
 
 export const users = createTable('user', {
   id: varchar('id', { length: 255 })
@@ -90,7 +102,12 @@ export const usersRelations = relations(users, ({ many, one }) => ({
   sessions: many(sessions),
   userTags: many(userTags),
   dietaryLogs: many(dietaryLogs),
-  dietarySettings: one(dietarySettings)
+  dietarySettings: one(dietarySettings),
+  posts: many(posts),
+  postLikes: many(postLikes),
+  postComments: many(postComments),
+  commentLikes: many(commentLikes),
+  postShares: many(postShares)
 }))
 
 export const accounts = createTable(
@@ -223,10 +240,162 @@ export const dietarySettingsRelations = relations(
   })
 )
 
-// export const settings = createTable('setting', {
-//   userId: varchar('user_id', { length: 255 })
-//     .notNull()
-//     .references(() => users.id, defaultForiegnKeyAction),
-//   key: varchar('key', { length: 255 }).notNull(),
-//   value: text('value')
-// })
+// Social Media Schema
+export const posts = createTable('post', {
+  id: varchar('id', { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: varchar('user_id', { length: 255 })
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
+  content: text('content').notNull(),
+  viewCount: integer('view_count').default(0).notNull(),
+  mediaType: mediaTypeEnum().notNull(),
+  mediaUrl: varchar('media_url', { length: 255 }),
+  isApproved: boolean('is_approved').default(false).notNull(),
+  isBanned: boolean('is_banned').default(false).notNull(),
+  createdAt: timestamp('created_at', {
+    withTimezone: true
+  })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp('updated_at', {
+    withTimezone: true
+  })
+    .defaultNow()
+    .notNull()
+})
+
+export const postsRelations = relations(posts, ({ one, many }) => ({
+  user: one(users, { fields: [posts.userId], references: [users.id] }),
+  comments: many(postComments),
+  likes: many(postLikes),
+  shares: many(postShares)
+}))
+
+export const postLikes = createTable(
+  'post_like',
+  {
+    userId: varchar('user_id', { length: 255 })
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
+    postId: varchar('post_id', { length: 255 })
+      .notNull()
+      .references(() => posts.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
+    createdAt: timestamp('created_at', {
+      withTimezone: true
+    })
+      .defaultNow()
+      .notNull()
+  },
+  (like) => ({
+    compoundKey: primaryKey({ columns: [like.userId, like.postId] })
+  })
+)
+
+export const postLikesRelations = relations(postLikes, ({ one }) => ({
+  user: one(users, { fields: [postLikes.userId], references: [users.id] }),
+  post: one(posts, { fields: [postLikes.postId], references: [posts.id] })
+}))
+
+export const postComments = createTable('post_comment', {
+  id: varchar('id', { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: varchar('user_id', { length: 255 })
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
+  postId: varchar('post_id', { length: 255 })
+    .notNull()
+    .references(() => posts.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
+  parentId: varchar('parent_id', { length: 255 }).references(
+    (): AnyPgColumn => postComments.id,
+    { onDelete: 'cascade', onUpdate: 'cascade' }
+  ),
+  content: text('content').notNull(),
+  createdAt: timestamp('created_at', {
+    withTimezone: true
+  })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp('updated_at', {
+    withTimezone: true
+  })
+    .defaultNow()
+    .notNull()
+})
+
+export const postCommentsRelations = relations(
+  postComments,
+  ({ one, many }) => ({
+    user: one(users, { fields: [postComments.userId], references: [users.id] }),
+    post: one(posts, { fields: [postComments.postId], references: [posts.id] }),
+    parent: one(postComments, {
+      fields: [postComments.parentId],
+      references: [postComments.id],
+      relationName: 'parent_comment'
+    }),
+    replies: many(postComments, {
+      relationName: 'parent_comment'
+    }),
+    likes: many(commentLikes)
+  })
+)
+
+export const commentLikes = createTable(
+  'comment_like',
+  {
+    userId: varchar('user_id', { length: 255 })
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
+    commentId: varchar('comment_id', { length: 255 })
+      .notNull()
+      .references(() => postComments.id, {
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
+      }),
+    createdAt: timestamp('created_at', {
+      withTimezone: true
+    })
+      .defaultNow()
+      .notNull()
+  },
+  (like) => ({
+    compoundKey: primaryKey({ columns: [like.userId, like.commentId] })
+  })
+)
+
+export const commentLikesRelations = relations(commentLikes, ({ one }) => ({
+  user: one(users, { fields: [commentLikes.userId], references: [users.id] }),
+  comment: one(postComments, {
+    fields: [commentLikes.commentId],
+    references: [postComments.id]
+  })
+}))
+
+export const postShares = createTable(
+  'post_share',
+  {
+    userId: varchar('user_id', { length: 255 })
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
+    postId: varchar('post_id', { length: 255 })
+      .notNull()
+      .references(() => posts.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
+    createdAt: timestamp('created_at', {
+      withTimezone: true
+    })
+      .defaultNow()
+      .notNull()
+  },
+  (share) => ({
+    compoundKey: primaryKey({ columns: [share.userId, share.postId] })
+  })
+)
+
+export const postSharesRelations = relations(postShares, ({ one }) => ({
+  user: one(users, { fields: [postShares.userId], references: [users.id] }),
+  post: one(posts, { fields: [postShares.postId], references: [posts.id] })
+}))

@@ -8,14 +8,8 @@ export const get = async (req: Request, res: Response) => {
     const page = parseInt(req.query.page as string) || 1
     const limit = parseInt(req.query.limit as string) || 20
     const requestToken = req.token
-    if (!requestToken) {
-      return res.status(401).json({
-        error: true,
-        message: 'Unauthorized'
-      })
-    }
     const session = await validateSessionToken(requestToken)
-    if (session.session === null) {
+    if (session === null) {
       return res.status(401).json({
         error: true,
         message: 'Unauthorized'

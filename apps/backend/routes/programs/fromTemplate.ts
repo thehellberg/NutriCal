@@ -26,7 +26,7 @@ export const post = async (req: Request, res: Response) => {
       })
     }
     const session = await validateSessionToken(requestToken)
-    if (session.session === null) {
+    if (session === null) {
       return res.status(401).json({
         error: true,
         message: 'Unauthorized'

@@ -1,38 +1,27 @@
-import profileIcon from '@assets/icons-male-user-96.png'
-import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import dayjs from 'dayjs'
+import { FlashList } from '@shopify/flash-list'
 import { Image } from 'expo-image'
 import { Link } from 'expo-router'
+import { Ellipsis, Heart, MessagesSquare } from 'lucide-react-native'
+import { DateTime } from 'luxon'
 import { useState } from 'react'
-import { Text, Dimensions, View, Pressable } from 'react-native'
-import ImageModal from 'react-native-image-modal'
+import { Text, View, Pressable } from 'react-native'
+import { GestureViewer } from 'react-native-gesture-image-viewer'
 import Toast from 'react-native-toast-message'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 
-const { width } = Dimensions.get('window')
+import type { GetPostById, GetPosts } from '@backend/types'
 
 export default function Post(props: {
-  id: number
-  content: string
-  displayName: string
-  favoriteUsers: Array<{ CustomerID: number }>
-  image: string
+  post: GetPosts[number] | NonNullable<GetPostById>
+  favoriteUsers: Array<{ userId: string }>
   favoriteFunction: (isFavorited: boolean) => void
-  repliesCount: number
-  mediaType: boolean
-  createdAt: string
-  views: number
-  selfAccountID: number
+  selfAccountID: string
   alone: boolean
-  hidePost: () => void
 }) {
-  const createdDate = dayjs(props.createdAt)
+  const createdDate = DateTime.fromISO(String(props.post.createdAt))
   const [isHidden, setHidden] = useState(false)
-  const [isImageViewing, setIsImageViewing] = useState(false)
   const [isfavorited, toggleFavorite] = useState(
-    props.favoriteUsers.some(
-      (value) => props.selfAccountID == value['CustomerID']
-    )
+    props.favoriteUsers.some((value) => props.selfAccountID == value.userId)
   )
   const [favoriteCount, setFavoriteCount] = useState(props.favoriteUsers.length)
   function favorite() {
@@ -49,38 +38,41 @@ export default function Post(props: {
   //TODO: Add Support for multiple media
   //TODO: Add support for Viewing media
   return (
-    <>
+    <View>
       {!isHidden && (
         <Link
-          href={'/synbio/home/' + props.id}
+          href={{
+            pathname: '/nutrical/home/post',
+            params: { id: props.post.id }
+          }}
           asChild
+          disabled={props.alone}
         >
           <Pressable
-            className={' bg-white py-2 pl-2 pr-4 border-b-4 border-gray-100'}
+            className={'bg-white p-4 rounded-lg border border-gray-200 mb-4'}
           >
-            <View className={'flex flex-row items-start py-1 w-full'}>
+            <View className={'flex flex-row items-start w-full'}>
               <Image
-                source={profileIcon}
-                className={'h-12 rounded-full w-12'}
+                source={require('@assets/icons8-male-user-96.png')}
+                className={'h-10 rounded-full w-10'}
               />
               <View className={'text-right items-start ml-2'}>
-                <Text className={' font-TajawalMedium'}>
-                  {props.displayName}
+                <Text className={'font-display-medium text-gray-900'}>
+                  {props.post.user.firstName} {props.post.user.lastName}
                 </Text>
-                <Text className={'font-Tajawal text-xs text-gray-400'}>
-                  {createdDate.fromNow()}
+                <Text className={'font-display text-xs text-gray-500'}>
+                  {createdDate.toRelative()}
                 </Text>
               </View>
-              <View className={'self-end items-end ml-auto'}>
+              <View className={'self-start items-end ml-auto'}>
                 <DropdownMenu.Root>
                   <DropdownMenu.Trigger>
-                    <Pressable className={'p-2'}>
-                      <MaterialIcons
-                        name={'more-horiz'}
+                    <View className={'flex flex-col justify-center p-2'}>
+                      <Ellipsis
                         size={24}
-                        color={'#94a3b8'}
+                        color={'#4B5563'}
                       />
-                    </Pressable>
+                    </View>
                   </DropdownMenu.Trigger>
                   <DropdownMenu.Content>
                     <DropdownMenu.Item
@@ -107,75 +99,76 @@ export default function Post(props: {
                 </DropdownMenu.Root>
               </View>
             </View>
-            <View className={'items-start my-2 px-2'}>
-              <Text className={'font-Tajawal text-left'}>{props.content}</Text>
+            <View className={'items-start my-3'}>
+              <Text className={'font-display text-base text-gray-800'}>
+                {props.post.content}
+              </Text>
             </View>
-            {props.mediaType && (
-              <View className={'mb-2 pl-2 w-full flex'}>
-                <ImageModal
-                  source={{ uri: props.image }}
-                  isRTL
-                  resizeMode={'cover'}
-                  modalImageResizeMode={'contain'}
-                  style={{
-                    height: undefined,
-                    width: '100%',
-                    aspectRatio: 0.75
-                  }}
-                  renderImageComponent={({ source, resizeMode, style }) => (
-                    <Image
-                      recyclingKey={props.id.toString()}
-                      className={'rounded-lg'}
-                      style={style}
-                      contentFit={resizeMode}
-                      source={source}
-                    />
-                  )}
-                />
-              </View>
+            {props.post.mediaType == 'image' && (
+              <GestureViewer
+                data={props.post.mediaUrl ? [props.post.mediaUrl] : []}
+                renderItem={(propsViewer) => (
+                  <Image
+                    recyclingKey={props.post.id}
+                    className={'rounded-lg w-full h-64'}
+                    contentFit={'cover'}
+                    source={{ uri: propsViewer }}
+                  />
+                )}
+                ListComponent={FlashList}
+              />
             )}
             {!props.alone && (
-              <>
-                <View className={'flex flex-row justify-end items-center my-1'}>
-                  {props.repliesCount !== 0 && (
-                    <Text className={'ml-1 font-TajawalMedium text-gray-600'}>
-                      {props.repliesCount} تعليقات
+              <View>
+                <View className={'flex flex-row justify-end items-center my-2'}>
+                  {props.post.comments.length !== 0 && (
+                    <Text className={'ml-4 font-display text-sm text-gray-600'}>
+                      {props.post.comments.length} تعليقات
                     </Text>
                   )}
-                  <Text className={'ml-1 font-TajawalMedium text-gray-600'}>
+                  <Text className={'font-display text-sm text-gray-600'}>
                     {favoriteCount} إعجاب
                   </Text>
                 </View>
-                <View className={'my-2 h-0.5 bg-gray-200 rounded-full'} />
+                <View className={'my-2 h-px bg-gray-200'} />
                 <View
                   className={'flex flex-row gap-2 items-center justify-evenly'}
                 >
                   <Pressable
-                    className={'flex flex-row items-center'}
-                    onPress={() => {
-                      favorite()
-                    }}
+                    className={'flex flex-row items-center p-2'}
+                    onPress={favorite}
                   >
-                    <MaterialIcons
-                      name={isfavorited ? 'favorite' : 'favorite-border'}
-                      size={24}
-                      color={'#94a3b8'}
-                    />
-                    <Text className={'ml-1 font-TajawalMedium text-gray-600'}>
+                    {isfavorited ? (
+                      <Heart
+                        fill={'#ef4444'}
+                        color={'#ef4444'}
+                        size={20}
+                      />
+                    ) : (
+                      <Heart
+                        color={'#4B5563'}
+                        size={20}
+                      />
+                    )}
+                    <Text className={'ml-2 font-display-medium text-gray-700'}>
                       أعجبني
                     </Text>
                   </Pressable>
                   <Link
-                    href={'/synbio/home/' + props.id}
+                    href={{
+                      pathname: '/nutrical/home/post',
+                      params: { id: props.post.id }
+                    }}
                     asChild
                   >
-                    <Pressable className={'flex flex-row items-center'}>
-                      <MaterialIcons
-                        name={'comment'}
-                        size={24}
-                        color={'#94a3b8'}
+                    <Pressable className={'flex flex-row items-center p-2'}>
+                      <MessagesSquare
+                        color={'#4B5563'}
+                        size={20}
                       />
-                      <Text className={'ml-1 font-TajawalMedium text-gray-600'}>
+                      <Text
+                        className={'ml-2 font-display-medium text-gray-700'}
+                      >
                         تعليق
                       </Text>
                     </Pressable>
@@ -185,11 +178,11 @@ export default function Post(props: {
                     <Text className={"ml-1"}>{views}</Text>
                   </View>*/}
                 </View>
-              </>
+              </View>
             )}
           </Pressable>
         </Link>
       )}
-    </>
+    </View>
   )
 }

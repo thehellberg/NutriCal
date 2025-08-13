@@ -51,9 +51,7 @@ export default function RecipeAdd() {
   >(['foods', debouncedSearch, page], async ([, search, pageNum]) => {
     // You may need to adjust the endpoint to accept search and page params
     const params = new URLSearchParams()
-    if (typeof search === 'string' && search) params.append('search', search)
-    params.append('page', String(pageNum))
-    params.append('limit', '20')
+     params.append('limit', '20')
 
     return await api.get(`foods?${params.toString()}`).json()
   })

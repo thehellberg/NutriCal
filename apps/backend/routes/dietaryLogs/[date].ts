@@ -12,14 +12,8 @@ export const get = async (req: Request, res: Response) => {
     const inputData: z.infer<typeof getDietaryLogsSchema> =
       getDietaryLogsSchema.parse(date)
     const requestToken = req.token
-    if (!requestToken) {
-      return res.status(401).json({
-        error: true,
-        message: 'Unauthorized'
-      })
-    }
     const session = await validateSessionToken(requestToken)
-    if (session.session === null) {
+    if (session === null) {
       return res.status(401).json({
         error: true,
         message: 'Unauthorized'
@@ -27,14 +21,24 @@ export const get = async (req: Request, res: Response) => {
     }
     const dietaryLog = await db.query.dietaryLogs.findFirst({
       orderBy: (dietaryLogs, { desc }) => [desc(dietaryLogs.createdAt)],
-      where: (dietaryLogs, { eq, and }) => and(eq(dietaryLogs.date, inputData), eq(dietaryLogs.userId, session.user.id))
+      where: (dietaryLogs, { eq, and }) =>
+        and(
+          eq(dietaryLogs.date, inputData),
+          eq(dietaryLogs.userId, session.user.id)
+        )
     })
 
     if (!dietaryLog) {
       const userPresets = await db.query.dietarySettings.findFirst({
-        where: (dietarySetting, { eq, and }) => eq(dietarySetting.userId, session.user.id)
+        where: (dietarySetting, { eq, and }) =>
+          eq(dietarySetting.userId, session.user.id)
       })
-      const defaultDietaryLog = { ...userPresets, date: inputData, id: undefined, userId: session.user.id }
+      const defaultDietaryLog = {
+        ...userPresets,
+        date: inputData,
+        id: undefined,
+        userId: session.user.id
+      }
       const updatedDietaryLog = await db
         .insert(dietaryLogs)
         .values(defaultDietaryLog)
@@ -43,10 +47,10 @@ export const get = async (req: Request, res: Response) => {
           set: defaultDietaryLog
         })
         .returning()
-        return res.json({
-          error: false,
-          data: updatedDietaryLog
-        })
+      return res.json({
+        error: false,
+        data: updatedDietaryLog
+      })
     }
     return res.json({
       error: false,

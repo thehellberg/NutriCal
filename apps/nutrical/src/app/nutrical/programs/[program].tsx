@@ -10,6 +10,7 @@ import type { CreateProgramReturn, ProgramTemplate } from '@backend/types'
 
 import useClient from '~/components/network/client'
 import PreviewMealSection from '~/components/programs/PreviewMealSection'
+import { ChevronLeft, TriangleAlert } from 'lucide-react-native'
 
 export default function Meal() {
   const { program } = useLocalSearchParams()
@@ -32,11 +33,7 @@ export default function Meal() {
         className="z-10 p-4"
         onPress={() => router.back()}
       >
-        <MaterialIcons
-          name="arrow-back-ios"
-          color={'#FFF'}
-          size={24}
-        />
+        <ChevronLeft />
       </Pressable>
       <View
         style={{ backgroundColor: programs?.startColor || '#c0c0c0' }}
@@ -199,11 +196,7 @@ export default function Meal() {
           <View className={'mx-4 my-3 w-72 h-0.5 bg-gray-300 rounded-full'} />
 
           <View className="flex flex-col items-center gap-4 w-64 mx-20 mt-4">
-            <MaterialIcons
-              name="warning-amber"
-              size={36}
-              color={'red'}
-            />
+            <TriangleAlert color={'red'} />
             <Text className="font-display text-gray-400 text-center mb-20">
               {programs?.warningText}
             </Text>

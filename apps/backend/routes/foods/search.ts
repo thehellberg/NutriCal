@@ -14,14 +14,8 @@ export const post = async (req: Request, res: Response) => {
       .strict()
     const reqData = trackRecipeSchema.parse(req.body)
     const requestToken = req.token
-    if (!requestToken) {
-      return res.status(401).json({
-        error: true,
-        message: 'Unauthorized'
-      })
-    }
     const session = await validateSessionToken(requestToken)
-    if (session.session === null) {
+    if (session === null) {
       return res.status(401).json({
         error: true,
         message: 'Unauthorized'

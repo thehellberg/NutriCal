@@ -7,6 +7,7 @@ import { View, Text, Pressable } from 'react-native'
 import MealComponent from './MealComponent'
 
 import type { UserPrograms } from '@backend/types'
+import { Plus } from 'lucide-react-native'
 
 export default function MealSection(props: {
   program: UserPrograms[number] | undefined
@@ -103,11 +104,7 @@ export default function MealSection(props: {
             href={{pathname: '/nutrical/meals/recipe/add', params: {meal: props.title, selectedDay: props.selectedDay, programId: props.program.id}}}
           >
             <Pressable className={' rounded-full bg-teal-300 p-1 mr-2'}>
-              <MaterialIcons
-                name={'add'}
-                size={28}
-                color={'#0f766e'}
-              />
+              <Plus />
             </Pressable>
           </Link>
         </View>

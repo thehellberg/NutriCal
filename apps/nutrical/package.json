@@ -86,6 +86,7 @@
     "@babel/core": "^7.20.0",
     "@inlang/cli": "^3.0.0",
     "@inlang/paraglide-js": "2.2.0",
+    "@types/luxon": "^3.6.2",
     "@types/react": "~19.0.10",
     "@types/react-native-get-random-values": "^1.8.2",
     "@welldone-software/why-did-you-render": "^8",

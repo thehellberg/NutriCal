@@ -14,14 +14,8 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
     }
     const recipeId = parseInt(id)
     const requestToken = req.token
-    if (!requestToken) {
-      return res.status(401).json({
-        error: true,
-        message: 'Unauthorized'
-      })
-    }
     const session = await validateSessionToken(requestToken)
-    if (session.session === null) {
+    if (session === null) {
       return res.status(401).json({
         error: true,
         message: 'Unauthorized'

@@ -3,6 +3,7 @@ import { Image } from 'expo-image'
 import { ScrollView, Text, View } from 'react-native'
 
 import Header from '../Header'
+import { ImageIcon } from 'lucide-react-native'
 
 export default function FlashListHeader() {
   return (
@@ -33,10 +34,7 @@ export default function FlashListHeader() {
               Write Here
             </Text>
           </View>
-          <MaterialIcons
-            name={'image'}
-            size={32}
-          />
+          <ImageIcon />
         </View>
       </View>
     </View>
